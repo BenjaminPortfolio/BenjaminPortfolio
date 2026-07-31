@@ -1,0 +1,79 @@
+/* ============================================
+   GLOBAL STYLES & DESIGN TOKENS
+   ============================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Patrick+Hand+SC&display=swap");
+:root {
+  /* Your existing variables */
+  --font-main: "DM Sans", sans-serif;
+  --font-patricSc: "Patrick Hand SC", cursive;
+  --font-lexend: "Lexend", sans-serif;
+  --color-bg: #000000;
+  --color-white: #ffffff;
+  --color-glass-bg: rgba(255, 255, 255, 0.08);
+  --color-glass-border: rgba(255, 255, 255, 0.2);
+  --color-overlay-top: rgba(0, 0, 0, 0.3);
+  --color-overlay-bottom: rgba(0, 0, 0, 0.5);
+  --radius-card: 24px;
+  --radius-pill: 50px;
+  --blur-glass: blur(12px);
+  --blur-glass-strong: blur(15px);
+  --transition-smooth: all 0.3s ease;
+
+  /* 👇 Add AboutOverlay variables here 👇 */
+  --card-bg: rgba(255, 255, 255, 0.62);
+  --card-bg-hover: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(255, 255, 255, 0.88);
+  --card-border-hover: rgba(255, 255, 255, 1);
+  --card-shadow:
+    0 4px 22px rgba(90, 150, 220, 0.13), 0 1.5px 6px rgba(90, 150, 220, 0.08);
+  --card-shadow-hover:
+    0 12px 40px rgba(59, 130, 212, 0.22), 0 2px 10px rgba(59, 130, 212, 0.13);
+  --blue-icon: #3b82d4;
+  --blue-grad: linear-gradient(135deg, #4a9edd, #2563ae);
+  --blue-accent: #1e73d0;
+  --blue-link: #2563ae;
+  --date-color: #3b82d4;
+  --text-dark: #1a2f4a;
+  --text-mid: #3a5a7a;
+  --text-soft: #5a7898;
+  --text-muted: #8aaac8;
+  --tag-border: rgba(59, 130, 212, 0.32);
+  --r-xl: 22px;
+  --r-lg: 16px;
+  --r-md: 12px;
+  --r-sm: 8px;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  width: 100%;
+  background-color: var(--color-bg);
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--color-bg);
+  color: var(--color-white);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove default button/link styles */
+button,
+a {
+  font-family: var(--font-main);
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}

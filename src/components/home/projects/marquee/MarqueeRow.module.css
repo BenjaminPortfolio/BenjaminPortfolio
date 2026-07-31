@@ -1,0 +1,42 @@
+.rowWrapper {
+  width: 100%;
+  /* overflow: hidden; */
+}
+
+.track {
+  display: flex;
+
+  gap: 14px;
+
+  width: max-content;
+
+  will-change: transform;
+}
+
+.ltr {
+  animation: marqueeLeft linear infinite;
+}
+
+.rtl {
+  animation: marqueeRight linear infinite;
+}
+
+@keyframes marqueeLeft {
+  from {
+    transform: translateX(0%);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marqueeRight {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}

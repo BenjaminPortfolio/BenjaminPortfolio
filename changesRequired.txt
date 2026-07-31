@@ -1,0 +1,3 @@
+# After refreshing the page should reset the scroll postion.(after loading screen or click to start button)
+# Make it responsive for mobile screens
+# Create the perfect zoom effect for the "Lets get started" button.

@@ -1,0 +1,18 @@
+.cloud {
+  position: absolute;
+  height: auto;
+  display: block;
+  pointer-events: none;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.2));
+  /* Initial position - overwritten by JS ref */
+  transform: translate(-50%, -50%);
+  will-change: transform, left, top;
+}
+
+@media (max-width: 768px) {
+  .cloud {
+    width: 250px !important;
+  }
+}
