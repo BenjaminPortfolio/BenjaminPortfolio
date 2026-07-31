@@ -2,6 +2,7 @@
 
 A scroll-driven parallax portfolio with multi-layer depth, cloud animations, and glassmorphism text cards.
 
+
 ---
 
 ## 🚀 Quick Start
