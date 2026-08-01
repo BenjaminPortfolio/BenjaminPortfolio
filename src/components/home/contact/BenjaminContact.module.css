@@ -156,14 +156,24 @@
     0 2px 12px rgba(60, 120, 200, 0.1),
     inset 0 1.5px 0 rgba(255, 255, 255, 0.9);
   display: grid;
-  grid-template-columns: 1fr 1.15fr 220px;
+  grid-template-columns: 1fr 1.15fr 170px;
   grid-template-rows: minmax(0, 1fr);
   height: 85vh;
-  max-height: 85vh;
+
   overflow-y: auto;
-  align-items: center;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(59, 130, 212, 0.22) transparent;
+  padding-left: 50px;
+  padding-block: 44px;
+  padding-right: 40px;
+  align-items: start;
+  justify-content: center;
   animation: modalIn 0.55s cubic-bezier(0.34, 1.1, 0.64, 1) both;
   position: relative;
+}
+.cjLeft {
+  padding-bottom: 40px;
 }
 
 @keyframes modalIn {
@@ -176,15 +186,24 @@
     transform: scale(1) translateY(0);
   }
 }
+.cjOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
 
+  justify-content: center;
+  padding: 24px;
+  overflow-y: auto;
+}
 /* Left Panel */
 .cjLeft {
-  padding: 44px 36px 44px 44px;
   display: flex;
   flex-direction: column;
+
   gap: 0;
-  min-height: 0;
-  overflow-y: auto;
+
+  /* overflow-y: visible; */
 }
 
 .cjEyebrow {
@@ -688,10 +707,10 @@
   position: relative;
   display: flex;
   align-items: start;
-  justify-content: flex-end;
+  justify-content: flex-start;
   overflow: visible;
   padding-bottom: 0;
-  left: -23px;
+  left: -70px;
 }
 
 .cjCharGlow {
@@ -725,7 +744,7 @@
 .cjCharImg {
   position: relative;
   z-index: 2;
-  width: 130%;
+  width: 165%;
   max-width: 320px;
   height: auto;
   object-fit: contain;
