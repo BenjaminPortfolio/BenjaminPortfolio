@@ -143,24 +143,24 @@ export default function BenjaminContact({ onClose }) {
 
   const socials = [
     { icon: "fas fa-envelope", href: "mailto:csbenju76@gmail.com" },
-    { icon: "fab fa-linkedin-in", href: "#" },
-    { icon: "fab fa-instagram", href: "#" },
-    { icon: "fab fa-dribbble", href: "#" },
+    {
+      icon: "fab fa-linkedin-in",
+      href: "https://www.linkedin.com/in/benjamin-cs-823b602b0",
+    },
+    {
+      icon: "fab fa-instagram",
+      href: "https://www.instagram.com/ben_.jmin?igsh=eXV2NGhhdGJibnp4&utm_source=qr",
+    },
+    {
+      icon: "fab fa-artstation",
+      href: "https://benjamincs1.artstation.com/",
+    },
+    // { icon: "fab fa-dribbble", href: "#" },
   ];
 
   return (
     <div className={styles.BenjaminContactVar}>
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          zIndex: 200,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "20px",
-        }}
-      >
+      <div className={styles.cjOverlay}>
         <div className={styles.cjBg}>
           <div className={`${styles.cjBokeh} ${styles.bk1}`} />
           <div className={`${styles.cjBokeh} ${styles.bk2}`} />
@@ -180,7 +180,7 @@ export default function BenjaminContact({ onClose }) {
             </button>
             {/* LEFT PANEL */}
             <div className={styles.cjLeft}>
-              <div className={styles.cjEyebrow}>Let's Connect</div>
+              {/* <div className={styles.cjEyebrow}>Let's Connect</div> */}
               <h1 className={styles.cjHeadline}>
                 Let's create something <em>amazing</em> together!
               </h1>
