@@ -171,13 +171,28 @@ export default function BenjaminContact({ onClose }) {
         <Snow />
         <div className={styles.cjShell}>
           <div className={styles.cjModal}>
-            <button
+            {/* <button
               className={styles.cjTopbarClose}
               onClick={onClose}
               aria-label="Close"
             >
               <i className="fas fa-times" />
-            </button>
+            </button> */}
+            <div className={styles.cjTopbar}>
+              <div className={styles.cjTopbarPill}>
+                <i className="fas fa-envelope-open-text" />
+                Contact Me
+              </div>
+
+              <button
+                type="button"
+                className={styles.cjTopbarClose}
+                onClick={onClose}
+                aria-label="Close modal"
+              >
+                <i className="fas fa-times" />
+              </button>
+            </div>
             {/* LEFT PANEL */}
             <div className={styles.cjLeft}>
               {/* <div className={styles.cjEyebrow}>Let's Connect</div> */}
