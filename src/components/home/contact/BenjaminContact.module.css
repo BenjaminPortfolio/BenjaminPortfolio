@@ -975,6 +975,7 @@
     right: 0;
     left: 50%;
     top: 25%;
+    /* top: 156.4px; */
     min-height: 500px;
   }
   .cjCharImg {
@@ -984,6 +985,14 @@
 
   .cjTagline {
     max-width: 250px;
+  }
+
+  .cjSocialsLabel {
+    padding-top: 10vh;
+    text-align: center;
+  }
+  .cjSocials {
+    justify-content: center;
   }
 }
 /* @media (max-width: 560px) {
