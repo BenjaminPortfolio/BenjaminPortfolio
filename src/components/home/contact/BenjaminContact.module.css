@@ -973,7 +973,7 @@
     position: absolute;
     margin-top: 0 !important;
     right: 0;
-    left: 50%;
+    left: 55%;
     top: 25%;
     /* top: 156.4px; */
     min-height: 500px;
@@ -987,12 +987,15 @@
     max-width: 250px;
   }
 
-  .cjSocialsLabel {
+  /* .cjSocialsLabel {
     padding-top: 10vh;
-    text-align: center;
   }
   .cjSocials {
     justify-content: center;
+  } */
+
+  .cjRow {
+    grid-template-columns: 1fr;
   }
 }
 /* @media (max-width: 560px) {
