@@ -1,5 +1,6 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import styles from "./BenjaminContact.module.css";
+import emailjs from "@emailjs/browser";
 
 // ─────────────────────────────────────────────
 //  🔧 REPLACE THESE WITH YOUR EMAILJS CREDENTIALS
@@ -9,9 +10,9 @@ import styles from "./BenjaminContact.module.css";
 //        {{from_name}}, {{from_email}}, {{service}}, {{message}}
 //     3. Paste your IDs below
 // ─────────────────────────────────────────────
-const EMAILJS_SERVICE_ID = "YOUR_SERVICE_ID"; // e.g. "service_abc123"
-const EMAILJS_TEMPLATE_ID = "YOUR_TEMPLATE_ID"; // e.g. "template_xyz789"
-const EMAILJS_PUBLIC_KEY = "YOUR_PUBLIC_KEY"; // e.g. "aBcDeFgHiJkLmNoP"
+const EMAILJS_SERVICE_ID = "service_q92l50c"; // e.g. "service_abc123"
+const EMAILJS_TEMPLATE_ID = "template_rgr5yhd"; // e.g. "template_xyz789"
+const EMAILJS_PUBLIC_KEY = "6wx5z0zo6O5D269lJ"; // e.g. "aBcDeFgHiJkLmNoP"
 
 function Snow() {
   const flakes = Array.from({ length: 50 }, (_, i) => ({
@@ -44,8 +45,8 @@ function Snow() {
 
 export default function BenjaminContact({ onClose }) {
   const [form, setForm] = useState({
-    name: "",
-    email: "",
+    from_name: "",
+    from_email: "",
     service: "",
     message: "",
   });
@@ -53,10 +54,14 @@ export default function BenjaminContact({ onClose }) {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const fileRef = useRef();
+  const formRef = useRef(null);
+  const fileRef = useRef(null);
 
-  // Load EmailJS SDK and FontAwesome once
   useEffect(() => {
+    emailjs.init({
+      publicKey: EMAILJS_PUBLIC_KEY,
+    });
+
     const faId = "cj-fa";
     if (!document.getElementById(faId)) {
       const l = document.createElement("link");
@@ -65,23 +70,6 @@ export default function BenjaminContact({ onClose }) {
       l.href =
         "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css";
       document.head.appendChild(l);
-    }
-
-    // Load EmailJS SDK
-    const ejsId = "emailjs-sdk";
-    if (!document.getElementById(ejsId)) {
-      const script = document.createElement("script");
-      script.id = ejsId;
-      script.src =
-        "https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js";
-      script.onload = () => {
-        if (window.emailjs) {
-          window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-        }
-      };
-      document.head.appendChild(script);
-    } else if (window.emailjs) {
-      window.emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
     }
   }, []);
 
@@ -97,34 +85,34 @@ export default function BenjaminContact({ onClose }) {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) return;
-
-    setLoading(true);
+    if (!form.from_name || !form.from_email || !form.message) setLoading(true);
     setError("");
 
     try {
-      const templateParams = {
-        to_email: "csbenju76@gmail.com",
-        from_name: form.name,
-        from_email: form.email,
-        service: form.service || "Not specified",
-        message: form.message,
-        reply_to: form.email,
-      };
-
-      await window.emailjs.send(
+      await emailjs.sendForm(
         EMAILJS_SERVICE_ID,
         EMAILJS_TEMPLATE_ID,
-        templateParams,
+        formRef.current,
+        EMAILJS_PUBLIC_KEY,
       );
 
+      // Reset the actual HTML form (important for file input)
+      formRef.current.reset();
+
+      // Reset React state
+      setForm({
+        name: "",
+        email: "",
+        service: "",
+        message: "",
+      });
+
+      setFileName("");
       setSent(true);
     } catch (err) {
-      console.error("EmailJS error:", err);
-      setError(
-        err?.text ||
-          "Oops! Something went wrong. Please try again or email directly at csbenju76@gmail.com",
-      );
+      console.error(err);
+
+      setError(err?.text || "Oops! Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -257,8 +245,8 @@ export default function BenjaminContact({ onClose }) {
                   <button
                     onClick={() => {
                       setForm({
-                        name: "",
-                        email: "",
+                        from_name: "",
+                        from_email: "",
                         service: "",
                         message: "",
                       });
@@ -300,18 +288,28 @@ export default function BenjaminContact({ onClose }) {
                   </button>
                 </div>
               ) : (
-                <form className={styles.cjForm} onSubmit={handleSubmit}>
+                <form
+                  ref={formRef}
+                  className={styles.cjForm}
+                  onSubmit={handleSubmit}
+                >
                   <div className={styles.cjRow}>
                     <div className={styles.cjField}>
                       <i className={`fas fa-user ${styles.cjFieldIcon}`} />
                       <input
                         className={styles.cjInput}
                         type="text"
-                        name="name"
+                        name="from_name"
                         placeholder="Your Name"
-                        value={form.name}
+                        value={form.from_name}
                         onChange={handleChange}
                         required
+                      />
+                      <input
+                        type="hidden"
+                        name="to_email"
+                        // value="csbenju76@gmail.com"
+                        value="hishamkool@gmail.com"
                       />
                     </div>
                     <div className={styles.cjField}>
@@ -319,9 +317,9 @@ export default function BenjaminContact({ onClose }) {
                       <input
                         className={styles.cjInput}
                         type="email"
-                        name="email"
+                        name="from_email"
                         placeholder="Email Address"
-                        value={form.email}
+                        value={form.from_email}
                         onChange={handleChange}
                         required
                       />
@@ -391,6 +389,7 @@ export default function BenjaminContact({ onClose }) {
                     <input
                       ref={fileRef}
                       type="file"
+                      name="attachment"
                       accept=".jpg,.jpeg,.png,.pdf"
                       style={{ display: "none" }}
                       onChange={handleFile}
