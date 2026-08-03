@@ -146,7 +146,7 @@
 }
 
 .cjModal {
-  width: 1197px;
+  width: 100%;
   background: rgba(215, 232, 252, 0.45);
   backdrop-filter: blur(28px);
   border: 1.5px solid rgba(255, 255, 255, 0.82);
@@ -952,9 +952,6 @@
   .cjShell {
     padding: 0;
   }
-}
-.cjModal {
-  width: 1197px;
 }
 
 @media (max-width: 560px) {
