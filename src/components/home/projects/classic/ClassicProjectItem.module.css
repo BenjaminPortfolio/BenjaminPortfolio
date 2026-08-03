@@ -17,6 +17,16 @@
   transition:
     grid-row 0.25s ease,
     grid-column 0.25s ease;
+
+  /* Kills the default blue tap-highlight/focus box mobile browsers draw
+     over a tapped clickable element/button. */
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.item,
+.item * {
+  -webkit-tap-highlight-color: transparent;
 }
 
 .gridItem {
@@ -73,6 +83,9 @@
     transform 0.2s ease;
 
   z-index: 10;
+
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 }
 
 .visible {

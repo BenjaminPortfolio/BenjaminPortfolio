@@ -20,7 +20,7 @@ const CAR_DATA = [
     ],
   },
   {
-    role: "Motion Artist",
+    role: "Motion Graphics Artist",
     desc: '"Crafting fluid animations and cinematic motion graphics"',
     image: "/assets/about/characters/benjamin_char2.png",
     tools: [
@@ -43,7 +43,7 @@ const CAR_DATA = [
     ],
   },
   {
-    role: "Digital Artist",
+    role: "Concept Artist",
     desc: '"Fusing traditional art sensibility with digital mastery"',
     image: "/assets/about/characters/benjamin_char4.png",
     tools: [
@@ -55,7 +55,7 @@ const CAR_DATA = [
   },
 ];
 
-const CAR_LABELS = ["Artist", "Motion Artist", "3D Artist", "Digital Artist"];
+const CAR_LABELS = ["Artist", "Motion Artist", "3D Artist", "Concept Artist"];
 
 /* â”€â”€â”€ Snow component â”€â”€â”€ */
 function Snow() {

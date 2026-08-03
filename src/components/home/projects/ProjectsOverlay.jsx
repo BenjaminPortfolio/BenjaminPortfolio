@@ -155,51 +155,52 @@ export default function ProjectsOverlay({ onClose }) {
             className={`${styles.topBar} ${!sidebarCollapsed ? styles.topBarExpanded : ""}`}
           >
             <div className={styles.topBarLeft}>
-              <div className={styles.categoryMenuWrap} ref={categoryMenuRef}>
-                <button
-                  ref={backBtnRef}
-                  type="button"
-                  className={`${styles.backBtn} ${!menuOpen ? styles.backBtnCollapsed : ""}`}
-                  onClick={toggleSidebar}
-                  aria-haspopup={isMobile ? "true" : undefined}
-                  aria-expanded={isMobile ? isCategoryMenuOpen : undefined}
-                  aria-label={menuOpen ? "Collapse categories" : "Expand categories"}
-                >
-                  <i className={`fas ${!menuOpen ? "fa-bars" : "fa-times"}`} />
-                  <span>{"Categories"}</span>
-                </button>
+              {isMobile && (
+                <div className={styles.categoryMenuWrap} ref={categoryMenuRef}>
+                  <button
+                    ref={backBtnRef}
+                    type="button"
+                    className={`${styles.backBtn} ${!menuOpen ? styles.backBtnCollapsed : ""}`}
+                    onClick={toggleSidebar}
+                    aria-haspopup="true"
+                    aria-expanded={isCategoryMenuOpen}
+                    aria-label={menuOpen ? "Collapse categories" : "Expand categories"}
+                  >
+                    <i className={`fas ${!menuOpen ? "fa-bars" : "fa-times"}`} />
+                    <span>{"Categories"}</span>
+                  </button>
 
-                {/* ── Mobile category dropdown — portaled to <body> so it can't
-                     get buried by ancestor stacking-context/compositing quirks
-                     (animated transforms, backdrop-filter, marquee video
-                     layers) ── */}
-                {isMobile &&
-                  isCategoryMenuOpen &&
-                  dropdownPos &&
-                  createPortal(
-                    <nav
-                      ref={dropdownPortalRef}
-                      className={styles.categoryDropdown}
-                      style={{
-                        position: "fixed",
-                        top: dropdownPos.top,
-                        left: dropdownPos.left,
-                        minWidth: dropdownPos.width,
-                      }}
-                    >
-                      {CATEGORIES.map((cat) => (
-                        <button
-                          key={cat.id}
-                          className={`${styles.dropdownItem} ${activeCategory === cat.id ? styles.dropdownItemActive : ""}`}
-                          onClick={() => handleCategorySelect(cat.id)}
-                        >
-                          {cat.label}
-                        </button>
-                      ))}
-                    </nav>,
-                    document.body,
-                  )}
-              </div>
+                  {/* ── Mobile category dropdown — portaled to <body> so it can't
+                       get buried by ancestor stacking-context/compositing quirks
+                       (animated transforms, backdrop-filter, marquee video
+                       layers) ── */}
+                  {isCategoryMenuOpen &&
+                    dropdownPos &&
+                    createPortal(
+                      <nav
+                        ref={dropdownPortalRef}
+                        className={styles.categoryDropdown}
+                        style={{
+                          position: "fixed",
+                          top: dropdownPos.top,
+                          left: dropdownPos.left,
+                          minWidth: dropdownPos.width,
+                        }}
+                      >
+                        {CATEGORIES.map((cat) => (
+                          <button
+                            key={cat.id}
+                            className={`${styles.dropdownItem} ${activeCategory === cat.id ? styles.dropdownItemActive : ""}`}
+                            onClick={() => handleCategorySelect(cat.id)}
+                          >
+                            {cat.label}
+                          </button>
+                        ))}
+                      </nav>,
+                      document.body,
+                    )}
+                </div>
+              )}
               <div className={styles.topBarTitle}>Projects Section</div>
             </div>
 
@@ -218,7 +219,7 @@ export default function ProjectsOverlay({ onClose }) {
           {/* Header */}
           <div className={styles.header}>
             <div>
-              <h1 className={styles.title}>Explore MY Gallery</h1>
+              <h1 className={styles.title}>Explore My Gallery</h1>
               <p className={styles.subtitle}>
                 A curated gallery of my work, showcasing how ideas turn into
                 impactful visuals across design, motion, and digital experiences

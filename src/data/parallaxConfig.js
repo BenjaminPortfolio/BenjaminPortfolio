@@ -19,7 +19,7 @@ export const ZOOM_CONFIG = {
 
 // --- SCROLL SETTINGS ---
 export const SCROLL_CONFIG = {
-  totalViewportMultiplier: 7, // body height = this × 100vh
+  totalViewportMultiplier: 4, // body height = this × 100vh
 };
 
 // --- IMAGE LAYERS ---

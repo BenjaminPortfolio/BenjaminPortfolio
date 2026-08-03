@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ParallaxScene from '../components/parallax/ParallaxScene';
 import Overlay from '../components/ui/Overlay';
@@ -30,6 +30,17 @@ export default function ParallaxPage() {
     setFadeOut(true);
     setTimeout(() => setStarted(true), 600);
   };
+
+  // Some browsers restore the previous scroll position on load/refresh
+  // (history.scrollRestoration defaults to "auto"), which left the
+  // parallax's initial progress slightly above 0 instead of starting
+  // clean at the top.
+  useEffect(() => {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
   // CTA click → transition to homepage
   const handleCTAClick = (e) => {

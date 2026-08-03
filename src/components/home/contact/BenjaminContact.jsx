@@ -263,7 +263,7 @@ export default function BenjaminContact({ onClose }) {
                       color: "#fff",
                       fontFamily: "'Outfit',sans-serif",
                       fontWeight: 700,
-                      fontSize: 12,
+                      fontSize: 14,
                       cursor: "pointer",
                     }}
                   >
@@ -280,7 +280,7 @@ export default function BenjaminContact({ onClose }) {
                       color: "var(--text-dark)",
                       fontFamily: "'Outfit',sans-serif",
                       fontWeight: 700,
-                      fontSize: 12,
+                      fontSize: 14,
                       cursor: "pointer",
                     }}
                   >
