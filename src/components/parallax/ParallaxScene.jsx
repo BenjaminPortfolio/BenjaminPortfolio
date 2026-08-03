@@ -17,7 +17,14 @@ import {
   TEXT_CARDS,
   ZOOM_CONFIG,
 } from "../../data/parallaxConfig";
+import { pickResponsiveSrc } from "../../utils/responsiveAsset";
 import styles from "./ParallaxScene.module.css";
+
+// Resolve mobile/desktop src once per mount instead of letting the browser's
+// srcset heuristics decide (they can still choose the large image on
+// high-DPR phones), keeping this in sync with what LoadingScreen preloads.
+const RESOLVED_LAYERS = LAYERS.map((l) => ({ ...l, src: pickResponsiveSrc(l) }));
+const RESOLVED_CLOUDS = CLOUDS.map((c) => ({ ...c, src: pickResponsiveSrc(c) }));
 
 export default function ParallaxScene({ ctaRef }) {
   // One ref slot per layer — LAYERS now has 8 items (index 0–7)
@@ -98,45 +105,45 @@ export default function ParallaxScene({ ctaRef }) {
   return (
     <div className={styles.scene}>
       {/* ── LAYER 8 index=0 — big cloud/bg behind mountains, slow parallax ── */}
-      <ParallaxLayer src={LAYERS[0].src} layerRef={layerRefs.current[0]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[0]} layerRef={layerRefs.current[0]} />
 
       {/* ── LAYER 7 index=1 — furthest mountain layer ── */}
-      <ParallaxLayer src={LAYERS[1].src} layerRef={layerRefs.current[1]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[1]} layerRef={layerRefs.current[1]} />
 
       {/* ── CLOUD 1 — between layer7 and text1 ── */}
-      <CloudLayer {...CLOUDS[0]} cloudRef={cloudRefs.current[0]} />
+      <CloudLayer {...RESOLVED_CLOUDS[0]} cloudRef={cloudRefs.current[0]} />
 
       {/* ── TEXT 1 — between layer7 and layer6 ── */}
       <TextCard {...TEXT_CARDS[0]} cardRef={textRefs.current[0]} />
 
       {/* ── LAYER 6 index=2 ── */}
-      <ParallaxLayer src={LAYERS[2].src} layerRef={layerRefs.current[2]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[2]} layerRef={layerRefs.current[2]} />
 
       {/* ── CLOUD 2 — between layer6 and text2 ── */}
-      <CloudLayer {...CLOUDS[1]} cloudRef={cloudRefs.current[1]} />
+      <CloudLayer {...RESOLVED_CLOUDS[1]} cloudRef={cloudRefs.current[1]} />
 
       {/* ── LAYER 5 index=3 ── */}
-      <ParallaxLayer src={LAYERS[3].src} layerRef={layerRefs.current[3]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[3]} layerRef={layerRefs.current[3]} />
       {/* ── TEXT 2 — between layer6 and layer5 ── */}
       <TextCard {...TEXT_CARDS[1]} cardRef={textRefs.current[1]} />
 
       {/* ── CLOUD 3 — between layer5 and text3 ── */}
-      <CloudLayer {...CLOUDS[2]} cloudRef={cloudRefs.current[2]} />
+      <CloudLayer {...RESOLVED_CLOUDS[2]} cloudRef={cloudRefs.current[2]} />
 
       {/* ── TEXT 3 — between layer5 and layer4 ── */}
       <TextCard {...TEXT_CARDS[2]} cardRef={textRefs.current[2]} />
 
       {/* ── LAYER 4 index=4 ── */}
-      <ParallaxLayer src={LAYERS[4].src} layerRef={layerRefs.current[4]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[4]} layerRef={layerRefs.current[4]} />
 
       {/* ── LAYER 2 index=5 ── */}
-      <ParallaxLayer src={LAYERS[5].src} layerRef={layerRefs.current[5]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[5]} layerRef={layerRefs.current[5]} />
 
       {/* ── LAYER 3 index=6 ── */}
-      <ParallaxLayer src={LAYERS[6].src} layerRef={layerRefs.current[6]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[6]} layerRef={layerRefs.current[6]} />
 
       {/* ── LAYER 1 index=7 — front/closest layer ── */}
-      <ParallaxLayer src={LAYERS[7].src} layerRef={layerRefs.current[7]} />
+      <ParallaxLayer {...RESOLVED_LAYERS[7]} layerRef={layerRefs.current[7]} />
     </div>
   );
 }

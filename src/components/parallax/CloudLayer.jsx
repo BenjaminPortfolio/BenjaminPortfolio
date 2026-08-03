@@ -7,7 +7,7 @@ import styles from './CloudLayer.module.css';
  * Position is controlled imperatively via cloudRef for perf.
  *
  * Props:
- *   src        - image URL
+ *   src        - image URL (already resolved to the mobile/desktop variant)
  *   width      - image width in px
  *   opacity    - base opacity
  *   cloudRef   - ref forwarded from parent

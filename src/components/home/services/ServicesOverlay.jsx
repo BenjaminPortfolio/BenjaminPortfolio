@@ -353,10 +353,15 @@ const CSS = `
   /* topbar */
   .sv-topbar{ padding:11px 16px; }
 
-  /* hero section — single column, hide character */
+  /* hero section — single column; character stacks below the cards */
   .sv-hero{ grid-template-columns:1fr; min-height:auto; }
-  .sv-hero-right{ display:none; }
-  .sv-hero-left{ padding:28px 20px 24px; }
+  .sv-hero-right{
+    height:280px;
+    order:2;
+    touch-action:none; /* let Spline's drag-to-orbit control the gesture, not page scroll */
+  }
+  .sv-hero-char, .sv-hero-char canvas{ touch-action:none; }
+  .sv-hero-left{ padding:28px 20px 24px; order:1; }
   .sv-h1{ font-size:clamp(28px,7vw,40px); letter-spacing:-1px; margin-bottom:10px; }
   .sv-lead{ font-size:12px; margin-bottom:20px; }
 

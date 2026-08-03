@@ -1,9 +1,20 @@
 .page {
   width: 100%;
   overflow-x: hidden;
+  background-image: var(--bg-full);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   background-attachment: fixed;
   background-color: #000;
+}
+
+/* iOS/mobile browsers repaint background-attachment: fixed on every scroll
+   frame, which causes visible jank — switch to normal scroll attachment and
+   a lighter, viewport-sized image on small screens. */
+@media (max-width: 768px) {
+  .page {
+    background-image: var(--bg-mobile, var(--bg-full));
+    background-attachment: scroll;
+  }
 }
