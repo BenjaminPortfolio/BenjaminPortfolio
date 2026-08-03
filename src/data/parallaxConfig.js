@@ -29,42 +29,48 @@ export const SCROLL_CONFIG = {
 export const LAYERS = [
   {
     id: "layer8",
-    src: "/assets/8.png",
+    src: "/assets/8.webp",
+    srcMobile: "/assets/8-mobile.webp",
     speed: 0.22,
     baseRange: 2200,
     sticksToBottom: true,
   },
   {
     id: "layer7",
-    src: "/assets/7.png",
+    src: "/assets/7.webp",
+    srcMobile: "/assets/7-mobile.webp",
     speed: 0.12,
     baseRange: 2000,
     sticksToBottom: true,
   },
   {
     id: "layer6",
-    src: "/assets/6.png",
+    src: "/assets/6.webp",
+    srcMobile: "/assets/6-mobile.webp",
     speed: 0.22,
     baseRange: 2200,
     sticksToBottom: true,
   },
   {
     id: "layer5",
-    src: "/assets/5.png",
+    src: "/assets/5.webp",
+    srcMobile: "/assets/5-mobile.webp",
     speed: 0.34,
     baseRange: 2400,
     sticksToBottom: true,
   },
   {
     id: "layer4",
-    src: "/assets/4.png",
+    src: "/assets/4.webp",
+    srcMobile: "/assets/4-mobile.webp",
     speed: 0.46,
     baseRange: 2600,
     sticksToBottom: true,
   },
   {
     id: "layer2",
-    src: "/assets/2.png",
+    src: "/assets/2.webp",
+    srcMobile: "/assets/2-mobile.webp",
     speed: 0.6,
     baseRange: 2000,
     sticksToBottom: true,
@@ -72,7 +78,8 @@ export const LAYERS = [
   { id: "layer3", src: "/assets/3.png", speed: 0.5, baseRange: 1900 },
   {
     id: "layer1",
-    src: "/assets/1.png",
+    src: "/assets/1.webp",
+    srcMobile: "/assets/1-mobile.webp",
     speed: 0.6,
     baseRange: 3000,
     // isForeground: true,
@@ -88,7 +95,8 @@ export const LAYERS = [
 export const CLOUDS = [
   {
     id: "cloud1",
-    src: "/assets/cloud1.png",
+    src: "/assets/cloud1.webp",
+    srcMobile: "/assets/cloud1-mobile.webp",
     moveType: "ltr",
     startX: -70,
     endX: 70,
@@ -99,7 +107,8 @@ export const CLOUDS = [
   },
   {
     id: "cloud2",
-    src: "/assets/cloud2.png",
+    src: "/assets/cloud2.webp",
+    srcMobile: "/assets/cloud2-mobile.webp",
     moveType: "rtl",
     startX: 70,
     endX: -70,
@@ -110,7 +119,8 @@ export const CLOUDS = [
   },
   {
     id: "cloud3",
-    src: "/assets/cloud3.png",
+    src: "/assets/cloud3.webp",
+    srcMobile: "/assets/cloud3-mobile.webp",
     moveType: "ltr",
     startX: -80,
     endX: 60,
@@ -160,5 +170,6 @@ export const CTA_CONFIG = {
 
 // --- BACKGROUND ---
 export const BACKGROUND_CONFIG = {
-  src: "/assets/9.png", // Fixed background image
+  src: "/assets/9.webp", // Fixed background image
+  srcMobile: "/assets/9-mobile.webp",
 };

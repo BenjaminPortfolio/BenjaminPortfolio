@@ -23,15 +23,24 @@ export function useParallaxScroll(onFrame) {
   }, []);
 
   useEffect(() => {
-    const { totalRange } = getMetrics();
+    // Cache metrics instead of forcing a synchronous layout read
+    // (document.body.scrollHeight) on every scroll event and every
+    // animation frame — that layout thrashing was the main source of
+    // scroll jank, especially on mobile.
+    const metricsRef = { current: getMetrics() };
 
     const handleScroll = () => {
-      const { totalRange: range } = getMetrics();
+      const { totalRange: range } = metricsRef.current;
       targetScrollRef.current = Math.min(range, Math.max(0, window.scrollY));
     };
 
+    const handleResize = () => {
+      metricsRef.current = getMetrics();
+      handleScroll();
+    };
+
     const animate = () => {
-      const { totalRange: range } = getMetrics();
+      const { totalRange: range } = metricsRef.current;
       const diff = targetScrollRef.current - currentScrollRef.current;
 
       // Lerp easing
@@ -48,14 +57,18 @@ export function useParallaxScroll(onFrame) {
     };
 
     // Initialize
-    currentScrollRef.current = Math.min(totalRange, window.scrollY);
+    currentScrollRef.current = Math.min(metricsRef.current.totalRange, window.scrollY);
     targetScrollRef.current = currentScrollRef.current;
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener('resize', handleResize);
+    window.addEventListener('orientationchange', handleResize);
     rafRef.current = requestAnimationFrame(animate);
 
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('orientationchange', handleResize);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, [onFrame, getMetrics]);

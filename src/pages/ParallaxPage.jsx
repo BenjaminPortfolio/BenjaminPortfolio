@@ -10,13 +10,14 @@ import {
   LAYERS,
   CLOUDS,
 } from '../data/parallaxConfig';
+import { pickResponsiveSrc } from '../utils/responsiveAsset';
 import '../styles/global.css';
 import styles from './ParallaxPage.module.css';
 
 const ALL_IMAGES = [
-  BACKGROUND_CONFIG.src,
-  ...LAYERS.map((l) => l.src),
-  ...CLOUDS.map((c) => c.src),
+  pickResponsiveSrc(BACKGROUND_CONFIG),
+  ...LAYERS.map(pickResponsiveSrc),
+  ...CLOUDS.map(pickResponsiveSrc),
 ];
 
 export default function ParallaxPage() {
@@ -50,7 +51,8 @@ export default function ParallaxPage() {
         style={{
           height: `${SCROLL_CONFIG.totalViewportMultiplier * 100}vh`,
           minHeight: `${SCROLL_CONFIG.totalViewportMultiplier * 1000}px`,
-          backgroundImage: `url('${BACKGROUND_CONFIG.src}')`,
+          '--bg-full': `url('${BACKGROUND_CONFIG.src}')`,
+          '--bg-mobile': `url('${BACKGROUND_CONFIG.srcMobile || BACKGROUND_CONFIG.src}')`,
         }}
       >
         <ParallaxScene ctaRef={ctaRef} />

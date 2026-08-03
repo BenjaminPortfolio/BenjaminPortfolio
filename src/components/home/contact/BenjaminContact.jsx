@@ -309,7 +309,7 @@ export default function BenjaminContact({ onClose }) {
                         type="hidden"
                         name="to_email"
                         // value="csbenju76@gmail.com"
-                        value="hishamkool@gmail.com"
+                        value="csbenju76@gmail.com"
                       />
                     </div>
                     <div className={styles.cjField}>

@@ -9,7 +9,7 @@ import styles from './ParallaxLayer.module.css';
  * (avoids React re-renders on every scroll frame).
  *
  * Props:
- *   src        - image URL
+ *   src        - image URL (already resolved to the mobile/desktop variant)
  *   layerRef   - ref forwarded from parent to allow direct DOM manipulation
  */
 export default function ParallaxLayer({ src, layerRef }) {

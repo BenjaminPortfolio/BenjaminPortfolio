@@ -7,10 +7,14 @@ export default function MobileMap({ mapItems, handleClick, treePositions }) {
     <div className={styles.page}>
       <div className={styles.mapContainer}>
         <img
-          src="/assets/home/mobile_map_path_new.png"
+          src="/assets/home/mobile_map_path_new.webp"
           alt="Portfolio Map"
           className={styles.mapImage}
           draggable={false}
+          width="1351"
+          height="4096"
+          decoding="async"
+          fetchpriority="high"
         />
 
         {/* Map items go here later */}
