@@ -7,11 +7,25 @@ import { getMediaType } from "../../../../utils/getMediaType";
 function ClassicProjectItem({ project, isExpanded, onToggle }) {
   const [hovered, setHovered] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(max-width: 768px)").matches;
+  });
 
   const videoRef = useRef(null);
   const itemRef = useRef(null);
 
   const type = getMediaType(project.src);
+
+  // Tapping the image to expand it is a mobile-only annoyance (no hover to
+  // reveal the +/- button first, so any tap on the image instantly expands
+  // it) — keep the whole-image click-to-expand on desktop only.
+  useEffect(() => {
+    const mql = window.matchMedia("(max-width: 768px)");
+    const handleChange = (e) => setIsMobile(e.matches);
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
 
   const handleToggle = useCallback(
     (e) => {
@@ -70,7 +84,7 @@ function ClassicProjectItem({ project, isExpanded, onToggle }) {
       className={`${styles.item} ${isExpanded ? styles.expanded : ""}`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={onToggle}
+      onClick={isMobile ? undefined : onToggle}
     >
       {type === "video" ? (
         <video
@@ -93,12 +107,14 @@ function ClassicProjectItem({ project, isExpanded, onToggle }) {
         />
       )}
 
-      <button
-        className={`${styles.expandBtn} ${hovered ? styles.visible : ""}`}
-        onClick={handleToggle}
-      >
-        {isExpanded ? "−" : "+"}
-      </button>
+      {!isMobile && (
+        <button
+          className={`${styles.expandBtn} ${hovered ? styles.visible : ""}`}
+          onClick={handleToggle}
+        >
+          {isExpanded ? "−" : "+"}
+        </button>
+      )}
     </div>
   );
 }

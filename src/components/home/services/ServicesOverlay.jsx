@@ -56,7 +56,7 @@ const CSS = `
   padding:6px 16px;
   background:rgba(255,255,255,.70);border:1.5px solid rgba(255,255,255,.95);
   border-radius:20px;
-  font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
   letter-spacing:.15em;text-transform:uppercase;color:var(--text-mid);
   box-shadow:0 2px 7px rgba(80,140,200,.12);
 }
@@ -92,13 +92,6 @@ const CSS = `
   padding:40px 36px 40px 44px;
   display:flex;flex-direction:column;
 }
-.sv-eyebrow{
-  display:flex;align-items:center;gap:8px;
-  font-family:'Outfit',sans-serif;font-size:9.5px;font-weight:700;
-  letter-spacing:.22em;text-transform:uppercase;color:var(--blue-accent);
-  margin-bottom:10px;
-}
-.sv-eyebrow i{font-size:12px}
 .sv-h1{
   font-family:'Outfit',sans-serif;
   font-size:clamp(34px,4vw,54px);font-weight:900;
@@ -107,7 +100,7 @@ const CSS = `
 }
 .sv-h1 em{color:var(--blue-accent);font-style:normal}
 .sv-lead{
-  font-size:12.5px;color:var(--text-mid);line-height:1.72;
+  font-size:14px;color:var(--text-mid);line-height:1.72;
   max-width:380px;margin-bottom:28px;
 }
 
@@ -140,8 +133,8 @@ const CSS = `
   transition:background .24s,border-color .24s;
 }
 .sv-card:hover .sv-card-icon{background:rgba(30,115,208,.17);border-color:rgba(30,115,208,.36)}
-.sv-card-title{font-family:'Outfit',sans-serif;font-size:12.5px;font-weight:700;color:var(--text-dark)}
-.sv-card-desc{font-size:10.5px;color:var(--text-soft);line-height:1.58}
+.sv-card-title{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text-dark)}
+.sv-card-desc{font-size:14px;color:var(--text-soft);line-height:1.58}
 .sv-card-content{display:flex;flex-direction:column;gap:5px}
 
 /* right — character */
@@ -163,6 +156,8 @@ const CSS = `
   position:relative;z-index:2;
   height:88%;max-height:480px;width:100%;
   display:flex;align-items:center;justify-content:center;
+  -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
+  mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
 }
 @keyframes charBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
@@ -208,7 +203,7 @@ const CSS = `
 }
 .sv-process-label{
   display:flex;align-items:center;gap:8px;
-  font-family:'Outfit',sans-serif;font-size:9.5px;font-weight:700;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;color:var(--blue-accent);
   margin-bottom:10px;
 }
@@ -217,7 +212,7 @@ const CSS = `
   font-family:'Outfit',sans-serif;font-size:30px;font-weight:800;
   color:var(--text-dark);letter-spacing:-1px;margin-bottom:8px;
 }
-.sv-process-sub{font-size:12px;color:var(--text-soft);line-height:1.65;max-width:180px}
+.sv-process-sub{font-size:14px;color:var(--text-soft);line-height:1.65;max-width:180px}
 
 /* steps */
 .sv-steps{
@@ -241,9 +236,9 @@ const CSS = `
   box-shadow:0 3px 12px rgba(80,140,200,.15);
   margin-bottom:10px;flex-shrink:0;
 }
-.sv-step-num{font-family:'Outfit',sans-serif;font-size:9px;font-weight:700;color:var(--text-muted);margin-bottom:3px;letter-spacing:.06em}
-.sv-step-title{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--text-dark);margin-bottom:5px}
-.sv-step-desc{font-size:10px;color:var(--text-soft);line-height:1.58}
+.sv-step-num{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text-muted);margin-bottom:3px;letter-spacing:.06em}
+.sv-step-title{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:5px}
+.sv-step-desc{font-size:14px;color:var(--text-soft);line-height:1.58}
 .sv-step-text{display:flex;flex-direction:column;gap:2px}
 
 /* ══════════════════════════════════
@@ -254,7 +249,7 @@ const CSS = `
 }
 .sv-testi-label{
   display:flex;align-items:center;gap:8px;
-  font-family:'Outfit',sans-serif;font-size:9.5px;font-weight:700;
+  font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;color:var(--blue-accent);
   margin-bottom:10px;
 }
@@ -302,7 +297,7 @@ const CSS = `
 .sv-stars{display:flex;gap:2px}
 .sv-star{color:#f5b200;font-size:11px}
 
-.sv-tcard-body{font-size:11.5px;color:var(--text-mid);line-height:1.72;flex:1}
+.sv-tcard-body{font-size:14px;color:var(--text-mid);line-height:1.72;flex:1}
 
 .sv-tcard-footer{
   display:flex;align-items:center;gap:10px;
@@ -312,14 +307,14 @@ const CSS = `
   width:36px;height:36px;border-radius:50%;flex-shrink:0;
   background:var(--blue-grad);
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;
+  color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
   border:2px solid rgba(255,255,255,.9);
   box-shadow:0 2px 8px rgba(30,115,208,.22);
   overflow:hidden;
 }
 .sv-avatar img{width:100%;height:100%;object-fit:cover}
-.sv-author strong{display:block;font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--text-dark)}
-.sv-author span{font-size:10px;color:var(--text-soft)}
+.sv-author strong{display:block;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text-dark)}
+.sv-author span{font-size:14px;color:var(--text-soft)}
 
 /* ══════════════════════════════════
    RESPONSIVE
@@ -334,8 +329,8 @@ const CSS = `
   .sv-grid{ grid-template-columns:repeat(3,1fr); gap:9px; }
   .sv-process{ padding:32px 32px 38px; }
   .sv-steps{ gap:6px; }
-  .sv-step-title{ font-size:11px; }
-  .sv-step-desc{ font-size:9.5px; }
+  .sv-step-title{ font-size:18px; }
+  .sv-step-desc{ font-size:14px; }
   .sv-testi{ padding:32px 32px 40px; }
   .sv-testi-grid{ gap:12px; }
 }
@@ -363,14 +358,14 @@ const CSS = `
   .sv-hero-char, .sv-hero-char canvas{ touch-action:none; }
   .sv-hero-left{ padding:28px 20px 24px; order:1; }
   .sv-h1{ font-size:clamp(28px,7vw,40px); letter-spacing:-1px; margin-bottom:10px; }
-  .sv-lead{ font-size:12px; margin-bottom:20px; }
+  .sv-lead{ font-size:14px; margin-bottom:20px; }
 
   /* service grid — 2 columns */
   .sv-grid{ grid-template-columns:1fr 1fr; gap:8px; }
   .sv-card{ padding:14px 13px 15px; }
   .sv-card-icon{ width:34px; height:34px; font-size:14px; }
-  .sv-card-title{ font-size:11.5px; }
-  .sv-card-desc{ font-size:10px; }
+  .sv-card-title{ font-size:14px; }
+  .sv-card-desc{ font-size:14px; }
 
   /* process section */
   .sv-process{ padding:28px 20px 80px; }
@@ -385,9 +380,9 @@ const CSS = `
   }
   .sv-step:not(:last-child)::after{ display:none; }
   .sv-step-icon{ width:40px; height:40px; font-size:15px; margin-bottom:8px; }
-  .sv-step-num{ font-size:8.5px; }
-  .sv-step-title{ font-size:11.5px; }
-  .sv-step-desc{ font-size:10px; }
+  .sv-step-num{ font-size:14px; }
+  .sv-step-title{ font-size:14px; }
+  .sv-step-desc{ font-size:14px; }
 
   /* testimonials */
   .sv-testi{ padding:28px 20px 36px; }
@@ -395,7 +390,7 @@ const CSS = `
   .sv-testi-grid{ grid-template-columns:1fr; gap:10px; }
   .sv-tcard{ padding:16px 16px 14px; }
   .sv-quote-icon{ font-size:24px; }
-  .sv-tcard-body{ font-size:11px; }
+  .sv-tcard-body{ font-size:14px; }
 }
 
 /* ── Large mobile (≤600px) ── */
@@ -405,15 +400,15 @@ const CSS = `
   .sv-grid{ grid-template-columns:1fr 1fr; gap:7px; }
   .sv-card{ padding:12px 11px 13px; gap:5px; }
   .sv-card-icon{ width:32px; height:32px; font-size:13px; border-radius:6px; }
-  .sv-card-title{ font-size:10.5px; }
-  .sv-card-desc{ font-size:9.5px; line-height:1.5; }
+  .sv-card-title{ font-size:14px; }
+  .sv-card-desc{ font-size:14px; line-height:1.5; }
   .sv-process{ padding:24px 16px 70px; }
   .sv-process-h{ font-size:22px; }
   .sv-steps{ grid-template-columns:1fr 1fr; row-gap:14px; }
   .sv-testi{ padding:24px 16px 32px; }
   .sv-testi-nav{ gap:6px; }
   .sv-testi-btn{ width:34px; height:34px; }
-  .sv-tcard-body p{ font-size:10.5px; }
+  .sv-tcard-body p{ font-size:14px; }
 }
 
 /* ── Small mobile (≤480px) ── */
@@ -421,9 +416,8 @@ const CSS = `
   // .sv-shell{ padding:0; }
   .sv-modal{ min-height:100svh; }
   .sv-hero-left{ padding:20px 14px 18px; }
-  .sv-eyebrow{ font-size:8.5px; }
   .sv-h1{ font-size:clamp(22px,9vw,30px); letter-spacing:-0.5px; margin-bottom:8px; }
-  .sv-lead{ font-size:11.5px; margin-bottom:16px; }
+  .sv-lead{ font-size:14px; margin-bottom:16px; }
 
   /* service grid — 1 column on very small */
   .sv-grid{ grid-template-columns:1fr; gap:7px; }
@@ -442,9 +436,9 @@ const CSS = `
   .sv-testi{ padding:22px 14px 28px; }
   .sv-testi-header{ flex-wrap:wrap; gap:10px; }
   .sv-tcard{ padding:14px 14px 12px; }
-  .sv-tcard-body p{ font-size:10px; line-height:1.65; }
-  .sv-author strong{ font-size:11px; }
-  .sv-author span{ font-size:9.5px; }
+  .sv-tcard-body p{ font-size:14px; line-height:1.65; }
+  .sv-author strong{ font-size:14px; }
+  .sv-author span{ font-size:14px; }
 }
 `;
 
@@ -611,9 +605,6 @@ export default function ServicesOverlay({ onClose }) {
           {/* ── SECTION 1: HERO + SERVICE GRID ── */}
           <div className="sv-hero">
             <div className="sv-hero-left">
-              <div className="sv-eyebrow">
-                <i className="fas fa-briefcase" /> Services
-              </div>
               <h1 className="sv-h1">
                 <em>Creative</em> Services
               </h1>

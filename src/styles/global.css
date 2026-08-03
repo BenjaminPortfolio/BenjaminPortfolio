@@ -50,6 +50,9 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Mobile browsers draw a translucent blue "tap highlight" box over
+     whatever clickable element was tapped — kills it site-wide. */
+  -webkit-tap-highlight-color: transparent;
 }
 
 html {

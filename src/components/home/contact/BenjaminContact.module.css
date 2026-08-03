@@ -141,12 +141,12 @@
   position: relative;
   z-index: 10;
   width: 90vw;
-  max-width: 1260px;
+  max-width: 1197px;
   padding: 20px;
 }
 
 .cjModal {
-  width: 100%;
+  width: 1197px;
   background: rgba(215, 232, 252, 0.45);
   backdrop-filter: blur(28px);
   border: 1.5px solid rgba(255, 255, 255, 0.82);
@@ -211,7 +211,7 @@
   border: 1.5px solid rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   font-family: "Outfit", sans-serif;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -258,7 +258,7 @@
 
 .cjEyebrow {
   font-family: "Outfit", sans-serif;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.22em;
   text-transform: uppercase;
@@ -302,7 +302,7 @@
 }
 
 .cjTagline {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-mid);
   line-height: 1.72;
   margin-bottom: 12px;
@@ -341,7 +341,7 @@
 
 .cjInfoLabel {
   font-family: "Outfit", sans-serif;
-  font-size: 10px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
@@ -378,20 +378,20 @@
 
 .cjInfoText strong {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-dark);
   margin-bottom: 1px;
 }
 
 .cjInfoText span {
-  font-size: 10.5px;
+  font-size: 14px;
   color: var(--text-soft);
 }
 
 .cjSocialsLabel {
   font-family: "Outfit", sans-serif;
-  font-size: 9.5px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
@@ -474,7 +474,7 @@
 }
 
 .cjFormSub {
-  font-size: 11.5px;
+  font-size: 14px;
   color: var(--text-soft);
   line-height: 1.65;
   margin-bottom: 22px;
@@ -522,7 +522,7 @@
   border: 1.5px solid var(--input-border);
   border-radius: var(--r-md);
   font-family: "Nunito", sans-serif;
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--text-dark);
   outline: none;
   transition:
@@ -566,7 +566,7 @@
   border: 1.5px solid var(--input-border);
   border-radius: var(--r-md);
   font-family: "Nunito", sans-serif;
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--text-muted);
   outline: none;
   transition:
@@ -598,7 +598,7 @@
   border: 1.5px solid var(--input-border);
   border-radius: var(--r-md);
   font-family: "Nunito", sans-serif;
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--text-dark);
   outline: none;
   resize: none;
@@ -657,13 +657,13 @@
 
 .cjAttachText strong {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--text-dark);
 }
 
 .cjAttachText span {
-  font-size: 10.5px;
+  font-size: 14px;
   color: var(--text-soft);
 }
 
@@ -675,7 +675,7 @@
   border: 1.5px solid rgba(30, 115, 208, 0.28);
   border-radius: var(--r-sm);
   font-family: "Outfit", sans-serif;
-  font-size: 11px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--blue-accent);
   cursor: pointer;
@@ -733,7 +733,7 @@
 
 .cjSecure {
   text-align: center;
-  font-size: 10.5px;
+  font-size: 14px;
   color: var(--text-muted);
   display: flex;
   align-items: center;
@@ -747,7 +747,7 @@
   background: rgba(220, 50, 50, 0.08);
   border: 1.5px solid rgba(220, 50, 50, 0.22);
   border-radius: var(--r-md);
-  font-size: 11.5px;
+  font-size: 14px;
   color: #c0392b;
   display: flex;
   align-items: center;
@@ -897,7 +897,7 @@
 }
 
 .cjSuccess p {
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--text-soft);
   line-height: 1.7;
   max-width: 260px;
@@ -954,7 +954,7 @@
   }
 }
 .cjModal {
-  width: 100%;
+  width: 1197px;
 }
 
 @media (max-width: 560px) {

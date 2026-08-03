@@ -31,7 +31,7 @@
   border: 1px solid rgba(255, 255, 255, 0.18);
 
   font-family: "DM Sans", sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   padding: 6px 14px;
   border-radius: 20px;
@@ -73,7 +73,7 @@
 .soon {
   font-weight: 400;
   opacity: 0.6;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 /* ── Media container ── */
