@@ -3,7 +3,13 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 100vh;
+  height: 100vh; /* fallback for browsers without dvh */
+  height: 100dvh; /* dynamic viewport height: resizes smoothly as the
+                     mobile URL bar collapses/expands instead of jumping */
   pointer-events: none;
   overflow: visible;
+  /* Creates a stacking context so the background-fill layer (z-index:
+     -1) paints at this scene's background layer — above the page's
+     black background but BELOW every parallax layer/cloud/text card. */
+  z-index: 0;
 }

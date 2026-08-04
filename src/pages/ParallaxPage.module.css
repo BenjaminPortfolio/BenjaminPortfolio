@@ -1,25 +1,16 @@
 .page {
   width: 100%;
   overflow-x: hidden;
-  background-image: var(--bg-full);
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: cover;
-  background-attachment: fixed;
-  background-color: #000;
-}
+  /* The 9.webp / 9-mobile.webp background is now rendered inside the
+     parallax scene as a fixed <img> (see ParallaxScene's bgFill layer),
+     so no CSS background image is needed here. Keeping a plain black
+     background color avoids any white/black flash before the image
+     decodes, without the mobile repaint glitches caused by
+     background-attachment: fixed (the black rectangle/blink seen while
+     scrolling and when the URL bar collapses).
 
-/* Mobile-only background handling — desktop keeps the original cover/
-   center/fixed treatment above untouched. */
-@media (max-width: 768px) {
-  .page {
-    background-image: var(--bg-mobile, var(--bg-full));
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-position: center top;
-    /* auto width (not a fixed px height) keeps the image's own aspect
-       ratio intact — no stretch/distortion — while filling exactly one
-       screen's worth of height instead of the whole (much taller) page. */
-    background-size: auto 100vh;
-  }
+     NOTE: do NOT add overscroll-behavior: none here — on several mobile
+     browsers it disables touch scrolling of the page entirely, which
+     breaks the parallax scroll on phones. */
+  background-color: #000;
 }

@@ -16,6 +16,7 @@ import {
   CLOUDS,
   TEXT_CARDS,
   ZOOM_CONFIG,
+  BACKGROUND_CONFIG,
 } from "../../data/parallaxConfig";
 import { pickResponsiveSrc } from "../../utils/responsiveAsset";
 import styles from "./ParallaxScene.module.css";
@@ -23,6 +24,10 @@ import styles from "./ParallaxScene.module.css";
 // Resolve mobile/desktop src once per mount instead of letting the browser's
 // srcset heuristics decide (they can still choose the large image on
 // high-DPR phones), keeping this in sync with what LoadingScreen preloads.
+const RESOLVED_BACKGROUND = {
+  ...BACKGROUND_CONFIG,
+  src: pickResponsiveSrc(BACKGROUND_CONFIG),
+};
 const RESOLVED_LAYERS = LAYERS.map((l) => ({ ...l, src: pickResponsiveSrc(l) }));
 const RESOLVED_CLOUDS = CLOUDS.map((c) => ({ ...c, src: pickResponsiveSrc(c) }));
 
@@ -111,6 +116,14 @@ export default function ParallaxScene({ ctaRef }) {
 
   return (
     <div className={styles.scene}>
+      {/* ── FIXED BACKGROUND FILL — the 9.webp / 9-mobile.webp image,
+           rendered as a fixed <img> instead of a CSS background with
+           background-attachment: fixed. On mobile, background-attachment:
+           fixed is re-rasterized while scrolling (and every time the URL
+           bar collapses/expands), which shows the black rectangle/blink.
+           A fixed <img> is composited once and never repainted. ── */}
+      <ParallaxLayer bgFill src={RESOLVED_BACKGROUND.src} />
+
       {/* ── LAYER 8 index=0 — big cloud/bg behind mountains, slow parallax ── */}
       <ParallaxLayer {...RESOLVED_LAYERS[0]} layerRef={layerRefs.current[0]} />
 
