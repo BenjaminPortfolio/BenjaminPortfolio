@@ -11,7 +11,7 @@ const CAR_DATA = [
   {
     role: "Artist",
     desc: '"Creative visionary bringing imagination to life"',
-    image: "/assets/about/characters/benjamin_char.png",
+    image: "/assets/about/characters/benjamin_char.webp",
     tools: [
       { icon: "fas fa-palette", color: "#8e44ad", title: "Krita" },
       { icon: "fas fa-pen-nib", color: "#2563ae", title: "Procreate" },
@@ -22,7 +22,7 @@ const CAR_DATA = [
   {
     role: "Motion Graphics Artist",
     desc: '"Crafting fluid animations and cinematic motion graphics"',
-    image: "/assets/about/characters/benjamin_char2.png",
+    image: "/assets/about/characters/benjamin_char2.webp",
     tools: [
       { icon: "fas fa-film", color: "#6c2dd4", title: "After Effects" },
       { icon: "fas fa-cube", color: "#e87d0d", title: "Blender" },
@@ -34,7 +34,7 @@ const CAR_DATA = [
   {
     role: "3D Artist",
     desc: '"Specialized in modeling, texturing, and real-time assets"',
-    image: "/assets/about/characters/benjamin_char3.png",
+    image: "/assets/about/characters/benjamin_char3.webp",
     tools: [
       { icon: "fas fa-cube", color: "#e87d0d", title: "Blender" },
       { icon: "fas fa-gamepad", color: "#1a1a2e", title: "Unreal Engine" },
@@ -45,7 +45,7 @@ const CAR_DATA = [
   {
     role: "Concept Artist",
     desc: '"Fusing traditional art sensibility with digital mastery"',
-    image: "/assets/about/characters/benjamin_char4.png",
+    image: "/assets/about/characters/benjamin_char4.webp",
     tools: [
       { icon: "fas fa-pen-nib", color: "#2563ae", title: "Procreate" },
       { icon: "fas fa-layer-group", color: "#001d6e", title: "Photoshop" },
@@ -135,7 +135,7 @@ function CarouselSection({ height }) {
               <img
                 src={
                   CAR_DATA[i]?.image ||
-                  "/assets/about/characters/benjamin_char.png"
+                  "/assets/about/characters/benjamin_char.webp"
                 }
                 alt={CAR_LABELS[i]}
               />
@@ -319,7 +319,7 @@ export default function BenjiPortfolio({ onClose }) {
               >
                 <img
                   className={styles["benji-hero-img"]}
-                  src="/assets/about/characters/benjamin_char.png"
+                  src="/assets/about/characters/benjamin_char.webp"
                   alt="Benjamin CS"
                 />
               </div>
@@ -503,7 +503,7 @@ export default function BenjiPortfolio({ onClose }) {
                 <img
                   // ref={detailImgRef}
                   className={cx(styles["benji-char-img-detail"])}
-                  src="/assets/about/characters/benjamin_char.png"
+                  src="/assets/about/characters/benjamin_char.webp"
                   alt="Benji"
                 />
               </div>

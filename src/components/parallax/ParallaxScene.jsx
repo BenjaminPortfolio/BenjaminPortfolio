@@ -57,13 +57,20 @@ export default function ParallaxScene({ ctaRef }) {
         const depthFactor = 0.7 + (i / LAYERS.length) * 0.5;
         const layerZoom = 1 + (zoom - 1) * depthFactor;
 
-        // ── Bottom clamp ──
-        if (layer.sticksToBottom) {
+        // ── Bottom clamp ── (skip until the image has actually loaded —
+        // el.naturalWidth is 0 before then, which turns this into a NaN
+        // offset; browsers drop the whole `transform` declaration when it
+        // contains NaN, silently reverting to the CSS default transform
+        // and leaving the tall layer centered instead of anchored to the
+        // bottom, i.e. showing plain sky instead of the mountain art)
+        if (layer.sticksToBottom && el.naturalWidth > 0) {
           const imageHeight = el.naturalHeight * (el.width / el.naturalWidth);
           const imageHalfHeight = (imageHeight * layerZoom) / 2;
           const minOffsetY = vh / 2 - imageHalfHeight;
           offsetY = Math.max(offsetY, minOffsetY);
         }
+
+        if (!Number.isFinite(offsetY)) offsetY = 0;
 
         el.style.transform = `translate(-50%, calc(-50% + ${offsetY}px)) scale(${layerZoom})`;
       });
@@ -139,11 +146,10 @@ export default function ParallaxScene({ ctaRef }) {
       {/* ── LAYER 2 index=5 ── */}
       <ParallaxLayer {...RESOLVED_LAYERS[5]} layerRef={layerRefs.current[5]} />
 
-      {/* ── LAYER 3 index=6 ── */}
+      {/* ── LAYER 1 index=6 — front/closest layer (layer3 removed: its
+           source image, /assets/3.1.png, doesn't exist on disk — was a
+           dead 404 request producing nothing visible anyway) ── */}
       <ParallaxLayer {...RESOLVED_LAYERS[6]} layerRef={layerRefs.current[6]} />
-
-      {/* ── LAYER 1 index=7 — front/closest layer ── */}
-      <ParallaxLayer {...RESOLVED_LAYERS[7]} layerRef={layerRefs.current[7]} />
     </div>
   );
 }

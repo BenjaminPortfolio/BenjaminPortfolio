@@ -159,7 +159,7 @@ const MAP_ITEMS = [
   {
     id: "projects",
     label: "Projects",
-    imageSrc: "/assets/home/house_jump_gif2.gif",
+    imageSrc: "/assets/home/house_jump_gif2.webp",
 
     desktop: {
       position: {
@@ -222,7 +222,7 @@ const MAP_ITEMS = [
   {
     id: "services",
     label: "Services",
-    videoSrc: "/assets/home/services_withoutbg.webm",
+    imageSrc: "/assets/home/services_withoutbg.webp",
 
     desktop: {
       position: {
@@ -231,6 +231,7 @@ const MAP_ITEMS = [
         width: "31.9%",
       },
       tagPosition: {
+        top: "-12%",
         left: "50%",
         transform: "translate(-50%)",
       },
@@ -238,12 +239,12 @@ const MAP_ITEMS = [
 
     mobile: {
       position: {
-        top: "45%",
+        top: "38%",
         left: "5%",
         width: "75%",
       },
       tagPosition: {
-        top: "-30%",
+        top: "-5%",
         left: "",
       },
     },

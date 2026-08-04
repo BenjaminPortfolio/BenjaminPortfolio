@@ -18,8 +18,11 @@ export const ZOOM_CONFIG = {
 // };
 
 // --- SCROLL SETTINGS ---
+// Desktop keeps the original scroll length; mobile is shortened separately
+// since a long scroll journey is far more tedious on a small touch screen.
 export const SCROLL_CONFIG = {
-  totalViewportMultiplier: 4, // body height = this × 100vh
+  totalViewportMultiplier: 7, // desktop body height = this × 100vh
+  totalViewportMultiplierMobile: 1.3, // mobile body height = this × 100vh
 };
 
 // --- IMAGE LAYERS ---
@@ -75,7 +78,6 @@ export const LAYERS = [
     baseRange: 2000,
     sticksToBottom: true,
   },
-  { id: "layer3", src: "/assets/3.png", speed: 0.5, baseRange: 1900 },
   {
     id: "layer1",
     src: "/assets/1.webp",

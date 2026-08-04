@@ -10,7 +10,7 @@ function DesktopMap({ mapItems, handleClick, treePositions }) {
       <div className={styles.mapContainer}>
         <img
           // src="/assets/home/map_bg.png"
-          src="/assets/home/empty_map_bg1.png"
+          src="/assets/home/empty_map_bg1.webp"
           alt="Portfolio Map"
           className={styles.mapBg}
           draggable={false}

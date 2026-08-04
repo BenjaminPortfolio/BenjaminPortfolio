@@ -22,6 +22,9 @@
      over a tapped clickable element/button. */
   -webkit-tap-highlight-color: transparent;
   outline: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .item,
