@@ -5,13 +5,20 @@
   overflow-y: auto;
   overflow-x: hidden;
 
-  /* background: #d8eaf5; */
+  /* Light sky-blue that matches the map image. The global body
+     background is black, so while the tall map image (1351×4096)
+     is still loading — or if it ever fails — this color keeps the
+     page from showing a black void at the bottom while scrolling. */
+  background: #d8eaf5;
 }
 
 .mapContainer {
   position: relative;
   width: 100%;
   overflow: hidden;
+
+  /* Same sky-blue fallback behind the image while it decodes. */
+  background: #d8eaf5;
 }
 
 .mapImage {
@@ -24,4 +31,87 @@
   user-select: none;
   pointer-events: none;
   -webkit-user-drag: none;
+}
+
+/* ── Scroll-down hint ──
+   Fixed to the bottom-center of the viewport so it stays visible while
+   the user scrolls the tall map. Semi-transparent white pill that reads
+   clearly over the sky-blue map. */
+.scrollHint {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 50;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.15);
+
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-select: none;
+
+  animation: scrollHintFloat 2s ease-in-out infinite;
+}
+
+.scrollHintText {
+  font-family: var(--font-main, "DM Sans", sans-serif);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: #1f2937;
+  text-transform: uppercase;
+}
+
+.scrollHintArrow {
+  font-size: 16px;
+  line-height: 1;
+  color: #1f2937;
+  animation: scrollHintBounce 1.6s ease-in-out infinite;
+}
+
+/* ── "Scroll up" state ──
+   When the user reaches the bottom of the map the arrow bounces upward
+   instead of downward. */
+.scrollHintUp .scrollHintArrow {
+  animation-name: scrollHintBounceUp;
+}
+
+@keyframes scrollHintFloat {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-6px);
+  }
+}
+
+@keyframes scrollHintBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+@keyframes scrollHintBounceUp {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
 }

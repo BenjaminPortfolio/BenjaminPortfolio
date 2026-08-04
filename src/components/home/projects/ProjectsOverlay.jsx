@@ -19,6 +19,7 @@ import styles from "./ProjectsOverlay.module.css";
  *   onClose - called when back arrow is clicked
  */
 export default function ProjectsOverlay({ onClose }) {
+  const [glassReady, setGlassReady] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
     if (typeof window === "undefined") return false;
@@ -112,6 +113,15 @@ export default function ProjectsOverlay({ onClose }) {
     };
   }, []);
 
+  // Wait for the slide-up animation (0.35s) to finish before enabling
+  // backdrop-filter blur. The expensive blur only runs on a settled
+  // frame — never during the opening animation — so the gradient paints
+  // instantly AND the glassmorphism effect returns right after.
+  useEffect(() => {
+    const id = setTimeout(() => setGlassReady(true), 380);
+    return () => clearTimeout(id);
+  }, []);
+
   useEffect(() => {
     const faId = "projects-overlay-fa";
     if (!document.getElementById(faId)) {
@@ -126,7 +136,9 @@ export default function ProjectsOverlay({ onClose }) {
 
   return (
     <div className={styles.backdrop}>
-      <div className={styles.overlay}>
+      <div
+        className={`${styles.overlay} ${glassReady ? styles.glassReady : ""}`}
+      >
         {/* ── LEFT SIDEBAR (desktop only — mobile uses the Categories dropdown) ── */}
         <aside
           className={`${styles.sidebar} ${sidebarCollapsed ? styles.sidebarCollapsed : ""}`}

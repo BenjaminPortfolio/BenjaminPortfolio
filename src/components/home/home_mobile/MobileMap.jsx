@@ -1,11 +1,49 @@
+import { useEffect, useState } from "react";
 import MapItem from "../MapItem";
 import styles from "./MobileMap.module.css";
 
 export default function MobileMap({ mapItems, handleClick, treePositions }) {
   const DEBUG_TREES = false;
+  const [atBottom, setAtBottom] = useState(false);
+
+  // Track scroll position — when the user reaches the bottom of the tall
+  // map, flip the hint to "Scroll up" (and back to "Scroll down" at top).
+  useEffect(() => {
+    const handleScroll = () => {
+      const doc = document.documentElement;
+      const scrollTop = window.scrollY || doc.scrollTop;
+      const scrollHeight = doc.scrollHeight;
+      const clientHeight = doc.clientHeight;
+      // Within ~40px of the bottom → show "Scroll up"
+      setAtBottom(scrollHeight - (scrollTop + clientHeight) < 40);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+    };
+  }, []);
+
   return (
     <div className={styles.page}>
       <div className={styles.mapContainer}>
+        {/* Scroll hint — fixed to the bottom of the viewport so it stays
+            visible while the user scrolls the tall map. Flips to
+            "Scroll up" once the user reaches the bottom. */}
+        <div
+          className={`${styles.scrollHint} ${atBottom ? styles.scrollHintUp : ""}`}
+          aria-hidden="true"
+        >
+          <span className={styles.scrollHintText}>
+            {atBottom ? "Scroll up" : "Scroll down"}
+          </span>
+          <span className={styles.scrollHintArrow}>
+            {atBottom ? "↑" : "↓"}
+          </span>
+        </div>
         <img
           src="/assets/home/mobile_map_path_new.webp"
           alt="Portfolio Map"
