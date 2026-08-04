@@ -15,3 +15,31 @@
   transform: translate(-50%, -50%) scale(1);
   will-change: transform;
 }
+
+/* Covers the fixed background when the browser's URL bar collapses/
+   expands on mobile. Rendered as a fixed <img> inset to the viewport
+   (inset: 0 tracks the dynamic URL bar exactly) so it fills the screen
+   at every size without repainting a fixed background image.
+
+   IMPORTANT: uses a NEGATIVE z-index so it is guaranteed to paint BEHIND
+   every parallax layer. The parallax <img> layers form stacking contexts
+   (transform + will-change) and paint in the "stack level 0" step; giving
+   this element a negative z-index puts it in the negative-level step which
+   always paints BEFORE the layers in every browser engine. Using z-index:
+   auto/0 here is NOT reliable because some engines (especially mobile
+   compositors promoting the fixed layer) paint a z-index: 0 fixed element
+   above its positioned z-auto siblings — which covered the whole parallax
+   scene with the sky image and made the parallax appear "missing". */
+.bgFill {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  display: block;
+  pointer-events: none;
+  transform: translateZ(0);
+  will-change: transform;
+  z-index: -1;
+}

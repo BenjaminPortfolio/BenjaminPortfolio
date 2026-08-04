@@ -119,8 +119,6 @@ export default function ParallaxPage() {
         style={{
           height: `${scrollMultiplier * 100}vh`,
           minHeight: `${scrollMultiplier * 1000}px`,
-          '--bg-full': `url('${BACKGROUND_CONFIG.src}')`,
-          '--bg-mobile': `url('${BACKGROUND_CONFIG.srcMobile || BACKGROUND_CONFIG.src}')`,
         }}
       >
         <ParallaxScene ctaRef={ctaRef} />
