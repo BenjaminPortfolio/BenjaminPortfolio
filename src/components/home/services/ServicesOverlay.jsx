@@ -82,7 +82,7 @@ const CSS = `
 ══════════════════════════════════ */
 .sv-hero{
   display:grid;
-  grid-template-columns:1fr 380px;
+  grid-template-columns:1fr 590px;
   min-height:520px;
   position:relative;overflow:hidden;
 }
@@ -154,7 +154,7 @@ const CSS = `
 }
 .sv-hero-char{
   position:relative;z-index:2;
-  height:88%;max-height:480px;width:100%;
+  height:88%;max-height:480px;width:590px;max-width:100%;
   display:flex;align-items:center;justify-content:center;
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
   mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
@@ -353,7 +353,9 @@ const CSS = `
   .sv-hero-right{
     height:280px;
     order:2;
-    touch-action:none; /* let Spline's drag-to-orbit control the gesture, not page scroll */
+    /* NOTE: no touch-action:none here — only the .sv-hero-char container
+       below should capture touch for Spline's drag-to-orbit. Touches on
+       the rest of the section should scroll the page normally. */
   }
   .sv-hero-char, .sv-hero-char canvas{ touch-action:none; }
   .sv-hero-left{ padding:28px 20px 24px; order:1; }

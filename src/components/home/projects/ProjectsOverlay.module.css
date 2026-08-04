@@ -45,6 +45,33 @@
   }
 }
 
+/* ── Glassmorphism activation ──
+   The expensive backdrop-filter blur is NOT active during the opening
+   animation — that's what made the gradient appear to "load" slowly.
+   .glassReady is applied 380ms after mount (once the 0.35s slide-up
+   settles), then the frosted glass cross-fades in on a settled frame —
+   so the overlay opens smoothly AND the glass effect returns. */
+.overlay.glassReady .sidebar {
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.overlay.glassReady .panel {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+
+.overlay.glassReady .topBar {
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.overlay.glassReady .tab {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 /* ── LEFT SIDEBAR ── */
 .sidebar {
   position: relative;
@@ -69,18 +96,17 @@
   z-index: 2;
 }
 .sidebar {
-  /* Glass background */
+  /* Solid gradient — rendered instantly on first paint.
+     The backdrop blur is added by .overlay.glassReady AFTER the opening
+     animation settles, so the gradient never waits on GPU compositing. */
   background: linear-gradient(
     173.6deg,
-    rgba(224, 224, 224, 0.08) 1.36%,
-    rgba(17, 160, 176, 0.4) 97.19%
+    rgba(224, 224, 224, 0.96) 1.36%,
+    rgba(17, 160, 176, 0.92) 97.19%
   );
 
-  /* Glass blur / refraction */
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-
   overflow: hidden;
+  transition: backdrop-filter 0s;
 }
 
 .sidebarCollapsed {
@@ -116,9 +142,7 @@
   gap: 6px;
   padding: 10px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.92);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: rgba(255, 255, 255, 0.97);
   box-shadow: 0 16px 40px rgba(15, 23, 42, 0.18);
   z-index: 300;
   animation: dropdownIn 0.18s ease;
@@ -209,9 +233,7 @@
   padding: 10px 16px;
   border-radius: 12px;
   border: none;
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.55);
   color: #2a2a2a;
   font-family: "DM Sans", sans-serif;
   font-size: 14px;
@@ -219,7 +241,7 @@
   text-align: left;
   cursor: pointer;
   transition:
-    background 0.2s ease,
+    background 0.25s ease,
     transform 0.15s ease;
   letter-spacing: 0.01em;
 }
@@ -248,17 +270,12 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* background: rgba(220, 235, 245, 0.5); */
-  background: #ffffff4d;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* Near-opaque base background renders instantly — no backdrop blur
+     during the opening animation. The frosted translucent background +
+     backdrop blur are added via .overlay.glassReady after it settles. */
+  background: rgba(255, 255, 255, 0.88);
   overflow: hidden;
-  /* Animating `width` on an element with an active backdrop-filter forces
-     the browser to recompute the entire blur every frame of the
-     transition — very expensive, and reads as the frosted background
-     "taking a while to load" right when the panel opens. Promoting it to
-     its own GPU layer up front avoids that first-paint recompute. */
-  will-change: backdrop-filter;
+  transition: background 0.2s ease;
 }
 
 .panelExpanded {
@@ -271,14 +288,13 @@
   justify-content: space-between;
   gap: 12px;
   padding: 18px 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   transition:
     align-items 0.25s ease,
     padding 0.25s ease,
-    gap 0.25s ease;
+    gap 0.25s ease,
+    background 0.2s ease;
 }
 
 .topBarExpanded {
