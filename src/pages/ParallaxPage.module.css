@@ -9,12 +9,17 @@
   background-color: #000;
 }
 
-/* iOS/mobile browsers repaint background-attachment: fixed on every scroll
-   frame, which causes visible jank — switch to normal scroll attachment and
-   a lighter, viewport-sized image on small screens. */
+/* Mobile-only background handling — desktop keeps the original cover/
+   center/fixed treatment above untouched. */
 @media (max-width: 768px) {
   .page {
     background-image: var(--bg-mobile, var(--bg-full));
-    background-attachment: scroll;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: center top;
+    /* auto width (not a fixed px height) keeps the image's own aspect
+       ratio intact — no stretch/distortion — while filling exactly one
+       screen's worth of height instead of the whole (much taller) page. */
+    background-size: auto 100vh;
   }
 }

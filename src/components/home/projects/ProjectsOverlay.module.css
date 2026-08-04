@@ -50,11 +50,6 @@
   position: relative;
   width: 240px;
   min-width: 240px;
-  transition:
-    transform 0.3s ease,
-    width 0.3s ease,
-    min-width 0.3s ease,
-    padding 0.3s ease;
 
   /* background: rgba(200, 225, 240, 0.45); */
   /* background: rgba(200, 210, 218, 0.35); ← neutral grey, not teal */
@@ -258,7 +253,12 @@
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   overflow: hidden;
-  transition: width 0.3s ease;
+  /* Animating `width` on an element with an active backdrop-filter forces
+     the browser to recompute the entire blur every frame of the
+     transition — very expensive, and reads as the frosted background
+     "taking a while to load" right when the panel opens. Promoting it to
+     its own GPU layer up front avoids that first-paint recompute. */
+  will-change: backdrop-filter;
 }
 
 .panelExpanded {

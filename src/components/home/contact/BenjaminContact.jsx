@@ -446,7 +446,7 @@ export default function BenjaminContact({ onClose }) {
               <div className={styles.cjCharGlow} />
               <img
                 className={styles.cjCharImg}
-                src="\assets\about\characters\benjamin_side_view.png"
+                src="/assets/about/characters/benjamin_side_view.webp"
                 alt="Anime Benjamin"
               />
             </div>

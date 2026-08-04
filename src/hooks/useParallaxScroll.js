@@ -51,7 +51,15 @@ export function useParallaxScroll(onFrame) {
       }
 
       const progress = Math.min(1, Math.max(0, currentScrollRef.current / range));
-      onFrame(progress, currentScrollRef.current);
+
+      // A single bad frame (e.g. a layer's image not fully decoded yet)
+      // must never kill the rAF chain — that would freeze the whole scene
+      // at whatever transform it last had (or never had, i.e. plain bg).
+      try {
+        onFrame(progress, currentScrollRef.current);
+      } catch (err) {
+        if (import.meta.env?.DEV) console.error('[useParallaxScroll] onFrame error:', err);
+      }
 
       rafRef.current = requestAnimationFrame(animate);
     };

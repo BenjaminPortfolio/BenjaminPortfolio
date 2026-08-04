@@ -18,6 +18,10 @@
   content-visibility: auto;
 
   contain-intrinsic-size: 250px 140px;
+
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
 }
 
 .media {

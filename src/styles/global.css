@@ -80,3 +80,17 @@ img {
   display: block;
   max-width: 100%;
 }
+
+/* Buttons, links and images are meant to be tapped, not selected — a
+   quick/double tap on mobile can otherwise trigger the browser's blue text-
+   selection highlight over them, which reads as a stray "selection" glitch.
+   Long-press image save/callout menus are suppressed for the same reason. */
+button,
+a,
+img,
+video,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}

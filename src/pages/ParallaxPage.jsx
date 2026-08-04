@@ -10,7 +10,8 @@ import {
   LAYERS,
   CLOUDS,
 } from '../data/parallaxConfig';
-import { pickResponsiveSrc } from '../utils/responsiveAsset';
+import { pickResponsiveSrc, isMobileViewport } from '../utils/responsiveAsset';
+import { prefetchAssets } from '../utils/prefetchAssets';
 import '../styles/global.css';
 import styles from './ParallaxPage.module.css';
 
@@ -20,14 +21,59 @@ const ALL_IMAGES = [
   ...CLOUDS.map(pickResponsiveSrc),
 ];
 
+// Not needed on this page, but needed the moment the user reaches /home or
+// opens an overlay — warming these in the background while the parallax
+// intro plays means they're already cached by the time they're used,
+// without affecting the loading screen's own progress bar/timing.
+const SECONDARY_ASSETS = [
+  '/assets/home/house_jump_gif2.webp',
+  '/assets/home/services_withoutbg.webp',
+  '/assets/home/boy_withoutbg.webm',
+  '/assets/home/ship_withoutbg.webm',
+  '/assets/home/single_tree.svg',
+  isMobileViewport()
+    ? '/assets/home/mobile_map_path_new.webp'
+    : '/assets/home/empty_map_bg1.webp',
+  '/assets/about/characters/benjamin_char.webp',
+  '/assets/about/characters/benjamin_char2.webp',
+  '/assets/about/characters/benjamin_char3.webp',
+  '/assets/about/characters/benjamin_char4.webp',
+  '/assets/about/characters/benjamin_side_view.webp',
+];
+
 export default function ParallaxPage() {
   const ctaRef = useRef(null);
   const [fadeOut, setFadeOut] = useState(false);
   const [started, setStarted] = useState(false);
+  const [scrollMultiplier, setScrollMultiplier] = useState(() =>
+    isMobileViewport()
+      ? SCROLL_CONFIG.totalViewportMultiplierMobile
+      : SCROLL_CONFIG.totalViewportMultiplier,
+  );
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const mql = window.matchMedia('(max-width: 768px)');
+    const handleChange = (e) => {
+      setScrollMultiplier(
+        e.matches
+          ? SCROLL_CONFIG.totalViewportMultiplierMobile
+          : SCROLL_CONFIG.totalViewportMultiplier,
+      );
+    };
+    mql.addEventListener('change', handleChange);
+    return () => mql.removeEventListener('change', handleChange);
+  }, []);
 
   const handleStart = () => {
     setFadeOut(true);
+    // Mobile-only: land a bit into the (intentionally shortened) scene
+    // instead of the very top. Desktop keeps its original long scroll and
+    // starts at the top like before.
+    if (isMobileViewport()) {
+      const totalRange = document.body.scrollHeight - window.innerHeight;
+      window.scrollTo(0, Math.max(0, totalRange) * 0.25);
+    }
     setTimeout(() => setStarted(true), 600);
   };
 
@@ -42,6 +88,12 @@ export default function ParallaxPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  // Background-prefetch home/about/contact assets while the parallax intro
+  // plays — doesn't touch the loading screen's own progress/timing at all.
+  useEffect(() => {
+    prefetchAssets(SECONDARY_ASSETS);
+  }, []);
+
   // CTA click → transition to homepage
   const handleCTAClick = (e) => {
     e.preventDefault();
@@ -51,6 +103,11 @@ export default function ParallaxPage() {
     setTimeout(() => {
       document.body.style.opacity = '1';
       document.body.style.transition = '';
+      // React Router doesn't reset scroll on navigation — without this,
+      // the mobile "start 25% in" scroll position on this page carries
+      // straight into the home map, landing on Contact instead of the
+      // Projects house at the top.
+      window.scrollTo(0, 0);
       navigate('/home');
     }, 500);
   };
@@ -60,8 +117,8 @@ export default function ParallaxPage() {
       <div
         className={styles.page}
         style={{
-          height: `${SCROLL_CONFIG.totalViewportMultiplier * 100}vh`,
-          minHeight: `${SCROLL_CONFIG.totalViewportMultiplier * 1000}px`,
+          height: `${scrollMultiplier * 100}vh`,
+          minHeight: `${scrollMultiplier * 1000}px`,
           '--bg-full': `url('${BACKGROUND_CONFIG.src}')`,
           '--bg-mobile': `url('${BACKGROUND_CONFIG.srcMobile || BACKGROUND_CONFIG.src}')`,
         }}

@@ -73,7 +73,9 @@ export default function LoadingScreen({ imageSrcs, onComplete }) {
             Benjamin
             <br />
             <span className={styles.subhead}>
-              Where creativity meets craftsmanship
+              Where creativity meets
+              <br />
+              craftsmanship
             </span>
           </div>
           <button className={styles.startButton} onClick={onComplete}>
