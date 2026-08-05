@@ -22,7 +22,7 @@ export const ZOOM_CONFIG = {
 // since a long scroll journey is far more tedious on a small touch screen.
 export const SCROLL_CONFIG = {
   totalViewportMultiplier: 7, // desktop body height = this × 100vh
-  totalViewportMultiplierMobile: 2, // mobile body height = this × 100vh
+  totalViewportMultiplierMobile: 3, // mobile body height = this × 100vh
 };
 
 // --- IMAGE LAYERS ---

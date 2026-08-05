@@ -13,8 +13,38 @@ export default function HomePageWrapper() {
   const [activeOverlay, setActiveOverlay] = useState(null);
   // null | 'projects' | 'about' | 'contact'
 
-  const open = (name) => setActiveOverlay(name);
-  const close = () => setActiveOverlay(null);
+  // Overlays are plain React state, not real navigation — so a phone's
+  // back button (which pops browser history, not this state) used to skip
+  // straight past "close the overlay" and leave /home entirely, landing on
+  // the parallax page. Pushing a history entry when an overlay opens means
+  // one back-press just pops that entry (closing the overlay, staying on
+  // /home's map) instead of leaving the page; a second back-press then
+  // behaves normally.
+  const open = (name) => {
+    window.history.pushState({ overlay: name }, "", window.location.pathname);
+    setActiveOverlay(name);
+  };
+
+  const close = () => {
+    setActiveOverlay(null);
+    // Only pop history if we're the ones who pushed the entry (i.e. this
+    // was a direct UI close, not already triggered by a back-button
+    // popstate) — otherwise closing via the X button would leave a stale
+    // extra entry in the stack.
+    if (window.history.state?.overlay) {
+      window.history.back();
+    }
+  };
+
+  useEffect(() => {
+    const handlePopState = () => {
+      // Whatever the user was doing, a back-press while an overlay is open
+      // should always just close it and land on the plain map.
+      setActiveOverlay(null);
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   useEffect(() => {
     if (activeOverlay) {

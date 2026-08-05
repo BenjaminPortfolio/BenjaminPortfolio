@@ -11,6 +11,7 @@ import {
   calcTextOpacity,
   calcCloudPosition,
 } from "../../hooks/useParallaxScroll";
+import { useVisualViewportHeight } from "../../hooks/useVisualViewportHeight";
 import {
   LAYERS,
   CLOUDS,
@@ -36,6 +37,10 @@ export default function ParallaxScene({ ctaRef }) {
   const layerRefs = useRef(LAYERS.map(() => ({ current: null })));
   const cloudRefs = useRef(CLOUDS.map(() => ({ current: null })));
   const textRefs = useRef(TEXT_CARDS.map(() => ({ current: null })));
+
+  // JS-driven fallback for the .scene/.bgFill dvh sizing — see the hook's
+  // own comment for why this matters on top of the CSS dvh fix.
+  const viewportHeight = useVisualViewportHeight();
 
 
   const onFrame = useCallback(
@@ -115,14 +120,17 @@ export default function ParallaxScene({ ctaRef }) {
   useParallaxScroll(onFrame);
 
   return (
-    <div className={styles.scene}>
+    <div
+      className={styles.scene}
+      style={viewportHeight ? { height: `${viewportHeight}px` } : undefined}
+    >
       {/* ── FIXED BACKGROUND FILL — the 9.webp / 9-mobile.webp image,
            rendered as a fixed <img> instead of a CSS background with
            background-attachment: fixed. On mobile, background-attachment:
            fixed is re-rasterized while scrolling (and every time the URL
            bar collapses/expands), which shows the black rectangle/blink.
            A fixed <img> is composited once and never repainted. ── */}
-      <ParallaxLayer bgFill src={RESOLVED_BACKGROUND.src} />
+      <ParallaxLayer bgFill src={RESOLVED_BACKGROUND.src} fillHeight={viewportHeight} />
 
       {/* ── LAYER 8 index=0 — big cloud/bg behind mountains, slow parallax ── */}
       <ParallaxLayer {...RESOLVED_LAYERS[0]} layerRef={layerRefs.current[0]} />

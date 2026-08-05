@@ -23,11 +23,25 @@ export default function LoadingScreen({ imageSrcs, onComplete }) {
     const loadImage = (src) =>
       new Promise((resolve) => {
         const img = new Image();
-        img.onload = img.onerror = () => {
+        const finish = () => {
           loaded++;
           setProgress(Math.round((loaded / total) * 100));
           resolve();
         };
+        img.onload = () => {
+          // Fetching is only half of "loaded" — decoding is often deferred
+          // by the browser until the image actually needs to paint, which
+          // is exactly what caused a visible jank/blink the first time
+          // these images appeared in the parallax scene. Forcing the
+          // decode now, while the progress bar is still showing, means
+          // every image is genuinely paint-ready before "100%".
+          if (img.decode) {
+            img.decode().then(finish).catch(finish);
+          } else {
+            finish();
+          }
+        };
+        img.onerror = finish;
         img.src = src;
       });
 
