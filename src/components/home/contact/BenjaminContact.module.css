@@ -309,84 +309,51 @@
   max-width: 280px;
 }
 
-.cjInfoCard {
-  background: transparent;
-  border: none;
-  border-radius: 0;
-  padding: 0;
-  box-shadow: none;
+.cjCallBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px 10px 10px;
   margin-bottom: 20px;
   flex-shrink: 0;
+  width: fit-content;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  border-radius: 999px;
+  text-decoration: none;
+  box-shadow: 0 3px 10px rgba(37, 99, 174, 0.14);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
 }
 
-.cjInfoCardHeader {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
+.cjCallBtn:hover {
+  background: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 99, 174, 0.22);
 }
 
-.cjInfoBadge {
-  width: 34px;
-  height: 34px;
+.cjCallIcon {
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
+  flex-shrink: 0;
   background: var(--blue-grad);
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
-  font-size: 13px;
+  font-size: 14px;
   box-shadow: 0 3px 10px rgba(37, 99, 174, 0.28);
 }
 
-.cjInfoLabel {
+.cjCallNumber {
   font-family: "Outfit", sans-serif;
   font-size: 14px;
   font-weight: 700;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--blue-accent);
-}
-
-.cjInfoRow {
-  display: flex;
-  align-items: flex-start;
-  gap: 11px;
-  padding: 7px 0;
-  border-bottom: 1px solid rgba(180, 210, 240, 0.22);
-}
-
-.cjInfoRow:last-child {
-  border-bottom: none;
-  padding-bottom: 0;
-}
-
-.cjInfoIcon {
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: rgba(30, 115, 208, 0.1);
-  border: 1.5px solid rgba(30, 115, 208, 0.18);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--blue-accent);
-  font-size: 11px;
-  margin-top: 1px;
-}
-
-.cjInfoText strong {
-  display: block;
-  font-size: 14px;
-  font-weight: 700;
   color: var(--text-dark);
-  margin-bottom: 1px;
-}
-
-.cjInfoText span {
-  font-size: 14px;
-  color: var(--text-soft);
+  letter-spacing: 0.02em;
 }
 
 .cjSocialsLabel {

@@ -65,6 +65,7 @@ function DesktopMap({ mapItems, handleClick, treePositions }) {
               imageSrc={item.imageSrc}
               style={item.desktop.position}
               tagPosition={item.desktop.tagPosition}
+              mediaOffsetY={item.desktop.mediaOffsetY}
               onClick={() => handleClick(item.id)}
               disabled={item.disabled}
             />

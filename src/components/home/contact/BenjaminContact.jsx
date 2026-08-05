@@ -118,17 +118,6 @@ export default function BenjaminContact({ onClose }) {
     }
   }
 
-  const infoRows = [
-    { icon: "fas fa-envelope", val: "csbenju76@gmail.com", label: "Email" },
-    { icon: "fas fa-map-marker-alt", val: "India", label: "Location" },
-    { icon: "fas fa-phone", val: "+91 9562358421", label: "Phone" },
-    {
-      icon: "fas fa-clock",
-      val: "Usually replies within 24 hrs",
-      label: "Response Time",
-    },
-  ];
-
   const socials = [
     { icon: "fas fa-envelope", href: "mailto:csbenju76@gmail.com" },
     {
@@ -192,25 +181,12 @@ export default function BenjaminContact({ onClose }) {
                 I'm always open to discussing new projects, creative ideas or
                 opportunities to be part of your vision.
               </p>
-              <div className={styles.cjInfoCard}>
-                <div className={styles.cjInfoCardHeader}>
-                  <div className={styles.cjInfoBadge}>
-                    <i className="fas fa-user" />
-                  </div>
-                  <div className={styles.cjInfoLabel}>Contact Info</div>
-                </div>
-                {infoRows.map((r, i) => (
-                  <div key={i} className={styles.cjInfoRow}>
-                    <div className={styles.cjInfoIcon}>
-                      <i className={r.icon} />
-                    </div>
-                    <div className={styles.cjInfoText}>
-                      <strong>{r.val}</strong>
-                      <span>{r.label}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <a href="tel:+919562358421" className={styles.cjCallBtn}>
+                <span className={styles.cjCallIcon}>
+                  <i className="fas fa-phone" />
+                </span>
+                <span className={styles.cjCallNumber}>+91 9562358421</span>
+              </a>
               <div className={styles.cjSocialsLabel}>Find Me On</div>
               <div className={styles.cjSocials}>
                 {socials.map((s, i) => (

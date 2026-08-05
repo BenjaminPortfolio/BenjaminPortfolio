@@ -16,6 +16,8 @@ import styles from "./MapItem.module.css";
  *   style       - position styles (top/left/width) passed from parent
  *   onClick     - click handler
  *   disabled    - greyed out, no click (for Services placeholder)
+ *   mediaOffsetY - optional vertical nudge (e.g. "-80px") applied only to
+ *                  the media box, for per-item/per-breakpoint fine-tuning
  */
 export default function MapItem({
   label,
@@ -26,6 +28,7 @@ export default function MapItem({
   onClick,
   disabled = false,
   clip, // ← add this
+  mediaOffsetY,
 }) {
   const videoRef = useRef(null);
   const [hovered, setHovered] = useState(false);
@@ -69,15 +72,14 @@ export default function MapItem({
       {/* Video or image */}
       <div
         className={styles.media}
-        style={
-          clip
-            ? {
-                marginTop: `-${clip.top || "0%"}`,
-                marginBottom: `-${clip.bottom || "0%"}`,
-                overflow: "hidden",
-              }
-            : undefined
-        }
+        style={{
+          ...(clip && {
+            marginTop: `-${clip.top || "0%"}`,
+            marginBottom: `-${clip.bottom || "0%"}`,
+            overflow: "hidden",
+          }),
+          ...(mediaOffsetY && { transform: `translateY(${mediaOffsetY})` }),
+        }}
         onClick={handleClick}
       >
         {videoSrc ? (

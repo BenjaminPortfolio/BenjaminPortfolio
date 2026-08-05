@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { SplineScene } from "./SplineScene";
 
 const CSS = `
@@ -264,16 +264,6 @@ const CSS = `
 }
 .sv-testi-h em{color:var(--blue-accent);font-style:normal}
 
-.sv-testi-nav{display:flex;gap:8px}
-.sv-testi-btn{
-  width:38px;height:38px;border-radius:50%;border:none;cursor:pointer;
-  background:rgba(255,255,255,.72);border:1.5px solid rgba(255,255,255,.95);
-  display:flex;align-items:center;justify-content:center;
-  color:var(--text-mid);font-size:13px;
-  box-shadow:0 2px 8px rgba(80,140,200,.14);transition:all .2s;
-}
-.sv-testi-btn:hover{background:#fff;color:var(--blue-accent);transform:translateY(-2px)}
-
 .sv-testi-grid{
   display:grid;grid-template-columns:1fr 1fr;gap:14px;
 }
@@ -408,8 +398,6 @@ const CSS = `
   .sv-process-h{ font-size:22px; }
   .sv-steps{ grid-template-columns:1fr 1fr; row-gap:14px; }
   .sv-testi{ padding:24px 16px 32px; }
-  .sv-testi-nav{ gap:6px; }
-  .sv-testi-btn{ width:34px; height:34px; }
   .sv-tcard-body p{ font-size:14px; }
 }
 
@@ -559,14 +547,6 @@ function Stars({ n }) {
 
 /* ── MAIN COMPONENT ── */
 export default function ServicesOverlay({ onClose }) {
-  const [tPage, setTPage] = useState(0);
-  const perPage = 4;
-  const pages = Math.ceil(TESTIMONIALS.length / perPage);
-  const visible = TESTIMONIALS.slice(
-    tPage * perPage,
-    tPage * perPage + perPage,
-  );
-
   useEffect(() => {
     const id = "sv-css";
     if (!document.getElementById(id)) {
@@ -695,20 +675,6 @@ export default function ServicesOverlay({ onClose }) {
             <div className="sv-testi-header">
               <div className="sv-testi-h">
                 What <em>Clients</em> Say
-              </div>
-              <div className="sv-testi-nav">
-                <button
-                  className="sv-testi-btn"
-                  onClick={() => setTPage((p) => Math.max(0, p - 1))}
-                >
-                  <i className="fas fa-chevron-left" />
-                </button>
-                <button
-                  className="sv-testi-btn"
-                  onClick={() => setTPage((p) => Math.min(pages - 1, p + 1))}
-                >
-                  <i className="fas fa-chevron-right" />
-                </button>
               </div>
             </div>
 

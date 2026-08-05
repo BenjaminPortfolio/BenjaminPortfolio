@@ -13,17 +13,26 @@ export default function MobileMap({ mapItems, handleClick, treePositions }) {
       const doc = document.documentElement;
       const scrollTop = window.scrollY || doc.scrollTop;
       const scrollHeight = doc.scrollHeight;
-      const clientHeight = doc.clientHeight;
-      // Within ~40px of the bottom → show "Scroll up"
-      setAtBottom(scrollHeight - (scrollTop + clientHeight) < 40);
+      // document.documentElement.clientHeight can be stale/inconsistent on
+      // real mobile browsers while the dynamic address bar is collapsing
+      // or expanding mid-scroll (doesn't happen in desktop emulation,
+      // which is why this wasn't caught earlier) — window.visualViewport
+      // tracks the actual visible viewport through that transition;
+      // window.innerHeight is the next-best fallback.
+      const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+      // Within ~80px of the bottom → show "Scroll up" (generous margin to
+      // absorb any residual measurement drift plus mobile rubber-banding).
+      setAtBottom(scrollHeight - (scrollTop + viewportHeight) < 80);
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("resize", handleScroll);
+    window.visualViewport?.addEventListener("resize", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleScroll);
+      window.visualViewport?.removeEventListener("resize", handleScroll);
     };
   }, []);
 
