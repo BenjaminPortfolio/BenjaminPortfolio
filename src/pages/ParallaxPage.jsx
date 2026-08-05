@@ -75,6 +75,14 @@ export default function ParallaxPage() {
       window.scrollTo(0, Math.max(0, totalRange) * 0.25);
     }
     setTimeout(() => setStarted(true), 600);
+
+    // Only NOW start prefetching secondary (home/about/contact) assets —
+    // this only fires once the critical parallax images have already
+    // finished loading (that's what unlocks the Start Journey button in
+    // the first place). Firing it earlier, in parallel with the critical
+    // images, competes for the same limited concurrent-connection slots on
+    // a real mobile network and can slow down the loading screen itself.
+    prefetchAssets(SECONDARY_ASSETS);
   };
 
   // Some browsers restore the previous scroll position on load/refresh
@@ -86,12 +94,6 @@ export default function ParallaxPage() {
       window.history.scrollRestoration = 'manual';
     }
     window.scrollTo(0, 0);
-  }, []);
-
-  // Background-prefetch home/about/contact assets while the parallax intro
-  // plays — doesn't touch the loading screen's own progress/timing at all.
-  useEffect(() => {
-    prefetchAssets(SECONDARY_ASSETS);
   }, []);
 
   // CTA click → transition to homepage

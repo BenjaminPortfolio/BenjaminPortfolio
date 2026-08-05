@@ -10,4 +10,14 @@
     rgba(0, 0, 0, 0.5) 100%
   );
   z-index: 100;
+  /* iOS Safari (and some Android compositors) can visibly lag/detach a
+     position: fixed element during active momentum scrolling on a long
+     page — it "catches up" once scrolling settles, which reads exactly
+     like the element scrolling with the content and then snapping back.
+     Promoting it to its own GPU layer up front fixes this the same way it
+     was fixed for the parallax's fixed background-fill layer. */
+  transform: translateZ(0);
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
 }

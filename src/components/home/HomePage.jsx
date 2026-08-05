@@ -235,6 +235,7 @@ const MAP_ITEMS = [
         left: "50%",
         transform: "translate(-50%)",
       },
+      mediaOffsetY: "-180px",
     },
 
     mobile: {
