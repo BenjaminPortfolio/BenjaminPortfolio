@@ -1244,9 +1244,20 @@
     align-items: flex-start;
   }
   .benji-modal {
+    /* .benji-modal has backdrop-filter, which makes it the containing
+       block for its position:fixed pill bar — so that bar is anchored to
+       THIS element's bottom edge, not the viewport's. Using plain `vh`
+       here sizes the modal off the LARGEST possible mobile viewport
+       (address bar hidden); when the address bar is actually showing, the
+       modal renders taller than the true visible screen and the
+       overflow:hidden below cuts off that extra height — pushing the
+       pinned pill bar out of view with no way to scroll to it. `dvh`
+       tracks the real visible viewport instead. */
     max-height: 100vh;
+    max-height: 100dvh;
     height: auto;
     min-height: 100vh;
+    min-height: 100dvh;
     border-radius: 20px;
     overflow: hidden;
   }
@@ -1306,6 +1317,9 @@
   .benji-skill-btn {
     width: 123px;
     height: 74px;
+  }
+  .benji-skill-btn span {
+    font-size: 10px;
   }
   .benji-hero-circle {
     width: 320px;
@@ -1469,6 +1483,7 @@
     right: 10px;
     transform: none;
     width: auto;
+    height: 42px;
     border-radius: 18px;
   }
   .benji-modal-pill-bar a {

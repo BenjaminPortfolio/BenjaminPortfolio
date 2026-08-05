@@ -894,9 +894,55 @@
 
   .cjCenter {
     order: 2;
-    padding: 24px;
+    padding: 16px 20px 8px 20px;
     max-height: none;
     overflow: visible;
+    /* Bleed past .cjModal's own side padding/gap (24px each) so this card
+       fills flush to the modal's edges — negative margins cancel out the
+       parent's padding/gap for this element specifically, without
+       touching .cjLeft's spacing at all. */
+    margin-left: -24px;
+    margin-right: -24px;
+    margin-bottom: -24px;
+  }
+
+  /* Compact the form itself — the modal has very little vertical room to
+     spare on a phone screen, so shrinking gaps/padding here matters much
+     more than cjCenter's own outer padding for actually fitting without
+     scrolling. */
+  .cjFormHeader {
+    margin-bottom: 4px;
+  }
+
+  .cjForm {
+    gap: 8px;
+  }
+
+  .cjRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .cjInput,
+  .cjSelect {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .cjTextarea {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    min-height: 70px;
+  }
+
+  .cjAttach {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+
+  .cjSubmit {
+    padding-top: 12px;
+    padding-bottom: 12px;
   }
 
   .cjCharPanel {
@@ -927,7 +973,7 @@
     padding-top: 0;
   }
   .cjModal > *:not(:first-child) {
-    margin-top: 0px;
+    margin-top: 18px;
   }
 
   .cjTopbar {
@@ -937,10 +983,11 @@
     position: absolute;
     margin-top: 0 !important;
     right: 0;
-    left: 55%;
-    top: 25%;
+    left: 60%;
+    top: 100px;
     /* top: 156.4px; */
     min-height: 500px;
+    z-index: 5;
   }
   .cjCharImg {
     width: 220px;
@@ -957,10 +1004,6 @@
   .cjSocials {
     justify-content: center;
   } */
-
-  .cjRow {
-    grid-template-columns: 1fr;
-  }
 }
 /* @media (max-width: 560px) {
   .cjModal {
