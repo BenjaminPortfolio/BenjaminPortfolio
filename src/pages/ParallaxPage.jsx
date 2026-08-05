@@ -96,6 +96,21 @@ export default function ParallaxPage() {
     window.scrollTo(0, 0);
   }, []);
 
+  // The loading/"Start Journey" screen sits on top of the (very tall)
+  // parallax page, which is otherwise still scrollable underneath it —
+  // lock scroll until the user actually starts, then release it. Both
+  // html and body need the lock: overflow:hidden on body alone doesn't
+  // reliably block scrolling in every browser.
+  useEffect(() => {
+    const value = started ? '' : 'hidden';
+    document.body.style.overflow = value;
+    document.documentElement.style.overflow = value;
+    return () => {
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [started]);
+
   // CTA click → transition to homepage
   const handleCTAClick = (e) => {
     e.preventDefault();
