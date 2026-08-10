@@ -82,7 +82,7 @@ const CSS = `
 ══════════════════════════════════ */
 .sv-hero{
   display:grid;
-  grid-template-columns:1fr 590px;
+  grid-template-columns:1fr 478px;
   min-height:520px;
   position:relative;overflow:hidden;
 }
@@ -154,7 +154,7 @@ const CSS = `
 }
 .sv-hero-char{
   position:relative;z-index:2;
-  height:88%;max-height:480px;width:590px;max-width:100%;
+  height:88%;max-height:480px;width:478px;max-width:100%;
   display:flex;align-items:center;justify-content:center;
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
   mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
@@ -233,9 +233,11 @@ const CSS = `
   border:1.5px solid rgba(255,255,255,.95);
   display:flex;align-items:center;justify-content:center;
   color:var(--blue-accent);font-size:17px;
+  line-height:1;text-align:center;padding:0;
   box-shadow:0 3px 12px rgba(80,140,200,.15);
   margin-bottom:10px;flex-shrink:0;
 }
+.sv-step-icon i{ display:block;line-height:1; }
 .sv-step-num{font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;color:var(--text-muted);margin-bottom:3px;letter-spacing:.06em}
 .sv-step-title{font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:5px}
 .sv-step-desc{font-size:14px;color:var(--text-soft);line-height:1.58}

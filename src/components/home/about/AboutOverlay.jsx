@@ -246,20 +246,6 @@ export default function BenjiPortfolio({ onClose }) {
           <div className={styles["benji-topbar-pill"]}>
             <i className="fas fa-user-circle" /> About the Artist
           </div>
-          <div className={styles["benji-topbar-socials"]}>
-            <a href="https://www.instagram.com/ben_.jmin?igsh=eXV2NGhhdGJibnp4&utm_source=qr">
-              <i className="fab fa-instagram" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/benjamin-cs-823b602b0
-"
-            >
-              <i className="fab fa-linkedin-in" />
-            </a>
-            <a href="https://benjamincs1.artstation.com/">
-              <i className="fab fa-artstation" />
-            </a>
-          </div>
           <button
             type="button"
             className={styles["benji-topbar-close"]}
@@ -333,6 +319,22 @@ export default function BenjiPortfolio({ onClose }) {
                 creative design. I'm highly dedicated, deadline-friendly, and
                 always focused on delivering my best work. Let's create
                 something amazing together!
+              </div>
+
+              {/* Socials — placed below the bubble, inside the hero right panel */}
+              <div className={styles["benji-topbar-socials"]}>
+                <a href="https://www.instagram.com/ben_.jmin?igsh=eXV2NGhhdGJibnp4&utm_source=qr">
+                  <i className="fab fa-instagram" />
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/benjamin-cs-823b602b0
+"
+                >
+                  <i className="fab fa-linkedin-in" />
+                </a>
+                <a href="https://benjamincs1.artstation.com/">
+                  <i className="fab fa-artstation" />
+                </a>
               </div>
             </div>
 

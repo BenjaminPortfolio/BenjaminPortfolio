@@ -447,3 +447,33 @@
     font-size: 14px;
   }
 }
+
+/* ── DESKTOP TOP BAR ── */
+@media (min-width: 769px) {
+  .topBar {
+    height: 55px;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* "Projects Section" title sits in the true centre of the bar —
+     the equal 1fr side tracks balance the close button. */
+  .topBarLeft {
+    grid-column: 2;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .topRightClose {
+    grid-column: 3;
+    justify-self: end;
+  }
+
+  /* Keep the title vertically centred even when the sidebar is expanded */
+  .topBarExpanded {
+    align-items: center;
+  }
+}
