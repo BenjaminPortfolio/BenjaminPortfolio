@@ -158,7 +158,7 @@
   display: grid;
   grid-template-columns: 1fr 1.15fr 170px;
   grid-template-rows: auto 1fr;
-  height: 85vh;
+  height: 76vh;
 
   overflow-y: auto;
   overflow-x: hidden;
@@ -177,7 +177,7 @@
 }
 
 .cjModal > *:not(:first-child) {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .cjTopbar {
@@ -242,6 +242,8 @@
   z-index: 200;
   display: flex;
 
+  /* center the modal section both horizontally & vertically */
+  align-items: center;
   justify-content: center;
   padding: 24px;
   overflow-y: auto;
@@ -291,6 +293,18 @@
 .cjHeadline em {
   color: var(--blue-accent);
   font-style: normal;
+}
+
+/* Desktop-only line break — puts "amazing" on its own line right below
+   "something". Hidden entirely on tablet/mobile so their text is unchanged. */
+.cjHeadlineBreak {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .cjHeadlineBreak {
+    display: inline;
+  }
 }
 
 .cjDivider {
@@ -397,6 +411,8 @@
 .cjCenter {
   background: rgba(255, 255, 255, 0.72);
   border: 1.5px solid rgba(255, 255, 255, 0.95);
+  /* rounded all corners on desktop — rounded top + rounded bottom;
+     mobile overrides this to no corner radius (see @media below) */
   border-radius: var(--r-lg);
   /* padding: 38px 36px 38px 32px; */
   padding: 30px;
@@ -404,7 +420,7 @@
   flex-direction: column;
   justify-content: center;
 
-  max-height: 603px;
+  max-height: 562px;
 
   box-shadow: 0 4px 18px rgba(80, 140, 200, 0.12);
   min-height: 0;
@@ -418,8 +434,8 @@
 }
 
 .cjFormIcon {
-  width: 46px;
-  height: 46px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   flex-shrink: 0;
   background: var(--blue-grad);
@@ -429,6 +445,15 @@
   color: #fff;
   font-size: 18px;
   box-shadow: 0 4px 16px rgba(37, 99, 174, 0.32);
+}
+
+/* Send (paper-plane) icon — sized to fit the 32px badge */
+.cjFormIcon i {
+  display: block;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  line-height: 1;
 }
 
 .cjFormTitle {
@@ -896,6 +921,8 @@
     order: 2;
     padding: 16px 20px 8px 20px;
     max-height: none;
+    /* no corner radius on mobile — the card bleeds flush to the modal edges */
+    border-radius: 0;
     overflow: visible;
     /* Bleed past .cjModal's own side padding/gap (24px each) so this card
        fills flush to the modal's edges — negative margins cancel out the

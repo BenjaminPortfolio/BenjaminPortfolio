@@ -174,7 +174,15 @@ export default function BenjaminContact({ onClose }) {
             <div className={styles.cjLeft}>
               {/* <div className={styles.cjEyebrow}>Let's Connect</div> */}
               <h1 className={styles.cjHeadline}>
-                Let's create something <em>amazing</em> together!
+                Let's create something
+                <span className={styles.cjHeadlineBreak}>
+                  <br />
+                </span>
+                <em>amazing</em>
+                <span className={styles.cjHeadlineBreak}>
+                  <br />
+                </span>
+                together!
               </h1>
               <div className={styles.cjDivider} />
               <p className={styles.cjTagline}>

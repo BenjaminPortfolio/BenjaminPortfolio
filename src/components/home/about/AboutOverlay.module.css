@@ -167,17 +167,15 @@
   color: var(--blue-icon);
 }
 .benji-topbar-socials {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
+  align-items: center;
+  justify-content: center;
   gap: 9px;
-  z-index: 1;
+  margin-top: 24px;
 }
 .benji-topbar-socials a {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.72);
   border: 1.5px solid rgba(255, 255, 255, 0.95);
@@ -1294,7 +1292,7 @@
     height: auto !important;
     min-height: auto !important;
     grid-template-columns: 1fr;
-    padding: 0px 0 70px;
+    padding: 0px 0 52px;
   }
   .benji-hero-left {
     order: 1;
