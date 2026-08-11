@@ -211,7 +211,7 @@
   border: 1.5px solid rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   font-family: "Outfit", sans-serif;
-  font-size: 14px;
+  font-size: 10px;
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
@@ -288,6 +288,10 @@
   color: var(--text-dark);
   letter-spacing: -1.5px;
   margin-bottom: 18px;
+
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0;
 }
 
 .cjHeadline em {
@@ -295,15 +299,32 @@
   font-style: normal;
 }
 
-/* Desktop-only line break — puts "amazing" on its own line right below
-   "something". Hidden entirely on tablet/mobile so their text is unchanged. */
+.cjWord {
+  flex: 0 0 100%;
+}
+
 .cjHeadlineBreak {
   display: none;
 }
 
 @media (min-width: 901px) {
-  .cjHeadlineBreak {
-    display: inline;
+  .cjHeadline,
+  .cjCenter {
+    margin-top: 40px;
+  }
+
+  .cjModal > *:not(:first-child) {
+    margin-top: 40px;
+  }
+
+  .cjModal {
+    align-items: start;
+    overflow-y: visible;
+    height: 86vh;
+  }
+
+  .cjCenter {
+    justify-content: flex-start;
   }
 }
 
@@ -748,13 +769,15 @@
 
 /* Character Panel */
 .cjCharPanel {
-  position: relative;
+  position: absolute;
+  right: 110px;
+  top: 52px;
+  width: 170px;
   display: flex;
   align-items: start;
   justify-content: flex-start;
   overflow: visible;
   padding-bottom: 0;
-  left: -70px;
 }
 
 .cjCharGlow {
@@ -907,7 +930,17 @@
 
     overflow-y: auto;
 
-    padding: 24px;
+    padding: 24px 24px 0 24px;
+  }
+
+  .cjTopbar {
+    margin-left: -24px;
+    margin-right: -24px;
+    padding: 12px 12px 11px;
+  }
+
+  .cjHeadline {
+    font-size: 48px;
   }
 
   .cjLeft {
@@ -915,22 +948,19 @@
     padding: 0;
     border: none;
     max-height: none;
+    overflow: hidden;
+    min-width: 0;
   }
 
   .cjCenter {
     order: 2;
-    padding: 16px 20px 8px 20px;
+    padding: 16px 24px 0 24px;
     max-height: none;
-    /* no corner radius on mobile — the card bleeds flush to the modal edges */
     border-radius: 0;
     overflow: visible;
-    /* Bleed past .cjModal's own side padding/gap (24px each) so this card
-       fills flush to the modal's edges — negative margins cancel out the
-       parent's padding/gap for this element specifically, without
-       touching .cjLeft's spacing at all. */
     margin-left: -24px;
     margin-right: -24px;
-    margin-bottom: -24px;
+    margin-bottom: 0;
   }
 
   /* Compact the form itself — the modal has very little vertical room to
@@ -942,7 +972,7 @@
   }
 
   .cjForm {
-    gap: 8px;
+    gap: 12px;
   }
 
   .cjRow {
@@ -973,14 +1003,18 @@
   }
 
   .cjCharPanel {
-    order: 3;
+    position: relative;
+    right: auto;
+    top: auto;
+    width: auto;
 
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     left: 0;
     padding: 0;
+    margin-top: 16px;
   }
 
   .cjTopbarClose {
@@ -1004,21 +1038,24 @@
   }
 
   .cjTopbar {
-    margin-right: -33px;
+    margin-left: -24px;
+    margin-right: -24px;
+    padding: 12px 12px 11px;
   }
   .cjCharPanel {
-    position: absolute;
-    margin-top: 0 !important;
-    right: 0;
-    left: 60%;
-    top: 100px;
-    /* top: 156.4px; */
-    min-height: 500px;
-    z-index: 5;
+    position: relative;
+    margin-top: 16px !important;
+    right: auto;
+    left: auto;
+    top: auto;
+    min-height: auto;
+    z-index: 1;
   }
   .cjCharImg {
     width: 220px;
     max-width: 100%;
+    max-height: 280px;
+    height: auto;
   }
 
   .cjTagline {
