@@ -14,6 +14,10 @@ function DesktopMap({ mapItems, handleClick, treePositions }) {
           alt="Portfolio Map"
           className={styles.mapBg}
           draggable={false}
+          width="1920"
+          height="1080"
+          loading="eager"
+          fetchpriority="high"
         />
 
         {/* Render trees behind the house */}

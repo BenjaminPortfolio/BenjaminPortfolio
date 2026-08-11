@@ -18,10 +18,13 @@
 .content {
   position: relative;
 
-  width: min(92vw, 1400px);
-  height: min(88vh, 900px);
+  width: 100%;
+  max-width: var(--modal-max-width);
+  height: auto;
+  max-height: var(--modal-max-height); /* fallback */
+  max-height: min(var(--modal-max-height), var(--modal-max-height-dvh)); /* dynamic viewport height */
 
-  border-radius: 28px;
+  border-radius: var(--modal-border-radius);
 
   background: rgba(157, 157, 157, 0.2);
 

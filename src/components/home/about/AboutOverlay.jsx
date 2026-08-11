@@ -1,4 +1,5 @@
-﻿import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
+import { useVisualViewportHeight } from "../../../hooks/useVisualViewportHeight";
 
 import styles from "./AboutOverlay.module.css";
 
@@ -59,14 +60,21 @@ const CAR_LABELS = ["Artist", "Motion Artist", "3D Artist", "Concept Artist"];
 
 /* â”€â”€â”€ Snow component â”€â”€â”€ */
 function Snow() {
-  const flakes = Array.from({ length: 60 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 5 + 2,
-    dur: Math.random() * 14 + 10,
-    delay: Math.random() * 20,
-    left: Math.random() * 100,
-    op: Math.random() * 0.55 + 0.28,
-  }));
+  // Generate flakes once per mount — creating new random values on every
+  // render caused unnecessary object churn and layout recalculations.
+  const flakes = useMemo(
+    () =>
+      Array.from({ length: 60 }, (_, i) => ({
+        id: i,
+        size: Math.random() * 5 + 2,
+        dur: Math.random() * 14 + 10,
+        delay: Math.random() * 20,
+        left: Math.random() * 100,
+        op: Math.random() * 0.55 + 0.28,
+      })),
+    [],
+  );
+
   return (
     <div className={styles["benji-snow-wrap"]}>
       {flakes.map((f) => (
@@ -196,6 +204,21 @@ export default function BenjiPortfolio({ onClose }) {
   const [sectionHeight, setSectionHeight] = useState("100%");
   const [activeSkill, setActiveSkill] = useState(2);
 
+  // JS-driven fallback for CSS dvh — ensures the modal and its sections
+  // track the actual visible viewport on mobile browsers where 100vh / 85vh
+  // can be taller than the visible area when the address bar is present.
+  const viewportHeight = useVisualViewportHeight();
+
+  // Compute a sensible max-height for the modal: 85% of the true visible
+  // viewport minus the shell's vertical padding (24px top + 24px bottom
+  // plus safe-area insets handled in CSS). Falls back gracefully when the
+  // hook returns 0 (SSR / unsupported browser).
+  const shellVerticalPadding = 48; // base 24px + 24px
+  const modalMaxHeight =
+    viewportHeight > 0
+      ? `${Math.max(viewportHeight * 0.85 - shellVerticalPadding, 400)}px`
+      : undefined;
+
   useEffect(() => {
     const faId = "benji-fa";
     if (!document.getElementById(faId)) {
@@ -229,7 +252,15 @@ export default function BenjiPortfolio({ onClose }) {
   ];
 
   return (
-    <div className={styles["benji-shell"]}>
+    <div
+      className={styles["benji-shell"]}
+      style={{
+        paddingTop: `calc(24px + var(--safe-top))`,
+        paddingRight: `calc(24px + var(--safe-right))`,
+        paddingBottom: `calc(24px + var(--safe-bottom))`,
+        paddingLeft: `calc(24px + var(--safe-left))`,
+      }}
+    >
       {/* Fixed BG */}
       <div className={styles["benji-bg-fixed"]}>
         <div className={cx(styles["benji-bokeh"], styles["b1"])} />
@@ -240,7 +271,10 @@ export default function BenjiPortfolio({ onClose }) {
         <Snow />
       </div>
 
-      <div className={styles["benji-modal"]}>
+      <div
+        className={styles["benji-modal"]}
+        style={modalMaxHeight ? { maxHeight: modalMaxHeight } : undefined}
+      >
         {/* Topbar */}
         <div className={styles["benji-topbar"]}>
           <div className={styles["benji-topbar-pill"]}>
@@ -263,7 +297,13 @@ export default function BenjiPortfolio({ onClose }) {
           {/* â”€â”€ SECTION 1: HERO â”€â”€ */}
           <div
             className={styles["benji-sec-hero"]}
-            style={{ height: sectionHeight, minHeight: "500px" }}
+            style={{
+              height: sectionHeight,
+              // Preserve the 500px minimum on larger screens but allow
+              // the hero to shrink on short viewports so the modal's
+              // scroll container can actually fit without clipping.
+              minHeight: "max(500px, 40vh)",
+            }}
           >
             <div className={styles["benji-hero-left"]}>
               <div className={styles["benji-hero-big-name"]}>Benjamin CS</div>

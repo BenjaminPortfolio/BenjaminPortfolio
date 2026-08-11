@@ -1,4 +1,5 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
+import { useVisualViewportHeight } from "../../../hooks/useVisualViewportHeight";
 import styles from "./BenjaminContact.module.css";
 import emailjs from "@emailjs/browser";
 
@@ -15,13 +16,19 @@ const EMAILJS_TEMPLATE_ID = "template_rgr5yhd"; // e.g. "template_xyz789"
 const EMAILJS_PUBLIC_KEY = "6wx5z0zo6O5D269lJ"; // e.g. "aBcDeFgHiJkLmNoP"
 
 function Snow() {
-  const flakes = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
-    size: Math.random() * 4 + 2,
-    dur: Math.random() * 12 + 10,
-    delay: Math.random() * 18,
-    left: Math.random() * 100,
-  }));
+  // Generate flakes once per mount — creating new random values on every
+  // render caused unnecessary object churn and layout recalculations.
+  const flakes = useMemo(
+    () =>
+      Array.from({ length: 50 }, (_, i) => ({
+        id: i,
+        size: Math.random() * 4 + 2,
+        dur: Math.random() * 12 + 10,
+        delay: Math.random() * 18,
+        left: Math.random() * 100,
+      })),
+    [],
+  );
 
   return (
     <div className={styles.cjSnow}>
@@ -44,6 +51,16 @@ function Snow() {
 }
 
 export default function BenjaminContact({ onClose }) {
+  // JS-driven fallback for CSS dvh — ensures the modal tracks the actual
+  // visible viewport on mobile browsers where 100vh / 85vh can exceed the
+  // visible area when the address bar is present.
+  const viewportHeight = useVisualViewportHeight();
+  const shellVerticalPadding = 44; // base 20px + 20px + 4px extra buffer
+  const modalMaxHeight =
+    viewportHeight > 0
+      ? `${Math.max(viewportHeight * 0.85 - shellVerticalPadding, 400)}px`
+      : undefined;
+
   const [form, setForm] = useState({
     from_name: "",
     from_email: "",
@@ -146,8 +163,19 @@ export default function BenjaminContact({ onClose }) {
           <div className={`${styles.cjBokeh} ${styles.bk5}`} />
         </div>
         <Snow />
-        <div className={styles.cjShell}>
-          <div className={styles.cjModal}>
+        <div
+          className={styles.cjShell}
+          style={{
+            paddingTop: `calc(20px + var(--safe-top))`,
+            paddingRight: `calc(20px + var(--safe-right))`,
+            paddingBottom: `calc(20px + var(--safe-bottom))`,
+            paddingLeft: `calc(20px + var(--safe-left))`,
+          }}
+        >
+          <div
+            className={styles.cjModal}
+            style={modalMaxHeight ? { maxHeight: modalMaxHeight } : undefined}
+          >
             {/* <button
               className={styles.cjTopbarClose}
               onClick={onClose}

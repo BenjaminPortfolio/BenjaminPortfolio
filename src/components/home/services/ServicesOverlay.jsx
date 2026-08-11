@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useVisualViewportHeight } from "../../../hooks/useVisualViewportHeight";
 import { SplineScene } from "./SplineScene";
 
 const CSS = `
@@ -19,6 +20,12 @@ const CSS = `
   --card-shadow:  0 4px 20px rgba(80,140,200,.11),0 1px 4px rgba(80,140,200,.07);
   --card-shadow-h:0 10px 36px rgba(59,130,212,.20),0 2px 8px rgba(59,130,212,.12);
   --r-xl:24px; --r-lg:16px; --r-md:12px; --r-sm:8px;
+
+  /* Safe-area insets for the modal shell */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
 }
 
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
@@ -27,15 +34,23 @@ const CSS = `
 .sv-shell{
   position:fixed;inset:0;z-index:200;
   display:flex;align-items:center;justify-content:center;
-  padding:24px;overflow:auto;pointer-events:auto;
+  padding:24px;
+  padding-top: calc(24px + var(--safe-top));
+  padding-right: calc(24px + var(--safe-right));
+  padding-bottom: calc(24px + var(--safe-bottom));
+  padding-left: calc(24px + var(--safe-left));
+  overflow:auto;pointer-events:auto;
 }
 .sv-modal{
-   width:100%;max-width:1200px;
-   height:85vh;max-height:85vh;
+   width:100%;
+   max-width:var(--modal-max-width);
+   height:auto;
+   max-height:var(--modal-max-height); /* fallback */
+   max-height:var(--modal-max-height-dvh); /* dynamic viewport height */
   background:rgba(218,234,252,0.52);
   backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
   border:1.5px solid rgba(255,255,255,.84);
-  border-radius:var(--r-xl);
+  border-radius:var(--modal-border-radius);
   box-shadow:0 8px 48px rgba(80,140,200,.22),0 2px 10px rgba(80,140,200,.12),
              inset 0 1.5px 0 rgba(255,255,255,.92);
   display:flex;flex-direction:column;
@@ -73,6 +88,9 @@ const CSS = `
 .sv-scroll{
   flex:1;overflow-y:auto;overflow-x:hidden;
   scrollbar-width:thin;scrollbar-color:rgba(59,130,212,.22) transparent;
+  /* Prevent the last section's content from being hidden behind the
+     home indicator / bottom safe area on iOS and Android. */
+  padding-bottom: calc(12px + var(--safe-bottom));
 }
 .sv-scroll::-webkit-scrollbar{width:4px}
 .sv-scroll::-webkit-scrollbar-thumb{background:rgba(59,130,212,.22);border-radius:4px}
@@ -549,6 +567,16 @@ function Stars({ n }) {
 
 /* ── MAIN COMPONENT ── */
 export default function ServicesOverlay({ onClose }) {
+  // JS-driven fallback for CSS dvh — ensures the modal tracks the actual
+  // visible viewport on mobile browsers where 85vh can exceed the visible
+  // area when the address bar is present.
+  const viewportHeight = useVisualViewportHeight();
+  const shellVerticalPadding = 48; // base 24px + 24px
+  const modalMaxHeight =
+    viewportHeight > 0
+      ? `${Math.max(viewportHeight * 0.85 - shellVerticalPadding, 400)}px`
+      : undefined;
+
   useEffect(() => {
     const id = "sv-css";
     if (!document.getElementById(id)) {
@@ -570,7 +598,10 @@ export default function ServicesOverlay({ onClose }) {
 
   return (
     <div className="sv-shell">
-      <div className="sv-modal">
+      <div
+        className="sv-modal"
+        style={modalMaxHeight ? { maxHeight: modalMaxHeight } : undefined}
+      >
         {/* TOPBAR */}
         <div className="sv-topbar">
           <div className="sv-topbar-pill">

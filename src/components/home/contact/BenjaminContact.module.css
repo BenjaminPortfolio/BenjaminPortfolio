@@ -21,6 +21,12 @@
   --r-lg: 16px;
   --r-md: 12px;
   --r-sm: 8px;
+
+  /* Safe-area insets */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
 }
 
 /* Background & Bokeh */
@@ -140,17 +146,24 @@
 .cjShell {
   position: relative;
   z-index: 10;
-  width: 90vw;
-  max-width: 1197px;
-  padding: 20px;
+  width: 100%;
+  max-width: var(--modal-max-width);
+  padding: var(--modal-shell-padding-mobile);
+  padding-top: calc(var(--modal-shell-padding-mobile) + var(--safe-top));
+  padding-right: calc(var(--modal-shell-padding-mobile) + var(--safe-right));
+  padding-bottom: calc(var(--modal-shell-padding-mobile) + var(--safe-bottom));
+  padding-left: calc(var(--modal-shell-padding-mobile) + var(--safe-left));
 }
 
 .cjModal {
   width: 100%;
+  height: auto;
+  max-height: var(--modal-max-height); /* fallback */
+  max-height: var(--modal-max-height-dvh); /* dynamic viewport height */
   background: rgba(215, 232, 252, 0.45);
   backdrop-filter: blur(28px);
   border: 1.5px solid rgba(255, 255, 255, 0.82);
-  border-radius: var(--r-xl);
+  border-radius: var(--modal-border-radius);
   box-shadow:
     0 12px 60px rgba(60, 120, 200, 0.2),
     0 2px 12px rgba(60, 120, 200, 0.1),
@@ -926,7 +939,8 @@
     gap: 24px;
 
     height: auto;
-    max-height: calc(100vh - 40px);
+    max-height: var(--modal-max-height); /* fallback */
+    max-height: var(--modal-max-height-dvh); /* dynamic viewport height */
 
     overflow-y: auto;
 
@@ -1018,13 +1032,17 @@
   }
 
   .cjTopbarClose {
-    right: 18px;
-    top: 18px;
+    right: max(18px, calc(18px + var(--safe-right)));
+    top: max(18px, calc(18px + var(--safe-top)));
   }
 }
 @media (max-width: 560px) {
   .cjShell {
     padding: 0;
+    padding-top: calc(0px + var(--safe-top));
+    padding-right: calc(0px + var(--safe-right));
+    padding-bottom: calc(0px + var(--safe-bottom));
+    padding-left: calc(0px + var(--safe-left));
   }
 }
 

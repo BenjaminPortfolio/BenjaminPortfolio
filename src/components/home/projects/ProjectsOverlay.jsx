@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useLayoutEffect } from "react";
 import { createPortal } from "react-dom";
+import { useVisualViewportHeight } from "../../../hooks/useVisualViewportHeight";
 import { PROJECTS } from "../../../data/projectData.js";
 import { FEATURED_PROJECTS } from "../../../data/featuredProjects.js"; // to show in all projects category
 import { CATEGORIES } from "../../../data/categories.js";
@@ -34,6 +35,16 @@ export default function ProjectsOverlay({ onClose }) {
   const categoryMenuRef = useRef(null);
   const backBtnRef = useRef(null);
   const dropdownPortalRef = useRef(null);
+
+  // JS-driven fallback for CSS dvh — ensures the overlay tracks the actual
+  // visible viewport on mobile browsers where 85vh / 92vh can exceed the
+  // visible area when the address bar is present.
+  const viewportHeight = useVisualViewportHeight();
+  const shellVerticalPadding = 48; // base 24px + 24px
+  const overlayMaxHeight =
+    viewportHeight > 0
+      ? `${Math.max(viewportHeight * 0.92 - shellVerticalPadding, 400)}px`
+      : undefined;
 
   // Position the portaled dropdown against the button's live position —
   // it renders outside the overlay's stacking context, so it can no
@@ -138,6 +149,7 @@ export default function ProjectsOverlay({ onClose }) {
     <div className={styles.backdrop}>
       <div
         className={`${styles.overlay} ${glassReady ? styles.glassReady : ""}`}
+        style={overlayMaxHeight ? { maxHeight: overlayMaxHeight } : undefined}
       >
         {/* ── LEFT SIDEBAR (desktop only — mobile uses the Categories dropdown) ── */}
         <aside

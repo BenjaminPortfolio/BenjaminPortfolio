@@ -62,6 +62,7 @@ export default function MobileMap({ mapItems, handleClick, treePositions }) {
           height="4096"
           decoding="async"
           fetchpriority="high"
+          loading="eager"
         />
 
         {/* Map items go here later */}

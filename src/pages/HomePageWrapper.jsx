@@ -48,16 +48,38 @@ export default function HomePageWrapper() {
 
   useEffect(() => {
     if (activeOverlay) {
-      document.body.style.overflow = "hidden";
+      // Lock background scroll. Using position:fixed in addition to
+      // overflow:hidden is the most reliable cross-browser way to
+      // prevent iOS Safari from rubber-banding / scrolling the page
+      // behind a fixed modal — overflow alone is not always enough.
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = "100%";
+      document.body.style.overflowY = "scroll";
       document.documentElement.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "";
+      // Restore scroll position exactly where it was before the overlay
+      // opened (the fixed-position trick moves the body to top: -scrollY,
+      // so we read that back and remove the fixed positioning).
+      const top = document.body.style.top;
+      const scrollY = top ? parseInt(top.replace("-", ""), 10) || 0 : 0;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflowY = "";
       document.documentElement.style.overflow = "";
+      window.scrollTo(0, scrollY);
     }
 
     return () => {
       document.body.style.overflow = "";
       document.body.style.touchAction = "";
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.width = "";
+      document.body.style.overflowY = "";
+      document.documentElement.style.overflow = "";
     };
   }, [activeOverlay]);
 
