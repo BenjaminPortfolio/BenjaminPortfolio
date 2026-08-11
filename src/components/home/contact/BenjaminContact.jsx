@@ -174,16 +174,29 @@ export default function BenjaminContact({ onClose }) {
             <div className={styles.cjLeft}>
               {/* <div className={styles.cjEyebrow}>Let's Connect</div> */}
               <h1 className={styles.cjHeadline}>
-                Let's create something
+                <span className={styles.cjWord}>Let's</span>
+                <span className={styles.cjWord}>create</span>
+                <span className={styles.cjWord}>something</span>
                 <span className={styles.cjHeadlineBreak}>
                   <br />
                 </span>
-                <em>amazing</em>
+                <span className={styles.cjWord}>
+                  <em>amazing</em>
+                </span>
                 <span className={styles.cjHeadlineBreak}>
                   <br />
                 </span>
-                together!
+                <span className={styles.cjWord}>together!</span>
               </h1>
+              {/* CHARACTER PANEL */}
+              <div className={styles.cjCharPanel}>
+                <div className={styles.cjCharGlow} />
+                <img
+                  className={styles.cjCharImg}
+                  src="/assets/about/characters/benjamin_side_view.webp"
+                  alt="Anime Benjamin"
+                />
+              </div>
               <div className={styles.cjDivider} />
               <p className={styles.cjTagline}>
                 I'm always open to discussing new projects, creative ideas or
@@ -424,15 +437,6 @@ export default function BenjaminContact({ onClose }) {
                   </div>
                 </form>
               )}
-            </div>
-            {/* CHARACTER PANEL */}
-            <div className={styles.cjCharPanel}>
-              <div className={styles.cjCharGlow} />
-              <img
-                className={styles.cjCharImg}
-                src="/assets/about/characters/benjamin_side_view.webp"
-                alt="Anime Benjamin"
-              />
             </div>
           </div>
         </div>

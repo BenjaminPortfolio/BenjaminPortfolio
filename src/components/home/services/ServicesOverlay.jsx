@@ -56,7 +56,7 @@ const CSS = `
   padding:6px 16px;
   background:rgba(255,255,255,.70);border:1.5px solid rgba(255,255,255,.95);
   border-radius:20px;
-  font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;
+  font-family:'Outfit',sans-serif;font-size:10px;font-weight:700;
   letter-spacing:.15em;text-transform:uppercase;color:var(--text-mid);
   box-shadow:0 2px 7px rgba(80,140,200,.12);
 }
@@ -330,15 +330,15 @@ const CSS = `
 /* ── Tablet portrait (≤768px) ── */
 @media(max-width:768px){
   /* shell & modal */
-  .sv-shell{ padding:10px; align-items:flex-start; overflow-y:auto; }
+  .sv-shell{ padding:10px; align-items:flex-start; overflow-y:visible; }
   .sv-modal{
-    height:auto; max-height:none; min-height:100svh;
+    height:auto; max-height:calc(100vh - 40px); overflow-y:auto;
     border-radius:20px; flex-direction:column;
   }
   .sv-scroll{ overflow-y:visible; flex:none; }
 
   /* topbar */
-  .sv-topbar{ padding:11px 16px; }
+  .sv-topbar{ padding:11px 16px; position:sticky; top:0; z-index:10; background:rgba(230,241,253); }
 
   /* hero section — single column; character stacks below the cards */
   .sv-hero{ grid-template-columns:1fr; min-height:auto; }
@@ -406,7 +406,7 @@ const CSS = `
 /* ── Small mobile (≤480px) ── */
 @media(max-width:480px){
   // .sv-shell{ padding:0; }
-  .sv-modal{ min-height:100svh; }
+  .sv-modal{ min-height:100svh; max-height:calc(100vh - 40px); overflow-y:auto; }
   .sv-hero-left{ padding:20px 14px 18px; }
   .sv-h1{ font-size:clamp(22px,9vw,30px); letter-spacing:-0.5px; margin-bottom:8px; }
   .sv-lead{ font-size:14px; margin-bottom:16px; }
@@ -419,10 +419,10 @@ const CSS = `
 
   /* process */
   .sv-process{ padding:22px 14px 60px; }
-  .sv-steps{ grid-template-columns:1fr; gap:10px; }
-  .sv-step{ flex-direction:row; text-align:left; gap:12px; align-items:flex-start; }
+  .sv-steps{ grid-template-columns:1fr; gap:20px; }
+  .sv-step{ flex-direction:row; text-align:left; gap:12px; align-items:center; }
   .sv-step-icon{ flex-shrink:0; margin-bottom:0; width:38px; height:38px; }
-  .sv-step-text{ display:flex; flex-direction:column; gap:2px; padding-top:2px; }
+  .sv-step-text{ display:flex; flex-direction:column; gap:2px; }
 
   /* testimonials */
   .sv-testi{ padding:22px 14px 28px; }
