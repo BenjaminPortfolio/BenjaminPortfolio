@@ -39,7 +39,7 @@
    clearly over the sky-blue map. */
 .scrollHint {
   position: fixed;
-  bottom: 24px;
+  bottom: max(24px, calc(24px + var(--safe-bottom)));
   left: 50%;
   transform: translateX(-50%);
   z-index: 50;

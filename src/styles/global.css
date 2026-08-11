@@ -20,6 +20,27 @@
   --blur-glass-strong: blur(15px);
   --transition-smooth: all 0.3s ease;
 
+  /* Safe-area insets — consumed by fixed-position shells, modals, and
+     bottom-anchored UI so content never hides behind iOS notch / home
+     indicator or Android navigation bars. */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+
+  /* ── Standardized Modal Sizing System ──
+     All modals (About, Services, Contact, Projects, ExpandedProject) share
+     these dimensions to ensure visual consistency across the site.
+     - Desktop: Fixed max-width/max-height centered on screen
+     - Mobile: Scales down to fit viewport while maintaining proportions
+     - Safe areas: Respected via shell padding (not modal padding) */
+  --modal-max-width: 1200px;
+  --modal-max-height: 85vh; /* fallback */
+  --modal-max-height-dvh: 85dvh; /* dynamic viewport height */
+  --modal-border-radius: 24px;
+  --modal-shell-padding: 24px;
+  --modal-shell-padding-mobile: 20px;
+
   /* 👇 Add AboutOverlay variables here 👇 */
   --card-bg: rgba(255, 255, 255, 0.62);
   --card-bg-hover: rgba(255, 255, 255, 0.9);
@@ -58,6 +79,12 @@
 html {
   width: 100%;
   background-color: var(--color-bg);
+  /* Ensure the page fills the dynamic viewport on mobile */
+  min-height: 100vh;
+  min-height: 100dvh;
+  /* Prevent iOS from zooming on orientation change */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -67,6 +94,10 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Smooth scrolling for anchor links */
+  scroll-behavior: smooth;
+  /* Improve touch scrolling performance on mobile */
+  -webkit-overflow-scrolling: touch;
 }
 
 /* Remove default button/link styles */
@@ -79,6 +110,23 @@ a {
 img {
   display: block;
   max-width: 100%;
+  /* Prevent layout shifts by reserving space */
+  height: auto;
+  /* Optimize image rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Lazy load images that are not critical for initial render */
+img:not([fetchpriority="high"]):not([loading="eager"]) {
+  loading: lazy;
+}
+
+/* Ensure videos don't overflow on mobile */
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* Buttons, links and images are meant to be tapped, not selected — a
@@ -93,4 +141,16 @@ video,
   -webkit-user-select: none;
   user-select: none;
   -webkit-touch-callout: none;
+}
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

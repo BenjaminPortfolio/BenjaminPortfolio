@@ -87,6 +87,10 @@
   align-items: center;
   justify-content: center;
   padding: 24px;
+  padding-top: calc(24px + var(--safe-top));
+  padding-right: calc(24px + var(--safe-right));
+  padding-bottom: calc(24px + var(--safe-bottom));
+  padding-left: calc(24px + var(--safe-left));
   overflow: auto;
   pointer-events: auto;
 }
@@ -114,14 +118,17 @@
 /* MODAL */
 .benji-modal {
   width: 100%;
-  max-width: 1200px;
-  height: 85vh;
-  max-height: 85vh;
+  max-width: var(--modal-max-width);
+  height: auto;
+  max-height: var(--modal-max-height); /* fallback for browsers without dvh */
+  max-height: var(--modal-max-height-dvh); /* dynamic viewport height: resizes as mobile URL bar
+                        collapses/expands, preventing the modal from extending
+                        beyond the visible area on short screens */
   background: rgba(218, 234, 252, 0.5);
   backdrop-filter: blur(30px);
   -webkit-backdrop-filter: blur(30px);
   border: 1.5px solid rgba(255, 255, 255, 0.84);
-  border-radius: var(--r-xl);
+  border-radius: var(--modal-border-radius);
   box-shadow:
     0 8px 48px rgba(80, 140, 200, 0.22),
     0 2px 10px rgba(80, 140, 200, 0.12),
@@ -211,7 +218,7 @@
     transform 0.18s,
     background 0.18s;
   position: absolute;
-  right: 26px;
+  right: max(26px, calc(26px + var(--safe-right)));
   top: 50%;
   transform: translateY(-50%);
   z-index: 2;
@@ -225,7 +232,7 @@
 /* FLOATING PILL BAR */
 .benji-modal-pill-bar {
   position: absolute;
-  bottom: 18px;
+  bottom: calc(18px + var(--safe-bottom));
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
@@ -275,6 +282,9 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(59, 130, 212, 0.22) transparent;
   scroll-padding-bottom: 0;
+  /* Ensure the last section's content isn't hidden behind the home
+     indicator / bottom safe area on iOS and Android. */
+  padding-bottom: calc(12px + var(--safe-bottom));
 }
 .benji-modal-scroll::-webkit-scrollbar {
   width: 4px;
