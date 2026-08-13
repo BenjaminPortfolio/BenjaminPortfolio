@@ -934,20 +934,36 @@
 /* Responsive */
 @media (max-width: 900px) {
   .cjModal {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto;
+    /* On mobile the modal is a FIXED 640px-tall flex column (not a grid).
+       In the old grid, `grid-template-rows: auto auto auto` inside a definite
+       640px height made the browser SHARE the available height between the
+       two content rows (row metrics came out ~260px/278px), which crushed
+       .cjLeft (overflow:hidden → clipped headline/character/socials) and
+       squeezed the form. Making it a flex column with `flex-shrink:0` items
+       lets each panel size to its real content while the fixed-height modal
+       scrolls internally — matching the About/Services/Projects behavior. */
+    display: flex;
+    flex-direction: column;
     gap: 24px;
-
     height: auto;
     max-height: var(--modal-max-height); /* fallback */
     max-height: var(--modal-max-height-dvh); /* dynamic viewport height */
 
     overflow-y: auto;
+    overflow-x: hidden;
 
     padding: 24px 24px 0 24px;
   }
 
+  /* Spacing between the panels is handled by the flex `gap` above — the base
+     rule adds `margin-top` to every child after the first, which would stack
+     on top of the gap and inflate the gaps on mobile. */
+  .cjModal > *:not(:first-child) {
+    margin-top: 0;
+  }
+
   .cjTopbar {
+    flex-shrink: 0;
     margin-left: -24px;
     margin-right: -24px;
     padding: 12px 12px 11px;
@@ -959,16 +975,18 @@
 
   .cjLeft {
     order: 1;
+    flex: 0 0 auto; /* never shrink below its content height */
     padding: 0;
     border: none;
     max-height: none;
-    overflow: hidden;
+    overflow: visible;
     min-width: 0;
   }
 
   .cjCenter {
     order: 2;
-    padding: 16px 24px 0 24px;
+    flex: 0 0 auto; /* never shrink below its content height */
+    padding: 16px 24px 30px 24px;
     max-height: none;
     border-radius: 0;
     overflow: visible;
@@ -990,7 +1008,10 @@
   }
 
   .cjRow {
-    grid-template-columns: 1fr 1fr;
+    /* On mobile the modal is only 380px wide, so stacking the name + email
+       cards vertically (email directly below "Your Name") gives each field
+       full width instead of squeezing them side-by-side into ~162px cards. */
+    grid-template-columns: 1fr;
     gap: 8px;
   }
 
@@ -1037,12 +1058,14 @@
   }
 }
 @media (max-width: 560px) {
+  /* Mirror the inline shell snippet (24px + safe-area insets) in the CSS so the
+     modal keeps a consistent outer gutter on the smallest devices — matching
+     the medium-mobile (≤900px) behaviour instead of collapsing to 0/safe. */
   .cjShell {
-    padding: 0;
-    padding-top: calc(0px + var(--safe-top));
-    padding-right: calc(0px + var(--safe-right));
-    padding-bottom: calc(0px + var(--safe-bottom));
-    padding-left: calc(0px + var(--safe-left));
+    padding-top: calc(24px + var(--safe-top));
+    padding-right: calc(24px + var(--safe-right));
+    padding-bottom: calc(24px + var(--safe-bottom));
+    padding-left: calc(24px + var(--safe-left));
   }
 }
 
@@ -1052,7 +1075,8 @@
     padding-top: 0;
   }
   .cjModal > *:not(:first-child) {
-    margin-top: 18px;
+    /* Flex `gap` handles inter-panel spacing; don't stack margin on top. */
+    margin-top: 0;
   }
 
   .cjTopbar {
@@ -1128,14 +1152,16 @@
   }
 } */
 
-/* Mobile — consistent modal width (374px, matching the other modals) + centred.
+/* Mobile — consistent modal dimensions (380 x 640, matching the other modals) + centred.
    cjOverlay/cjShell horizontal padding is removed so the fixed-width cjModal
-   is a TRUE 374px (the overlay/shell padding was squeezing it to ~327px and
-   breaking the inner content). Height is content-driven and capped at 800px
-   (scrollable) so nothing is clipped. !important on max-height overrides the
-   JS-computed inline maxHeight. margin:auto on the shell lets the modal
-   scroll instead of clipping when taller than short mobile viewports (incl.
-   iOS Safari). Desktop (>900px) is untouched. */
+   is a TRUE 380px (the overlay/shell padding was squeezing it to ~327px and
+   breaking the inner content). Height is locked to 640px (matching the other
+   modals) so nothing is clipped. !important on max-height overrides the
+   JS-computed inline maxHeight. justify-content is set to flex-start so the
+   content is top-aligned and scrolls from the top instead of being truncated
+   by the grid's default vertical centering. margin:auto on the modal lets it
+   scroll when taller than short mobile viewports (incl. iOS Safari).
+   Desktop (>900px) is untouched. */
 @media (max-width: 900px) {
   .cjOverlay {
     align-items: center;
@@ -1149,17 +1175,26 @@
     width: 100%;
     max-width: 100%;
     margin: auto;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
+    /* The shell's outer padding — 24px + safe-area insets on ALL four sides
+       (the same `element.style` snippet the Services modal uses) — comes from
+       the inline `style` on this element. Previously this block zeroed the
+       horizontal padding with `!important`, which produced an inconsistency on
+       mobile: 24px+safe vertically but 0px horizontally, so the modal sat
+       flush against the viewport edges / iOS home indicator while still
+       breathing on the top/bottom. Removing the `!important` lets the
+       uniform 24px+safe snippet apply on every mobile device. The modal itself
+       uses `width: min(380px, 100%)`, so it shrinks gracefully inside this
+       padding on narrow phones instead of overflowing — matching the other
+       modals. Desktop (>900px) is untouched. */
   }
   .cjModal {
-    margin-left: auto;
-    margin-right: auto;
-    width: 374px;
-    max-width: 100%;
-    height: auto;
-    min-height: 0;
-    max-height: 800px !important;
+    margin: auto;
+    width: min(380px, 100%);
+    max-width: 380px;
+    height: 640px;
+    min-height: 640px;
+    max-height: 640px !important;
+    justify-content: flex-start;
     overflow-y: auto;
     overflow-x: hidden;
   }

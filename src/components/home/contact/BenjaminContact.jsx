@@ -166,10 +166,10 @@ export default function BenjaminContact({ onClose }) {
         <div
           className={styles.cjShell}
           style={{
-            paddingTop: `calc(20px + var(--safe-top))`,
-            paddingRight: `calc(20px + var(--safe-right))`,
-            paddingBottom: `calc(20px + var(--safe-bottom))`,
-            paddingLeft: `calc(20px + var(--safe-left))`,
+            paddingTop: `calc(24px + var(--safe-top))`,
+            paddingRight: `calc(24px + var(--safe-right))`,
+            paddingBottom: `calc(24px + var(--safe-bottom))`,
+            paddingLeft: `calc(24px + var(--safe-left))`,
           }}
         >
           <div
