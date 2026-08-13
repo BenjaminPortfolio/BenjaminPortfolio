@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import styles from "./LoadingScreen.module.css";
+import SplitText from "./SplitText";
+import ClickSpark from "./ClickSpark";
 
 /**
  * LoadingScreen
@@ -64,7 +66,21 @@ export default function LoadingScreen({ imageSrcs, onComplete }) {
 
   return (
     <div className={styles.screen}>
-      <div className={styles.content}>
+      {/* ClickSpark overlays a transparent canvas on the whole loading screen
+          and emits sparks wherever the user clicks (including the START
+          JOURNEY button). .sparkContent re-centers the .content column so the
+          layout stays exactly as it was before the wrapper was added. */}
+      <ClickSpark
+        sparkColor="#111111"
+        sparkSize={14}
+        sparkRadius={55}
+        sparkCount={10}
+        duration={400}
+        easing="ease-out"
+        extraScale={1.2}
+      >
+        <div className={styles.sparkContent}>
+          <div className={styles.content}>
         {/* ── PHASE 1: Loading ── */}
         <div
           className={`${styles.loadingState} ${phase === "ready" ? styles.hidden : ""}`}
@@ -84,19 +100,66 @@ export default function LoadingScreen({ imageSrcs, onComplete }) {
           className={`${styles.readyState} ${phase === "ready" ? styles.visible : ""}`}
         >
           <div className={styles.title}>
-            Benjamin
-            <br />
-            <span className={styles.subhead}>
-              Where creativity meets
-              <br />
-              craftsmanship
-            </span>
+            {/* SplitText mounts only once the ready phase begins so the
+                letter animation plays as the opening text appears */}
+            {phase === "ready" && (
+              <>
+                <SplitText
+                  text="Benjamin"
+                  tag="span"
+                  className={styles.titleWord}
+                  delay={90}
+                  duration={0.8}
+                  ease="power3.out"
+                  splitType="chars, words"
+                  from={{ opacity: 0, y: 50 }}
+                  to={{ opacity: 1, y: 0 }}
+                  threshold={0.1}
+                  rootMargin="-100px"
+                  textAlign="center"
+                />
+                <br />
+                <span className={styles.subhead}>
+                  <SplitText
+                    text="Where creativity meets"
+                    tag="span"
+                    className={styles.subheadWord}
+                    delay={40}
+                    duration={0.6}
+                    ease="power3.out"
+                    splitType="chars, words"
+                    from={{ opacity: 0, y: 30 }}
+                    to={{ opacity: 1, y: 0 }}
+                    threshold={0.1}
+                    rootMargin="-100px"
+                    textAlign="center"
+                  />
+                  <br />
+                  <SplitText
+                    text="craftsmanship"
+                    tag="span"
+                    className={styles.subheadWord}
+                    delay={40}
+                    duration={0.6}
+                    ease="power3.out"
+                    splitType="chars, words"
+                    from={{ opacity: 0, y: 30 }}
+                    to={{ opacity: 1, y: 0 }}
+                    threshold={0.1}
+                    rootMargin="-100px"
+                    textAlign="center"
+                  />
+                </span>
+              </>
+            )}
           </div>
           <button className={styles.startButton} onClick={onComplete}>
             START JOURNEY
           </button>
         </div>
-      </div>
+          </div>
+        </div>
+      </ClickSpark>
     </div>
   );
 }

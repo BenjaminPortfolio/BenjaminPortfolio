@@ -450,6 +450,25 @@ const CSS = `
   .sv-author strong{ font-size:14px; }
   .sv-author span{ font-size:14px; }
 }
+
+/* ── Mobile — consistent modal dimensions (800 x 380) + centered/scrollable ──
+   Forces the same 800px height + 380px width for the services modal on
+   mobile so it matches the other modals. !important on max-height overrides
+   the JS-computed inline maxHeight. The shell stays centered, and
+   margin:auto on the child lets the modal scroll instead of clipping when
+   800px is taller than short mobile viewports (incl. iOS Safari).
+   Desktop (>768px) is untouched. */
+@media(max-width:768px){
+  .sv-shell{
+    align-items:center; justify-content:center;
+    overflow-y:auto; -webkit-overflow-scrolling:touch;
+  }
+  .sv-modal{
+    margin:auto;
+    width:380px; max-width:380px;
+    height:800px; min-height:800px; max-height:800px !important;
+  }
+}
 `;
 
 /* ── DATA ── */

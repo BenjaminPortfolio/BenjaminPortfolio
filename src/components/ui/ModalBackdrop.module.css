@@ -1,0 +1,55 @@
+/* Backdrop rendered behind any open modal (Projects / About / Services /
+   Contact). Sits at a LOWER z-index than every overlay shell (which is 200)
+   so it paints behind the modal but above the home map. It never receives
+   pointer events, so it cannot interfere with the modal. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Slight dim over the map behind the modal */
+.dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 26, 54, 0.32);
+}
+
+/* Falling snow */
+.snowWrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.flake {
+  position: absolute;
+  top: -12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
+  animation-name: snowfall;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  25% {
+    transform: translateY(28vh) translateX(calc(var(--drift) * 0.4));
+  }
+  50% {
+    transform: translateY(56vh) translateX(calc(var(--drift) * -0.3));
+  }
+  75% {
+    transform: translateY(82vh) translateX(calc(var(--drift) * 0.5));
+  }
+  100% {
+    transform: translateY(110vh) translateX(calc(var(--drift) * -0.2));
+  }
+}
