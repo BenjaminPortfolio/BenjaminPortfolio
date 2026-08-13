@@ -1578,11 +1578,11 @@
   }
 }
 
-/* Mobile — consistent modal dimensions (800 x 380) + centered / scrollable.
-   Forces the same 800px height + 380px width for the about modal on mobile
+/* Mobile — consistent modal dimensions (640 x 380) + centered / scrollable.
+   Forces the same 640px height + 380px width for the about modal on mobile
    so it matches the other modals. !important on max-height overrides the
    JS-computed inline maxHeight. The shell is centered, and `margin:auto` lets
-   the modal scroll instead of clipping when 800px is taller than short mobile
+   the modal scroll instead of clipping when 640px is taller than short mobile
    viewports (incl. iOS Safari). Desktop (>768px) is untouched. */
 @media (max-width: 768px) {
   .benji-shell {
@@ -1595,9 +1595,9 @@
     margin: auto;
     width: 380px;
     max-width: 380px;
-    height: 800px;
-    min-height: 800px;
-    max-height: 800px !important;
+    height: 640px;
+    min-height: 640px;
+    max-height: 640px !important;
   }
 }
 

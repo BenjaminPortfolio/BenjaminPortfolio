@@ -451,22 +451,32 @@ const CSS = `
   .sv-author span{ font-size:14px; }
 }
 
-/* ── Mobile — consistent modal dimensions (800 x 380) + centered/scrollable ──
-   Forces the same 800px height + 380px width for the services modal on
-   mobile so it matches the other modals. !important on max-height overrides
-   the JS-computed inline maxHeight. The shell stays centered, and
-   margin:auto on the child lets the modal scroll instead of clipping when
-   800px is taller than short mobile viewports (incl. iOS Safari).
+/* ── Mobile — modal locked to 380px x 640px, consistent with other modals ──
+   Matches the Projects & About modals exactly (380 x 640) so accounting is
+   identical across Android Chrome / iOS Safari. !important on height/min-height/
+   max-height overrides both the conflicting tablet/480px rules above and the
+   JS-computed inline maxHeight. Shell padding is zeroed (the leftover
+   padding:10px from the block above was squeezing/offsetting the fixed-width
+   modal and producing browser-to-browser inconsistency). .sv-scroll is made
+   flex:1 + scrollable so content scrolls inside the fixed 640px modal.
    Desktop (>768px) is untouched. */
 @media(max-width:768px){
   .sv-shell{
+    padding:0;
     align-items:center; justify-content:center;
     overflow-y:auto; -webkit-overflow-scrolling:touch;
   }
   .sv-modal{
     margin:auto;
-    width:380px; max-width:380px;
-    height:800px; min-height:800px; max-height:800px !important;
+    width: min(380px, 100%);
+    max-width: 380px;
+    height: 640px;
+    min-height: 640px;
+    max-height: 640px !important;
+    overflow:hidden;
+  }
+  .sv-scroll{
+    flex:1 1 auto; overflow-y:auto; overflow-x:hidden;
   }
 }
 `;
@@ -616,7 +626,15 @@ export default function ServicesOverlay({ onClose }) {
   }, []);
 
   return (
-    <div className="sv-shell">
+    <div
+      className="sv-shell"
+      style={{
+        paddingTop: `calc(24px + var(--safe-top))`,
+        paddingRight: `calc(24px + var(--safe-right))`,
+        paddingBottom: `calc(24px + var(--safe-bottom))`,
+        paddingLeft: `calc(24px + var(--safe-left))`,
+      }}
+    >
       <div
         className="sv-modal"
         style={modalMaxHeight ? { maxHeight: modalMaxHeight } : undefined}
