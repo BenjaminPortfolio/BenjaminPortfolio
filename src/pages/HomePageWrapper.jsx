@@ -4,6 +4,7 @@ import ProjectsOverlay from "../components/home/projects/ProjectsOverlay";
 import AboutOverlay from "../components/home/about/AboutOverlay";
 import BenjaminContact from "../components/home/contact/BenjaminContact.jsx";
 import ServicesOverlay from "../components/home/services/ServicesOverlay.jsx";
+import ModalBackdrop from "../components/ui/ModalBackdrop";
 
 /**
  * HomePageWrapper
@@ -91,6 +92,11 @@ export default function HomePageWrapper() {
         onContactClick={() => open("contact")}
         onServicesClick={() => open("services")}
       />
+
+      {/* Dim + snow layer behind whichever modal is open (Projects, About,
+          Services, Contact). Sits below the overlay shells, so it never
+          interferes with the modal's functionality. */}
+      {activeOverlay && <ModalBackdrop />}
 
       {activeOverlay === "projects" && <ProjectsOverlay onClose={close} />}
 

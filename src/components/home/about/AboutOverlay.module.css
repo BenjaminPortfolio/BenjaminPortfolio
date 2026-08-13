@@ -1563,11 +1563,10 @@
   .benji-car-stage {
     min-height: 420px;
   }
-  .benji-modal-pill-bar a span {
-    display: none;
-  }
   .benji-modal-pill-bar a {
-    padding: 11px 0;
+    padding: 6px 6px;
+    font-size: 12px;
+    gap: 5px;
   }
 
   .benji-skill-btn {
@@ -1578,3 +1577,28 @@
     font-size: 45px;
   }
 }
+
+/* Mobile — consistent modal dimensions (800 x 380) + centered / scrollable.
+   Forces the same 800px height + 380px width for the about modal on mobile
+   so it matches the other modals. !important on max-height overrides the
+   JS-computed inline maxHeight. The shell is centered, and `margin:auto` lets
+   the modal scroll instead of clipping when 800px is taller than short mobile
+   viewports (incl. iOS Safari). Desktop (>768px) is untouched. */
+@media (max-width: 768px) {
+  .benji-shell {
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .benji-modal {
+    margin: auto;
+    width: 380px;
+    max-width: 380px;
+    height: 800px;
+    min-height: 800px;
+    max-height: 800px !important;
+  }
+}
+
+

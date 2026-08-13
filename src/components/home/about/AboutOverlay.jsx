@@ -545,7 +545,7 @@ export default function BenjiPortfolio({ onClose }) {
                 <img
                   // ref={detailImgRef}
                   className={cx(styles["benji-char-img-detail"])}
-                  src="/assets/about/characters/benjamin_char.webp"
+                  src="/assets/about/characters/benjamin_about.png"
                   alt="Benji"
                 />
               </div>
@@ -645,10 +645,10 @@ export default function BenjiPortfolio({ onClose }) {
         {/* Floating pill bar */}
         <div className={styles["benji-modal-pill-bar"]}>
           <a href="mailto:kpminishaji007@gmail.com">
-            <i className="fas fa-envelope" /> <span>csbenju76@gmail.com</span>
+            <i className="fas fa-envelope" /> <span>Mail me</span>
           </a>
           <a href="#">
-            <i className="fas fa-map-marker-alt" /> <span>India</span>
+            <i className="fas fa-map-marker-alt" /> <span>Find me</span>
           </a>
           <a href="/assets/about/pdf/CV_BENJAMIN.pdf" download>
             <i className="fas fa-download" /> <span>Download CV</span>

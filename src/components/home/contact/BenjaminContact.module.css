@@ -1127,3 +1127,42 @@
     margin-bottom: 10px;
   }
 } */
+
+/* Mobile — consistent modal width (374px, matching the other modals) + centred.
+   cjOverlay/cjShell horizontal padding is removed so the fixed-width cjModal
+   is a TRUE 374px (the overlay/shell padding was squeezing it to ~327px and
+   breaking the inner content). Height is content-driven and capped at 800px
+   (scrollable) so nothing is clipped. !important on max-height overrides the
+   JS-computed inline maxHeight. margin:auto on the shell lets the modal
+   scroll instead of clipping when taller than short mobile viewports (incl.
+   iOS Safari). Desktop (>900px) is untouched. */
+@media (max-width: 900px) {
+  .cjOverlay {
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .cjShell {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    margin: auto;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .cjModal {
+    margin-left: auto;
+    margin-right: auto;
+    width: 374px;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    max-height: 800px !important;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+}
+
+
