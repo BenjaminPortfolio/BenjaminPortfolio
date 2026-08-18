@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  perspective: 1000px;
+  padding: 60px;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+}
+
+.simpleText {
+  position: absolute;
+  bottom: 10px;
+  color: white;
+  font-size: 12pt;
+  font-weight: 900;
+  font-family: monospace;
+  text-shadow: 2px 2px #000;
+  pointer-events: none;
+}
+
+.lampBlock {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  transform-style: preserve-3d;
+  transform: rotateX(-30deg) rotateY(45deg);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.face {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  border: 5px solid #24303c;
+  box-sizing: border-box;
+  background: #24303c;
+}
+
+.face div {
+  width: 100%;
+  height: 100%;
+  background-color: #3a4a5c;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Face Orientations - Z-axis is half of the width (50px) */
+.top {
+  transform: rotateX(90deg) translateZ(50px);
+}
+
+.bottom {
+  transform: rotateX(-90deg) translateZ(50px);
+}
+
+.front {
+  transform: rotateY(0deg) translateZ(50px);
+}
+
+.back {
+  transform: rotateY(180deg) translateZ(50px);
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(50px);
+}
+
+.right {
+  transform: rotateY(90deg) translateZ(50px);
+}
+
+/* Pixel Variance for Texture */
+.face div:nth-child(3n) {
+  filter: brightness(110%);
+}
+
+.face div:nth-child(7n) {
+  filter: brightness(80%);
+}
+
+/* ON STATE (Checked) */
+.container input:checked ~ .lampBlock .face {
+  border-color: #4a80b8;
+  filter: drop-shadow(0px 0px 25px rgba(159, 211, 240, 0.6));
+}
+
+.container input:checked ~ .lampBlock .face div {
+  background-color: #9fd3f0;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.container input:checked ~ .lampBlock .face div:nth-child(3n) {
+  background-color: #dceefc;
+}
+
+.container input:checked ~ .lampBlock .face div:nth-child(7n) {
+  background-color: #4a90c2;
+}
+
+/* Interaction */
+.container:hover .lampBlock {
+  transform: rotateX(-30deg) rotateY(55deg);
+}
+
+.container:active .lampBlock {
+  transform: rotateX(-30deg) rotateY(45deg) scale(0.9);
+}
+
+/* ── Floating placement — position passed in by the caller ── */
+.float {
+  position: fixed;
+  z-index: 200;
+  contain: layout style;
+}

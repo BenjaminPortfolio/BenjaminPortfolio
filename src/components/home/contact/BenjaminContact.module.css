@@ -271,6 +271,12 @@
   /* overflow-y: visible; */
 }
 
+/* Wraps the headline + character image. Desktop: plain block (the character
+   stays absolutely positioned as before). Mobile: side-by-side row. */
+.cjHeadlineWrap {
+  display: block;
+}
+
 .cjEyebrow {
   font-family: "Outfit", sans-serif;
   font-size: 14px;
@@ -402,6 +408,12 @@
   font-weight: 700;
   color: var(--text-dark);
   letter-spacing: 0.02em;
+}
+
+/* Slide-to-call slider — hidden on desktop; replaces the call button on
+   mobile (see the @media (max-width: 900px) block). */
+.cjSlideCall {
+  display: none;
 }
 
 .cjSocialsLabel {
@@ -970,7 +982,83 @@
   }
 
   .cjHeadline {
-    font-size: 48px;
+    font-size: 24px; /* halved on mobile (was 48px) — desktop unchanged */
+  }
+
+  /* Mobile: hide the tel: button and use a slide-to-call slider instead */
+  .cjCallBtn {
+    display: none;
+  }
+
+  .cjSlideCall {
+    display: block;
+    margin-bottom: 20px; /* keep the same spacing the call button had */
+  }
+
+  .cjSlideTrack {
+    position: relative;
+    width: 276px;
+    height: 56px;
+    border-radius: 999px;
+    background: var(--blue-grad);
+    overflow: hidden;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    cursor: pointer;
+  }
+
+  .cjSlideFill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    pointer-events: none;
+  }
+
+  .cjSlideText {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: "Outfit", sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+  }
+
+  .cjSlideKnob {
+    position: absolute;
+    top: 4px;
+    left: 4px;
+    z-index: 2;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--blue-accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(37, 99, 174, 0.35);
+    pointer-events: none;
+  }
+
+  /* Center the "Find Me On" label + social icons row on mobile */
+  .cjSocialsLabel {
+    text-align: center;
+  }
+
+  .cjSocials {
+    justify-content: center;
   }
 
   .cjLeft {
@@ -1037,11 +1125,29 @@
     padding-bottom: 12px;
   }
 
+  .cjHeadlineWrap {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+        
+          .cjHeadline {
+    flex: 1;
+    min-width: 0;
+    font-size: 32px;
+  }
+
   .cjCharPanel {
     position: relative;
     right: auto;
     top: auto;
-    width: auto;
+    flex-shrink: 0;
+    width: 38%;
+    max-width: 160px;
+    margin-top: 0;
 
     display: flex;
     justify-content: flex-start;
@@ -1049,7 +1155,12 @@
 
     left: 0;
     padding: 0;
-    margin-top: 16px;
+  }
+
+  .cjCharImg {
+    width: 100%;
+    max-width: 100%;
+    height: auto;
   }
 
   .cjTopbarClose {
@@ -1086,7 +1197,7 @@
   }
   .cjCharPanel {
     position: relative;
-    margin-top: 16px !important;
+    margin-top: 0;
     right: auto;
     left: auto;
     top: auto;
@@ -1094,9 +1205,9 @@
     z-index: 1;
   }
   .cjCharImg {
-    width: 220px;
+    width: 100%;
     max-width: 100%;
-    max-height: 280px;
+    max-height: 200px;
     height: auto;
   }
 

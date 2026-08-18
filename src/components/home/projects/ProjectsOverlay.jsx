@@ -179,6 +179,7 @@ export default function ProjectsOverlay({ onClose }) {
             className={`${styles.topBar} ${!sidebarCollapsed ? styles.topBarExpanded : ""}`}
           >
             <div className={styles.topBarLeft}>
+              <div className={styles.topBarTitle}>Projects Section</div>
               {isMobile && (
                 <div className={styles.categoryMenuWrap} ref={categoryMenuRef}>
                   <button
@@ -225,7 +226,6 @@ export default function ProjectsOverlay({ onClose }) {
                     )}
                 </div>
               )}
-              <div className={styles.topBarTitle}>Projects Section</div>
             </div>
 
             <button

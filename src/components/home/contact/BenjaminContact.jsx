@@ -15,6 +15,12 @@ const EMAILJS_SERVICE_ID = "service_q92l50c"; // e.g. "service_abc123"
 const EMAILJS_TEMPLATE_ID = "template_rgr5yhd"; // e.g. "template_xyz789"
 const EMAILJS_PUBLIC_KEY = "6wx5z0zo6O5D269lJ"; // e.g. "aBcDeFgHiJkLmNoP"
 
+// Slide-to-call slider constants — SLIDE_KNOB / SLIDE_PAD must match the
+// .cjSlideKnob width/height and top/left values in the CSS module.
+const PHONE_HREF = "tel:+919562358421";
+const SLIDE_KNOB = 48;
+const SLIDE_PAD = 4;
+
 function Snow() {
   // Generate flakes once per mount — creating new random values on every
   // render caused unnecessary object churn and layout recalculations.
@@ -74,6 +80,15 @@ export default function BenjaminContact({ onClose }) {
   const formRef = useRef(null);
   const fileRef = useRef(null);
 
+  // ── Mobile slide-to-call slider ──
+  const [slideProgress, setSlideProgress] = useState(0); // 0..1
+  const [slideOffset, setSlideOffset] = useState(0); // px for the knob
+  const slideTrackRef = useRef(null);
+  const slideDraggingRef = useRef(false);
+  const slideStartX = useRef(0);
+  const slideStartValue = useRef(0);
+  const slideValueRef = useRef(0);
+
   useEffect(() => {
     emailjs.init({
       publicKey: EMAILJS_PUBLIC_KEY,
@@ -98,6 +113,42 @@ export default function BenjaminContact({ onClose }) {
   function handleFile(e) {
     const file = e.target.files?.[0];
     if (file) setFileName(file.name);
+  }
+
+  // ── Mobile slide-to-call ──
+  function handleSlideDown(e) {
+    e.preventDefault();
+    const track = slideTrackRef.current;
+    if (!track) return;
+    slideStartX.current = e.clientX;
+    slideStartValue.current = slideValueRef.current;
+    slideDraggingRef.current = true;
+    track.setPointerCapture?.(e.pointerId);
+  }
+
+  function handleSlideMove(e) {
+    if (!slideDraggingRef.current) return;
+    const track = slideTrackRef.current;
+    if (!track) return;
+    const rect = track.getBoundingClientRect();
+    const travel = rect.width - SLIDE_KNOB - SLIDE_PAD * 2;
+    if (travel <= 0) return;
+    const dx = e.clientX - slideStartX.current;
+    const next = Math.min(1, Math.max(0, slideStartValue.current + dx / travel));
+    slideValueRef.current = next;
+    setSlideProgress(next);
+    setSlideOffset(next * travel);
+  }
+
+  function handleSlideUp() {
+    if (!slideDraggingRef.current) return;
+    slideDraggingRef.current = false;
+    if (slideValueRef.current >= 0.9) {
+      window.location.href = PHONE_HREF;
+    }
+    slideValueRef.current = 0;
+    setSlideProgress(0);
+    setSlideOffset(0);
   }
 
   async function handleSubmit(e) {
@@ -201,29 +252,32 @@ export default function BenjaminContact({ onClose }) {
             {/* LEFT PANEL */}
             <div className={styles.cjLeft}>
               {/* <div className={styles.cjEyebrow}>Let's Connect</div> */}
-              <h1 className={styles.cjHeadline}>
-                <span className={styles.cjWord}>Let's</span>
-                <span className={styles.cjWord}>create</span>
-                <span className={styles.cjWord}>something</span>
-                <span className={styles.cjHeadlineBreak}>
-                  <br />
-                </span>
-                <span className={styles.cjWord}>
-                  <em>amazing</em>
-                </span>
-                <span className={styles.cjHeadlineBreak}>
-                  <br />
-                </span>
-                <span className={styles.cjWord}>together!</span>
-              </h1>
-              {/* CHARACTER PANEL */}
-              <div className={styles.cjCharPanel}>
-                <div className={styles.cjCharGlow} />
-                <img
-                  className={styles.cjCharImg}
-                  src="/assets/about/characters/benjamin_side_view.webp"
-                  alt="Anime Benjamin"
-                />
+              {/* HEADLINE + CHARACTER — side by side on mobile */}
+              <div className={styles.cjHeadlineWrap}>
+                <h1 className={styles.cjHeadline}>
+                  <span className={styles.cjWord}>Let's</span>
+                  <span className={styles.cjWord}>create</span>
+                  <span className={styles.cjWord}>something</span>
+                  <span className={styles.cjHeadlineBreak}>
+                    <br />
+                  </span>
+                  <span className={styles.cjWord}>
+                    <em>amazing</em>
+                  </span>
+                  <span className={styles.cjHeadlineBreak}>
+                    <br />
+                  </span>
+                  <span className={styles.cjWord}>together!</span>
+                </h1>
+                {/* CHARACTER PANEL */}
+                <div className={styles.cjCharPanel}>
+                  <div className={styles.cjCharGlow} />
+                  <img
+                    className={styles.cjCharImg}
+                    src="/assets/about/characters/benjamin_side_view.webp"
+                    alt="Anime Benjamin"
+                  />
+                </div>
               </div>
               <div className={styles.cjDivider} />
               <p className={styles.cjTagline}>
@@ -236,6 +290,30 @@ export default function BenjaminContact({ onClose }) {
                 </span>
                 <span className={styles.cjCallNumber}>+91 9562358421</span>
               </a>
+
+              {/* Mobile slide-to-call — drag the phone icon to the right to call */}
+              <div className={styles.cjSlideCall}>
+                <div
+                  ref={slideTrackRef}
+                  className={styles.cjSlideTrack}
+                  onPointerDown={handleSlideDown}
+                  onPointerMove={handleSlideMove}
+                  onPointerUp={handleSlideUp}
+                  onPointerCancel={handleSlideUp}
+                >
+                  <span className={styles.cjSlideText}>Slide to Call</span>
+                  <span
+                    className={styles.cjSlideFill}
+                    style={{ width: `${slideProgress * 100}%` }}
+                  />
+                  <span
+                    className={styles.cjSlideKnob}
+                    style={{ transform: `translateX(${slideOffset}px)` }}
+                  >
+                    <i className="fas fa-phone" />
+                  </span>
+                </div>
+              </div>
               <div className={styles.cjSocialsLabel}>Find Me On</div>
               <div className={styles.cjSocials}>
                 {socials.map((s, i) => (

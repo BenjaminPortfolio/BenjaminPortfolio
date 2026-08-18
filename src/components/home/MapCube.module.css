@@ -1,0 +1,89 @@
+/* ── Floating wrapper — sits above the map, like the other loaders ──
+   Desktop default: right side of the viewport.
+   A caller can override placement via the `position` prop (see MapCube.jsx). */
+.float {
+  position: fixed;
+  z-index: 60;
+  top: max(20px, calc(20px + env(safe-area-inset-top, 0px)));
+  left: max(20px, calc(20px + env(safe-area-inset-left, 0px)));
+  contain: layout style;
+}
+
+.cubeLoader {
+  position: relative;
+  /* you can change this size */
+  width: 75px;
+  height: 75px;
+  transform-style: preserve-3d;
+  transform: rotateX(-30deg);
+  animation: animate 4s linear infinite;
+  /* Pre-promoted GPU layer so toggling the switch doesn't pay a
+     layer-promotion stutter right as the animation starts. */
+  will-change: transform;
+}
+
+.cubeLoader.paused {
+  animation-play-state: paused;
+}
+
+@keyframes animate {
+  0% {
+    transform: rotateX(-30deg) rotateY(0);
+  }
+  100% {
+    transform: rotateX(-30deg) rotateY(360deg);
+  }
+}
+
+.cubeLoader .cubeWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.cubeLoader .cubeWrapper .cubeSpan {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  /* width 75px / 2 = 37.5px */
+  transform: rotateY(calc(90deg * var(--i))) translateZ(37.5px);
+  background: linear-gradient(
+    to bottom,
+    #3a4a5c 0%,
+    #4d6478 12%,
+    #5f7d94 28%,
+    #79a0b8 46%,
+    #96c1d8 63%,
+    #b9e3ff 79%,
+    #dceefc 92%,
+    #eaf7ff 100%
+  );
+}
+
+.cubeTop {
+  position: absolute;
+  width: 75px;
+  height: 75px;
+  background: #3a4a5c 0%;
+  /* width 75px / 2 = 37.5px */
+  transform: rotateX(90deg) translateZ(37.5px);
+  transform-style: preserve-3d;
+}
+
+.cubeTop::before {
+  content: "";
+  position: absolute;
+  /* you can change this size */
+  width: 75px;
+  height: 75px;
+  background: #96c1d8 19.6%;
+  transform: translateZ(-90px);
+  filter: blur(10px);
+  box-shadow:
+    0 0 10px #2b3542,
+    0 0 20px #96c1d8,
+    0 0 30px #2b3542,
+    0 0 40px #96c1d8;
+}
