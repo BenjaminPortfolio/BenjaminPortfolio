@@ -331,8 +331,8 @@
 }
 
 .topRightClose {
-  width: 40px;
-  height: 40px;
+  width: 36px;
+  height: 36px;
   border: none;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.8);
@@ -425,6 +425,13 @@
 
   .topBarLeft {
     gap: 8px;
+    /* Keep the left frame compact on small phones so it never crowds the
+       close button. Without this cap, the row lets flex-shrink compress the
+       close button's width below its height, leaving a non-square button. */
+    width: auto;
+    max-width: calc(100% - 52px);
+    flex: 1 1 auto;
+    min-width: 0;
   }
 
   .topBarTitle {
@@ -438,8 +445,13 @@
   }
 
   .topRightClose {
+    flex: 0 0 36px;
     width: 36px;
     height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+    aspect-ratio: 1 / 1;
+    align-self: center;
   }
 
   .header {
@@ -477,6 +489,8 @@
   .topRightClose {
     grid-column: 3;
     justify-self: end;
+    width: 36px;
+    height: 36px;
   }
 
   /* Keep the title vertically centred even when the sidebar is expanded */
@@ -485,11 +499,23 @@
   }
 }
 
+/* ── DESKTOP FIXED MODAL HEIGHT ──
+   The modal keeps a constant 663px height on desktop so switching category
+   tabs never resizes it (the grid areas scroll internally). !important on
+   max-height overrides the JS-computed inline maxHeight (92vh-based) that
+   would otherwise clamp the modal below 663px on short desktop windows. */
+@media (min-width: 769px) {
+  .overlay {
+    height: 663px;
+    max-height: 663px !important;
+  }
+}
+
 /* Mobile — consistent modal dimensions (640 x 380) + centered / scrollable.
    Forces the same 640px height + 380px width for the projects overlay on
    mobile so it matches the other modals. !important on max-height overrides
    the JS-computed inline maxHeight that would otherwise cap the height.
-   The shell stays centered, and `margin:auto` on the child lets the modal
+   The shell stays centered, and `margin: auto` on the child lets the modal
    scroll instead of clipping when 640px is taller than short mobile
    viewports (incl. iOS Safari). Desktop (>768px) is untouched. */
 @media (max-width: 768px) {

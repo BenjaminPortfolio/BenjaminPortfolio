@@ -1,0 +1,282 @@
+/* ── Floating wrapper — sits above the map, like the .media frames ── */
+.float {
+  position: fixed;
+  top: max(16px, calc(16px + env(safe-area-inset-top, 0px)));
+  left: max(16px, calc(16px + env(safe-area-inset-left, 0px)));
+  z-index: 60;
+  contain: layout style;
+}
+
+.container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+}
+
+.simpleText {
+  position: absolute;
+  bottom: -40px;
+  width: 120px;
+  text-align: center;
+  color: white;
+  font-size: 16pt;
+  font-weight: 800;
+  font-family: monospace;
+  pointer-events: none;
+}
+
+.checkmark {
+  display: none;
+}
+
+.torch {
+  display: flex;
+  justify-content: center;
+  height: 150px;
+  transform: translateY(-50px);
+}
+
+.head,
+.stick {
+  position: absolute;
+  width: 30px;
+  transform-style: preserve-3d;
+  transform: rotateX(-30deg) rotateY(45deg);
+}
+
+.stick {
+  position: relative;
+  height: 120px;
+}
+
+.face {
+  position: absolute;
+  transform-style: preserve-3d;
+  width: 30px;
+  height: 30px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 50% 50%;
+  background-color: #000000;
+}
+
+.top {
+  transform: rotateX(90deg) translateZ(15px);
+}
+
+.left {
+  transform: rotateY(-90deg) translateZ(15px);
+}
+
+.right {
+  transform: rotateY(0deg) translateZ(15px);
+}
+
+.top div,
+.left div,
+.right div {
+  width: 102%;
+  height: 102%;
+}
+
+.top div:nth-child(1),
+.left div:nth-child(3),
+.right div:nth-child(3) {
+  background-color: #eaf7ff60;
+}
+
+.top div:nth-child(2),
+.left div:nth-child(1),
+.right div:nth-child(1) {
+  background-color: #6fc8e560;
+}
+
+.top div:nth-child(3),
+.left div:nth-child(4),
+.right div:nth-child(4) {
+  background-color: #ffffff60;
+}
+
+.top div:nth-child(4),
+.left div:nth-child(2),
+.right div:nth-child(2) {
+  background-color: #4a90c260;
+}
+
+.side {
+  position: absolute;
+  width: 30px;
+  height: 120px;
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: repeat(8, 12.5%);
+  cursor: pointer;
+  translate: 0 12px;
+}
+
+.sideLeft {
+  transform: rotateY(-90deg) translateZ(15px) translateY(8px);
+}
+
+.sideRight {
+  transform: rotateY(0deg) translateZ(15px) translateY(8px);
+}
+
+.sideLeft div,
+.sideRight div {
+  width: 103%;
+  height: 103%;
+}
+
+.side div:nth-child(1) {
+  background-color: #3a4a5c;
+}
+
+.side div:nth-child(2),
+.side div:nth-child(2) {
+  background-color: #24303c;
+}
+
+.side div:nth-child(3),
+.side div:nth-child(5) {
+  background-color: #3d4d5f;
+}
+
+.side div:nth-child(4),
+.side div:nth-child(10) {
+  background-color: #1c252e;
+}
+
+.side div:nth-child(6) {
+  background-color: #202832;
+}
+
+.side div:nth-child(7) {
+  background-color: #405066;
+}
+
+.side div:nth-child(8) {
+  background-color: #202832;
+}
+
+.side div:nth-child(9) {
+  background-color: #3a4a5c;
+}
+
+.side div:nth-child(11),
+.side div:nth-child(15) {
+  background-color: #313e4a;
+}
+
+.side div:nth-child(12) {
+  background-color: #232c36;
+}
+
+.side div:nth-child(13) {
+  background-color: #3a4a5c;
+}
+
+.side div:nth-child(14) {
+  background-color: #222a34;
+}
+
+.side div:nth-child(16) {
+  background-color: #1e252d;
+}
+
+.container input:checked ~ .torch .face {
+  filter: drop-shadow(0px 0px 2px rgb(255, 255, 255))
+    drop-shadow(0px 0px 10px rgba(159, 211, 240, 0.7))
+    drop-shadow(0px 0px 25px rgba(111, 200, 229, 0.4));
+}
+
+.container input:checked ~ .torch .top div:nth-child(1),
+.container input:checked ~ .torch .left div:nth-child(3),
+.container input:checked ~ .torch .right div:nth-child(3) {
+  background-color: #eaf7ff;
+}
+
+.container input:checked ~ .torch .top div:nth-child(2),
+.container input:checked ~ .torch .left div:nth-child(1),
+.container input:checked ~ .torch .right div:nth-child(1) {
+  background-color: #6fc8e5;
+}
+
+.container input:checked ~ .torch .top div:nth-child(3),
+.container input:checked ~ .torch .left div:nth-child(4),
+.container input:checked ~ .torch .right div:nth-child(4) {
+  background-color: #ffffff;
+}
+
+.container input:checked ~ .torch .top div:nth-child(4),
+.container input:checked ~ .torch .left div:nth-child(2),
+.container input:checked ~ .torch .right div:nth-child(2) {
+  background-color: #4a90c2;
+}
+
+.container input:checked ~ .torch .side div:nth-child(1) {
+  background-color: #6fa8c9;
+}
+
+.container input:checked ~ .torch .side div:nth-child(2),
+.container input:checked ~ .torch .side div:nth-child(2) {
+  background-color: #4a5f73;
+}
+
+.container input:checked ~ .torch .side div:nth-child(3),
+.container input:checked ~ .torch .side div:nth-child(5) {
+  background-color: #7ec4e8;
+}
+
+.container input:checked ~ .torch .side div:nth-child(4),
+.container input:checked ~ .torch .side div:nth-child(10) {
+  background-color: #2b3a4a;
+}
+
+.container input:checked ~ .torch .side div:nth-child(6) {
+  background-color: #3a4a5c;
+}
+
+.container input:checked ~ .torch .side div:nth-child(7) {
+  background-color: #9fd3f0;
+}
+
+.container input:checked ~ .torch .side div:nth-child(8) {
+  background-color: #2f3d4c;
+}
+
+.container input:checked ~ .torch .side div:nth-child(9) {
+  background-color: #7ec4e8;
+}
+
+.container input:checked ~ .torch .side div:nth-child(11),
+.container input:checked ~ .torch .side div:nth-child(15) {
+  background-color: #4a90c2;
+}
+
+.container input:checked ~ .torch .side div:nth-child(12) {
+  background-color: #2b3a4a;
+}
+
+.container input:checked ~ .torch .side div:nth-child(13) {
+  background-color: #7ec4e8;
+}
+
+.container input:checked ~ .torch .side div:nth-child(14) {
+  background-color: #2b3a4a;
+}
+
+.container input:checked ~ .torch .side div:nth-child(16) {
+  background-color: #232c36;
+}

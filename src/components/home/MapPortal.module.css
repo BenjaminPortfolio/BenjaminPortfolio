@@ -1,0 +1,8 @@
+/* ── Floating wrapper — sits above the map (right side) ── */
+.float {
+  position: fixed;
+  z-index: 60;
+  top: max(20px, calc(20px + env(safe-area-inset-top, 0px)));
+  right: max(20px, calc(20px + env(safe-area-inset-right, 0px)));
+  contain: layout style;
+}

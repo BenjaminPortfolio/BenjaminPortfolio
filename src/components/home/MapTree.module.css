@@ -1,0 +1,139 @@
+/* ── Floating wrapper — sits above the map, like the other loaders ──
+   `contain` stops this fixed element's internal animation from forcing
+   the browser to re-check layout/paint on the rest of the page — with
+   14+ of these on screen, that containment is most of the win. */
+.float {
+  position: fixed;
+  z-index: 60;
+  top: max(20px, calc(20px + env(safe-area-inset-top, 0px)));
+  left: max(20px, calc(20px + env(safe-area-inset-left, 0px)));
+  contain: layout style;
+}
+
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.tree {
+  position: relative;
+  width: 50px;
+  height: 50px;
+  transform-style: preserve-3d;
+  transform: rotateX(-20deg) rotateY(30deg);
+  animation: treeAnimate 5s linear infinite;
+  /* Keeps this on its own GPU layer at all times (paused or not) so
+     flipping the switch doesn't pay a one-time "promote to a layer" cost
+     right as the animation starts — that promotion delay was a big part
+     of the lag/stutter when turning the toggle on. */
+  will-change: transform;
+}
+
+/* Freezes the tree on its resting frame — used when the animation switch
+   is off, so the browser stops recomputing the rotation every frame. */
+.tree.paused {
+  animation-play-state: paused;
+}
+
+@keyframes treeAnimate {
+  0% {
+    transform: rotateX(-20deg) rotateY(360deg);
+  }
+
+  100% {
+    transform: rotateX(-20deg) rotateY(0deg);
+  }
+}
+
+.branch,
+.stem {
+  position: absolute;
+  top: -50px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: translateY(calc(25px * var(--x))) translateZ(0px);
+  backface-visibility: hidden;
+}
+
+.branch span {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #dceefc, #ffffff);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  border-bottom: 5px solid #9fc4de66;
+  transform-origin: bottom;
+  transform: rotateY(calc(90deg * var(--i))) rotateX(30deg) translateZ(28.5px);
+}
+
+.stem span {
+  position: absolute;
+  top: 110px;
+  /* updated top value */
+  left: calc(50% - 7.5px);
+  width: 15px;
+  height: 50%;
+  background: linear-gradient(90deg, #7a6a5f, #9c8b7e);
+  border-bottom: 5px solid #00000019;
+  transform-origin: bottom;
+  transform: rotateY(calc(90deg * var(--i))) translateZ(7.5px);
+}
+
+/* ── Snow-theme color variants — pass `theme="themeX"` to MapTree ── */
+.themeIce .branch span {
+  background: linear-gradient(90deg, #b9e3ff, #eaf7ff);
+  border-bottom: 5px solid #7fb8de66;
+}
+.themeIce .stem span {
+  background: linear-gradient(90deg, #6b7c8c, #8fa2b3);
+}
+
+.themePowder .branch span {
+  background: linear-gradient(90deg, #e6d9f7, #ffffff);
+  border-bottom: 5px solid #c6b3e666;
+}
+.themePowder .stem span {
+  background: linear-gradient(90deg, #8a7f8f, #a89cae);
+}
+
+.themeFrost .branch span {
+  background: linear-gradient(90deg, #cfe8e0, #ffffff);
+  border-bottom: 5px solid #9fd0c266;
+}
+.themeFrost .stem span {
+  background: linear-gradient(90deg, #6f7d78, #8fa39c);
+}
+
+.themeGlacier .branch span {
+  background: linear-gradient(90deg, #aeefff, #ffffff);
+  border-bottom: 5px solid #6fc8e566;
+}
+.themeGlacier .stem span {
+  background: linear-gradient(90deg, #5c7a8a, #7d9cab);
+}
+
+.themeBlush .branch span {
+  background: linear-gradient(90deg, #ffe1ea, #fff5f8);
+  border-bottom: 5px solid #f3b8cb66;
+}
+.themeBlush .stem span {
+  background: linear-gradient(90deg, #8f7a80, #ad969c);
+}
+
+.shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  filter: blur(20px);
+  transform-style: preserve-3d;
+  transform: rotateX(90deg) translateZ(-65px);
+}

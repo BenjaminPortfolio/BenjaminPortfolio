@@ -1,0 +1,28 @@
+/* ── Floating wrapper — sits above the map, like the MapCheckbox ──
+   Desktop default: top-right of the viewport.
+   A caller can override placement via the `position` prop (see MapLoader.jsx),
+   and the mobile media query below is the built-in small-screen default. */
+.float {
+  position: fixed;
+  z-index: 60;
+  top: max(40px, calc(40px + env(safe-area-inset-top, 0px)));
+  right: max(40px, calc(40px + env(safe-area-inset-right, 0px)));
+  contain: layout style;
+}
+
+/* Mobile — smaller + tucked away (bottom-right, above the scroll hint) so the
+   200px loader doesn't crowd the top of the tall map or overlap map items. */
+@media (max-width: 768px) {
+  .float {
+    top: auto;
+    right: max(12px, calc(12px + env(safe-area-inset-right, 0px)));
+    bottom: max(76px, calc(76px + env(safe-area-inset-bottom, 0px)));
+    transform: scale(0.55);
+    transform-origin: bottom right;
+  }
+}
+
+.container {
+  background-color: #17afbd;
+}
+

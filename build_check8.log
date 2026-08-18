@@ -1,0 +1,27 @@
+
+> benjamin-portfolio@1.0.0 build
+> vite build
+
+[36mvite v5.4.21 [32mbuilding for production...[36m[39m
+transforming...
+[32mΓ£ô[39m 423 modules transformed.
+rendering chunks...
+computing gzip size...
+[2mdist/[22m[32mindex.html                                     [39m[1m[2m    1.03 kB[22m[1m[22m[2m Γöé gzip:   0.50 kB[22m
+[2mdist/[22m[35massets/index-BxYQaILl.css                      [39m[1m[2m   73.33 kB[22m[1m[22m[2m Γöé gzip:  14.53 kB[22m
+[2mdist/[22m[36massets/howler-CYGbJswT.js                      [39m[1m[2m   27.09 kB[22m[1m[22m[2m Γöé gzip:   8.15 kB[22m
+[2mdist/[22m[36massets/boolean-C9OooAi2.js                     [39m[1m[2m   48.48 kB[22m[1m[22m[2m Γöé gzip:  17.32 kB[22m
+[2mdist/[22m[36massets/navmesh-BFd9Mv4x.js                     [39m[1m[2m   55.09 kB[22m[1m[22m[2m Γöé gzip:  11.02 kB[22m
+[2mdist/[22m[36massets/process-B8HpfOtd.js                     [39m[1m[2m   60.26 kB[22m[1m[22m[2m Γöé gzip:  20.99 kB[22m
+[2mdist/[22m[36massets/gaussian-splat-compression-BblNKJdU.js  [39m[1m[2m   82.55 kB[22m[1m[22m[2m Γöé gzip:  23.40 kB[22m
+[2mdist/[22m[36massets/ui-DHLurPtK.js                          [39m[1m[2m   90.37 kB[22m[1m[22m[2m Γöé gzip:  28.28 kB[22m
+[2mdist/[22m[36massets/opentype-D6jUvuOk.js                    [39m[1m[2m  171.88 kB[22m[1m[22m[2m Γöé gzip:  50.27 kB[22m
+[2mdist/[22m[36massets/index-CyJJLYkD.js                       [39m[1m[2m  411.53 kB[22m[1m[22m[2m Γöé gzip: 137.90 kB[22m
+[2mdist/[22m[36massets/physics-BM4kW-A5.js                     [39m[1m[33m1,987.51 kB[39m[22m[2m Γöé gzip: 722.69 kB[22m
+[2mdist/[22m[36massets/react-spline-D9pI2oQ2.js                [39m[1m[33m2,060.04 kB[39m[22m[2m Γöé gzip: 585.67 kB[22m
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+[32mΓ£ô built in 9.69s[39m
