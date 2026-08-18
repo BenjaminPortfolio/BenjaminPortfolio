@@ -161,6 +161,7 @@
   max-height: var(--modal-max-height); /* fallback */
   max-height: var(--modal-max-height-dvh); /* dynamic viewport height */
   background: rgba(215, 232, 252, 0.45);
+  -webkit-backdrop-filter: blur(28px);
   backdrop-filter: blur(28px);
   border: 1.5px solid rgba(255, 255, 255, 0.82);
   border-radius: var(--modal-border-radius);

@@ -16,6 +16,12 @@
       href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&family=Patrick+Hand+SC&display=swap"
       rel="stylesheet"
     />
+    <!-- Warm the connections the About/Services overlays need on first
+         open (FontAwesome CDN, the Spline 3D scene host) so that round trip
+         isn't paid for the first time only once the user has already
+         clicked and is waiting to see the modal. -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://prod.spline.design" crossorigin />
   </head>
   <body>
     <div id="root"></div>

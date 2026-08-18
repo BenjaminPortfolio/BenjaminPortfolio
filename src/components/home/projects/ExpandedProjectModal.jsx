@@ -38,6 +38,7 @@ export default function ExpandedProjectModal({ project, onClose }) {
               src={project.src}
               controls
               autoPlay
+              muted
               preload="none"
               loop
               playsInline
