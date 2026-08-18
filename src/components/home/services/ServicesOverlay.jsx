@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useVisualViewportHeight } from "../../../hooks/useVisualViewportHeight";
 import { SplineScene } from "./SplineScene";
 
@@ -129,6 +129,7 @@ const CSS = `
 }
 .sv-card{
   background:var(--card-bg);
+  -webkit-backdrop-filter:blur(16px);
   backdrop-filter:blur(16px);
   border:1.5px solid var(--card-border);
   border-radius:var(--r-lg);
@@ -176,6 +177,12 @@ const CSS = `
   display:flex;align-items:center;justify-content:center;
   -webkit-mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
   mask-image:linear-gradient(to bottom, transparent 0%, #000 12%, #000 70%, transparent 100%);
+}
+/* Desktop only — the character captures pointer input here, so Spline can
+   mouse-track and drag-to-orbit. Mobile turns this off (see the <=768px
+   block further down). */
+@media(min-width:769px){
+  .sv-hero-char, .sv-hero-char canvas{ touch-action:none; }
 }
 @keyframes charBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 
@@ -289,6 +296,7 @@ const CSS = `
 }
 .sv-tcard{
   background:var(--card-bg);
+  -webkit-backdrop-filter:blur(16px);
   backdrop-filter:blur(16px);
   border:1.5px solid var(--card-border);
   border-radius:var(--r-lg);
@@ -367,7 +375,18 @@ const CSS = `
        below should capture touch for Spline's drag-to-orbit. Touches on
        the rest of the section should scroll the page normally. */
   }
-  .sv-hero-char, .sv-hero-char canvas{ touch-action:none; }
+
+  /* Mobile — the character is display-only: no mouse/pointer tracking.
+     pointer-events:none means the canvas never receives pointermove /
+     pointerdown, which is what Spline binds its mouse-hover / look-at
+     handlers to, and it also lets touches scroll the modal instead of being
+     swallowed by drag-to-orbit. The camera's hover-rotate can be bound to
+     the window object rather than the canvas, so that one is switched off
+     on the Spline instance in JS (see setSplineHoverTracking below). */
+  .sv-hero-char, .sv-hero-char canvas{
+    pointer-events:none;
+    touch-action:auto;
+  }
   .sv-hero-left{ padding:28px 20px 24px; order:1; }
   .sv-h1{ font-size:clamp(28px,7vw,40px); letter-spacing:-1px; margin-bottom:10px; }
   .sv-lead{ font-size:14px; margin-bottom:20px; }
@@ -594,6 +613,31 @@ function Stars({ n }) {
   );
 }
 
+/* ── SPLINE MOUSE TRACKING (desktop only) ── */
+const MOBILE_MQ = "(max-width: 768px)";
+
+/**
+ * Spline binds its object-level mouse handlers (mouse hover / look-at /
+ * follow) to the <canvas>, so `pointer-events:none` in the <=768px CSS block
+ * is enough to silence those. The camera's own "hover rotate" is the
+ * exception: depending on how the scene was authored the runtime binds it to
+ * `window` instead of the canvas, where CSS can't reach it. Its handler is
+ * gated on `hoverRotatePanMode`, so setting that to 0 stops the mouse-follow
+ * while leaving drag-to-orbit and everything else intact.
+ *
+ * `_controls` is part of the runtime's published typings; guarded throughout
+ * so a runtime change degrades to "tracking stays on" rather than a crash.
+ */
+function setSplineHoverTracking(app, enabled, savedModeRef) {
+  const orbit = app?._controls?.orbitControls;
+  if (!orbit) return;
+
+  if (savedModeRef.current === null) {
+    savedModeRef.current = orbit.hoverRotatePanMode ?? 0;
+  }
+  orbit.hoverRotatePanMode = enabled ? savedModeRef.current : 0;
+}
+
 /* ── MAIN COMPONENT ── */
 export default function ServicesOverlay({ onClose }) {
   // JS-driven fallback for CSS dvh — ensures the modal tracks the actual
@@ -605,6 +649,34 @@ export default function ServicesOverlay({ onClose }) {
     viewportHeight > 0
       ? `${Math.max(viewportHeight * 0.85 - shellVerticalPadding, 400)}px`
       : undefined;
+
+  // Mouse tracking on the hero character is a desktop-only affordance.
+  const splineAppRef = useRef(null);
+  const hoverRotateModeRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(MOBILE_MQ).matches;
+  });
+
+  // Keep isMobile in sync with the viewport (not just the value at mount), so
+  // a resize across the breakpoint turns tracking off/back on to match the CSS.
+  useEffect(() => {
+    const mql = window.matchMedia(MOBILE_MQ);
+    const handleChange = (e) => setIsMobile(e.matches);
+    mql.addEventListener("change", handleChange);
+    return () => mql.removeEventListener("change", handleChange);
+  }, []);
+
+  useEffect(() => {
+    setSplineHoverTracking(splineAppRef.current, !isMobile, hoverRotateModeRef);
+  }, [isMobile]);
+
+  // Spline's controls only exist once the scene has loaded, so the initial
+  // pass has to run from onLoad rather than from the effect above.
+  const handleSplineLoad = (app) => {
+    splineAppRef.current = app;
+    setSplineHoverTracking(app, !isMobile, hoverRotateModeRef);
+  };
 
   useEffect(() => {
     const id = "sv-css";
@@ -699,6 +771,7 @@ export default function ServicesOverlay({ onClose }) {
               <SplineScene
                 scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
                 className="sv-hero-char"
+                onLoad={handleSplineLoad}
               />
             </div>
           </div>

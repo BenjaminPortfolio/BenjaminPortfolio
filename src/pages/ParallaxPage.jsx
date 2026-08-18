@@ -11,7 +11,11 @@ import {
   CLOUDS,
 } from '../data/parallaxConfig';
 import { pickResponsiveSrc, isMobileViewport } from '../utils/responsiveAsset';
-import { prefetchAssets } from '../utils/prefetchAssets';
+import {
+  prefetchAssets,
+  prefetchSplineModule,
+  MODAL_CDN_ASSETS,
+} from '../utils/prefetchAssets';
 import '../styles/global.css';
 import styles from './ParallaxPage.module.css';
 
@@ -39,6 +43,8 @@ const SECONDARY_ASSETS = [
   '/assets/about/characters/benjamin_char3.webp',
   '/assets/about/characters/benjamin_char4.webp',
   '/assets/about/characters/benjamin_side_view.webp',
+  '/assets/about/characters/benjamin_about.webp',
+  ...MODAL_CDN_ASSETS,
 ];
 
 export default function ParallaxPage() {
@@ -83,6 +89,7 @@ export default function ParallaxPage() {
     // images, competes for the same limited concurrent-connection slots on
     // a real mobile network and can slow down the loading screen itself.
     prefetchAssets(SECONDARY_ASSETS);
+    prefetchSplineModule();
   };
 
   // Some browsers restore the previous scroll position on load/refresh

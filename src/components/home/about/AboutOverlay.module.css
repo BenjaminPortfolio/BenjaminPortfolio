@@ -181,8 +181,8 @@
   margin-top: 24px;
 }
 .benji-topbar-socials a {
-  width: 32px;
-  height: 32px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.72);
   border: 1.5px solid rgba(255, 255, 255, 0.95);
@@ -585,6 +585,7 @@
 /* CARDS */
 .benji-card {
   background: var(--card-bg);
+  -webkit-backdrop-filter: blur(18px);
   backdrop-filter: blur(18px);
   border: 1.5px solid var(--card-border);
   border-radius: var(--r-lg);
@@ -1041,6 +1042,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  cursor: pointer;
 
   transform-origin: top center;
 
@@ -1279,13 +1281,16 @@
     flex-wrap: wrap;
     gap: 10px;
   }
+  .benji-topbar-close {
+    right: max(12px, calc(12px + var(--safe-right)));
+  }
   .benji-topbar-pill {
     font-size: 10px;
     padding: 6px 12px;
   }
-  .benji-topbar-socials a {
-    width: 32px;
-    height: 32px;
+    .benji-topbar-socials a {
+    width: 36px;
+    height: 36px;
     font-size: 13px;
   }
   .benji-topbar-pill {

@@ -3,7 +3,7 @@
 import { Suspense, lazy } from "react";
 const Spline = lazy(() => import("@splinetool/react-spline"));
 
-export function SplineScene({ scene, className }) {
+export function SplineScene({ scene, className, ...props }) {
   return (
     <Suspense
       fallback={
@@ -12,7 +12,9 @@ export function SplineScene({ scene, className }) {
         </div>
       }
     >
-      <Spline scene={scene} className={className} />
+      {/* Remaining props (onLoad, event callbacks, …) are forwarded so callers
+          can reach the Spline Application instance after it loads. */}
+      <Spline scene={scene} className={className} {...props} />
     </Suspense>
   );
 }

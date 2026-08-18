@@ -5,6 +5,11 @@ import AboutOverlay from "../components/home/about/AboutOverlay";
 import BenjaminContact from "../components/home/contact/BenjaminContact.jsx";
 import ServicesOverlay from "../components/home/services/ServicesOverlay.jsx";
 import ModalBackdrop from "../components/ui/ModalBackdrop";
+import {
+  prefetchAssets,
+  prefetchSplineModule,
+  MODAL_CDN_ASSETS,
+} from "../utils/prefetchAssets";
 
 /**
  * HomePageWrapper
@@ -13,6 +18,23 @@ import ModalBackdrop from "../components/ui/ModalBackdrop";
 export default function HomePageWrapper() {
   const [activeOverlay, setActiveOverlay] = useState(null);
   // null | 'projects' | 'about' | 'contact'
+
+  // ParallaxPage already warms these the moment the intro's "Start
+  // Journey" is tapped, so by the time most users reach the map they're
+  // already cached. This is just the fallback for a direct/refreshed
+  // landing on /home (bookmark, share link, browser back) that skips the
+  // intro — without it, About/Services would pay the full CDN + Spline
+  // scene download cost on the very click that opens the modal.
+  useEffect(() => {
+    const idle =
+      window.requestIdleCallback || ((cb) => setTimeout(cb, 1500));
+    const cancelIdle = window.cancelIdleCallback || clearTimeout;
+    const id = idle(() => {
+      prefetchAssets(MODAL_CDN_ASSETS);
+      prefetchSplineModule();
+    });
+    return () => cancelIdle(id);
+  }, []);
 
   // Overlays are plain React state, not real navigation — so a phone's
   // back button (which pops browser history, not this state) used to skip

@@ -545,7 +545,7 @@ export default function BenjiPortfolio({ onClose }) {
                 <img
                   // ref={detailImgRef}
                   className={cx(styles["benji-char-img-detail"])}
-                  src="/assets/about/characters/benjamin_about.png"
+                  src="/assets/about/characters/benjamin_about.webp"
                   alt="Benji"
                 />
               </div>
